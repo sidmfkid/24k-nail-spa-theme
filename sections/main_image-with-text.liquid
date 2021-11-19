@@ -1,0 +1,38 @@
+{% render 'no-overflow'%}
+
+
+<section class="image-with-text">
+    <div class="image-with-text__content">
+        <div class="image-with-text__content-title">
+            <h2>Newly Renovated Everything!</h2>
+        </div>
+        <div class="image-with-text__content-list">
+            <ul>
+                <li>All Brand New Equipment</li>
+                <li>New Pedicure Chairs</li>
+                <li>New Manicure Tables</li>
+                <li>Newly Remodeled Bathroom</li>
+                <li>Newly Installed Flooring And Sinks</li>
+                <li>Brand New Refreshing Decor</li>
+            </ul>
+        </div>
+    </div>
+    <div class="image-with-text__svg"></div>
+</section>
+
+{% style%}
+.image-with-text__svg {
+background: url({{ 'subtract.svg' | asset_url }});
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+{% endstyle%}
+
+{% schema %}
+{
+"name": "main_image-with-text",
+"settings": [
+]
+}
+{% endschema %}

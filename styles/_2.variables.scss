@@ -1,0 +1,105 @@
+html {
+  //******** Colors *********//
+  --secondary-10: hsla(53, 100%, 10%, 1);
+  --secondary-20: hsla(53, 100%, 20%, 1);
+  --secondary-30: hsla(53, 100%, 30%, 1);
+  --secondary-40: hsla(53, 100%, 40%, 1);
+  --secondary-50: hsla(53, 100%, 50%, 1);
+  --secondary-60: hsla(53, 100%, 60%, 1);
+  --secondary-70: hsla(53, 100%, 70%, 1);
+  --secondary-80: hsla(53, 100%, 80%, 1);
+  --secondary-90: hsla(53, 100%, 90%, 1);
+  --secondary-95: hsla(53, 100%, 94.9%, 1);
+  --secondary-98: hsla(53, 100%, 98%, 1);
+  --secondary-99: hsla(53, 100%, 99%, 1);
+  --secondary-10-m: hsla(53, 100%, 10%, 0.78);
+  --secondary-20-m: hsla(53, 100%, 20%, 0.78);
+  --secondary-30-m: hsla(53, 100%, 30%, 0.78);
+  --secondary-40-m: hsla(53, 100%, 40%, 0.78);
+  --secondary-50-m: hsla(53, 45.9%, 50%, 0.78);
+  --secondary-60-m: hsla(53, 100%, 60%, 0.78);
+  --secondary-70-m: hsla(53, 100%, 70%, 0.78);
+  --secondary-80-m: hsla(53, 100%, 80%, 0.78);
+  --secondary-90-m: hsla(53, 100%, 90%, 0.78);
+  --secondary-95-m: hsla(53, 100%, 94.9%, 0.78);
+  --secondary-98-m: hsla(53, 100%, 98%, 0.78);
+  --secondary-99-m: hsla(53, 100%, 99%, 0.78);
+  --primary-10: hsla(302, 100%, 10%, 1);
+  --primary-20: hsla(302, 100%, 20%, 1);
+  --primary-30: hsla(302, 100%, 30%, 1);
+  --primary-40: hsla(302, 100%, 40%, 1);
+  --primary-50: hsla(302, 100%, 50%, 1);
+  --primary-60: hsla(302, 100%, 60%, 1);
+  --primary-70: hsla(302, 100%, 70%, 1);
+  --primary-80: hsla(302, 100%, 80%, 1);
+  --primary-90: hsla(302, 100%, 90%, 1);
+  --primary-95: hsla(302, 100%, 94.9%, 1);
+  --primary-98: hsla(300, 100%, 98%, 1);
+  --primary-99: hsla(300, 100%, 99%, 1);
+  --primary-10-m: hsla(302, 100%, 10%, 0.78);
+  --primary-20-m: hsla(302, 100%, 20%, 0.78);
+  --primary-30-m: hsla(302, 100%, 30%, 0.78);
+  --primary-40-m: hsla(302, 100%, 40%, 0.78);
+  --primary-50-m: hsla(302, 100%, 50%, 0.78);
+  --primary-60-m: hsla(302, 100%, 60%, 0.78);
+  --primary-70-m: hsla(302, 100%, 70%, 0.78);
+  --primary-80-m: hsla(302, 100%, 80%, 0.78);
+  --primary-90-m: hsla(302, 100%, 90%, 0.78);
+  --primary-95-m: hsla(302, 100%, 94.9%, 0.78);
+  --primary-98-m: hsla(300, 100%, 98%, 0.78);
+  --primary-99-m: hsla(300, 100%, 99%, 0.78);
+
+  //******** Typography *********//
+  --xxsmall: 1rem;
+  --xsmall: 1.3rem;
+  --small: 1.6rem;
+  --medium: 2rem;
+  --regular-24: 2.4rem;
+  --regular-31: 3.1rem;
+  --large: 3.8rem;
+  --xlarge: 4.8rem;
+}
+
+// Typography Settings
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Font Weights *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+$font-weights: (
+  "thin": 100,
+  "extralight": 200,
+  "light": 300,
+  "regular": 400,
+  "semibold": 500,
+  "bold": 600,
+  "extrabold": 600,
+);
+
+@function font-weight($font-weight-style) {
+  @return map-get($font-weights, $font-weight-style);
+}
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Font Sizes *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+$font-sizes: (
+  "xxsmall": calc(0.7rem + 0.5vw),
+  "xsmall": calc(1rem + 0.5vw),
+  "small": calc(1.2rem + 0.5vw),
+  "regular": calc(1.5rem + 1vw),
+  "medium": calc(1.5rem + 2vw),
+  "large": calc(1.5rem + 5vw),
+  "xlarge": calc(2.5rem + 5vw),
+);
+
+@function font-size($font-size-style) {
+  @return map-get($font-sizes, $font-size-style);
+}
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Break Points *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+$break-points: (
+  "break-point-small": 400px,
+  "break-point-medium": 600px,
+  "break-point-tablet": 900px,
+  "break-point-desktop": 1300px,
+);
+
+@function break-point($break-point-limit) {
+  @return map-get($break-points, $break-point-limit);
+}

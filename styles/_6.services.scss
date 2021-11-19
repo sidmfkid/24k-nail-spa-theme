@@ -1,0 +1,76 @@
+.services {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: var(--secondary-98);
+  &__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    @extend %sec-padding;
+    &-title {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: font-size(medium);
+      color: var(--primary-40);
+    }
+    &-options {
+      width: calc(90rem + 10vw);
+
+      button {
+        margin-bottom: 2rem;
+        width: 100%;
+        height: calc(8rem + 1vw);
+      }
+      &-btn.btn.btn-primary {
+        background-color: var(--primary-90-m);
+        color: var(--secondary-98);
+      }
+    }
+  }
+  &__flower-head {
+    &-1 {
+      position: absolute;
+      top: 10%;
+      left: 0;
+      width: calc(10rem + 5vw);
+      height: auto;
+      animation: 5s levitate cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite
+        forwards;
+    }
+    &-2 {
+      position: absolute;
+      bottom: -5rem;
+      left: -10rem;
+      animation: 5.4s levitate cubic-bezier(0.445, 0.05, 0.55, 0.95) 3s infinite
+        forwards;
+    }
+    &-3 {
+      position: absolute;
+      top: 20%;
+      right: -15rem;
+      width: calc(30rem + 5vw);
+      height: auto;
+      animation: 7s levitate cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite
+        reverse;
+    }
+  }
+}
+
+@keyframes levitate {
+  0% {
+    transform: translateY(0rem) rotate(0deg);
+  }
+  50% {
+    transform: translateY(10rem) rotate(180deg);
+  }
+  100% {
+    transform: translateY(0rem) rotate(360deg);
+  }
+}

@@ -1,0 +1,60 @@
+{% render 'no-overflow'%}
+
+<section class="hero">
+    <div class="hero__title">
+        <h1>Book Your Appointment Today</h1>
+    </div>
+
+    <div class="hero__cards">
+        <div class="hero__cards-card">
+            <h2>Start Your Booking Below</h2>
+            <a role="link" aria-disabled="false" class="btn btn-primary" href="{{ section.settings.hero_btn-1 }}">{{
+                section.settings.hero_btn-1-text }}</a>
+        </div>
+        <div class="hero__cards-card">
+            <h2>Browse Services</h2>
+            <a role="link" aria-disabled="false" class="btn btn-primary" href="{{ section.settings.hero_btn-2 }}">{{
+                section.settings.hero_btn-2-text }}</a>
+        </div>
+    </div>
+
+    {% render 'flowers-1' %}
+    <!-- <img class="svg-illustration" height="500" width="500" loading="lazy" src="{{ 'flowers-1.svg' | asset_url }}" alt=""> -->
+    <svg class="svg-divider" width="1498" height="302" viewBox="0 0 1498 302" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M748 0L0 301.5H1498L748 0Z" fill="#FFFEF5" />
+    </svg>
+</section>
+
+
+{% schema %}
+{
+"name": "main_hero",
+"settings": [
+{
+"type": "url",
+"id": "hero_btn-1",
+"label": "Choose what this button does"
+},
+{
+"type": "text",
+"id": "hero_btn-1-text",
+"label": "Put button text here",
+"default": "Start Here",
+"placeholder": "Start Here"
+},
+{
+"type": "url",
+"id": "hero_btn-2",
+"label": "Choose what this button does"
+},
+{
+"type": "text",
+"id": "hero_btn-2-text",
+"label": "Put button text here",
+"default": "Browse",
+"placeholder": "Start Here"
+}
+]
+}
+{% endschema %}

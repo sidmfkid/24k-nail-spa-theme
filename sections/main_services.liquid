@@ -1,0 +1,39 @@
+<section class="services">
+    <div class="services__content">
+        <h2 class="services__content-title">Services</h2>
+        <div class="services__content-options">
+            <button aria-disabled="false" href="{{ section.settings.service_btn_1}}"
+                class="services__content-options-btn btn btn-primary">Manicures</button>
+            <button aria-disabled="false" href="{{ section.settings.service_btn_2}}"
+                class="services__content-options-btn btn btn-primary">Pedicures</button>
+            <button aria-disabled="false" href="{{ section.settings.service_btn_3}}"
+                class="services__content-options-btn btn btn-primary">Extra
+                Services</button>
+        </div>
+    </div>
+    {% render 'flower-heads'%}
+
+</section>
+
+{% schema %}
+{
+"name": "main_services",
+"settings": [
+{
+"type": "url",
+"id": "service_btn_1",
+"label": "Choose Link For Button"
+},
+{
+"type": "url",
+"id": "service_btn_2",
+"label": "Choose Link For Button"
+},
+{
+"type": "url",
+"id": "service_btn_3",
+"label": "Choose Link For Button"
+}
+]
+}
+{% endschema %}

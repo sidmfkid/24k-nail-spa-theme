@@ -1,0 +1,25 @@
+<footer class="footer">
+
+    <img src="" alt="" class="footer__logo">
+    <nav class="footer__nav">
+        {% for link in linklists.footer-menu.links %}
+        <a href="{{ link.url }}" class="footer__nav-link">{{ link.title }}</a>
+
+        {% endfor %}
+    </nav>
+</footer>
+
+{% schema %}
+{
+"name": "footer",
+"settings": [
+{
+"type": "link_list",
+"id": "footer-menu",
+"label": "Links For Footer",
+"default": "footer",
+"info": "Choose a menu for the footer"
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,23 @@
+{% render 'no-overflow'%}
+
+
+<section class="map">
+    <h2 class="map__title">Location</h2>
+    <div class="map__content">
+        <div id="map" class="map__content-container"></div>
+        <div class="map__content-info">
+            <h3>Address</h3>
+            <p class="address">{{ shop.address.street }}, {{ shop.address.city }} {{ shop.address.province }}<br>Right
+                Next
+                To Insomnia Cookie </p>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+"name": "main_map",
+"settings": [
+]
+}
+{% endschema %}

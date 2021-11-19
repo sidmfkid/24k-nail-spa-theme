@@ -1,0 +1,38 @@
+{% render 'no-overflow'%}
+
+<header class="header">
+    <div class="overlay"></div>
+    <a class="header__logo" href="#">
+        <img loading="lazy" width="583" height="529" src="{{ '24k-logo.png' | asset_img_url: '300x' }}" alt="">
+    </a>
+
+    <nav class="nav-container" role="navigation">
+        <div class="navlink__container" role="list">
+            {% for link in linklists.new-menu.links %}
+            <a active {% if link.current %} aria-current="page" {% endif %} role="tab" href="{{ link.url }}" class="nav-link{% if link.active %}-active
+                                {% endif %}
+                                header-reg
+                                ">{{ link.title }}</a>
+            {% endfor %}
+        </div>
+        {% render 'cart-icon' %}
+        <div aria-hidden="true" class="hamburger-button" role="button">
+            <div class="lines"></div>
+        </div>
+    </nav>
+</header>
+
+{% schema %}
+{
+"name": "header",
+"settings": [
+{
+"type": "link_list",
+"id": "new-menu",
+"label": "Navigation Menu",
+"default": "main-menu",
+"info": "Select Menu"
+}
+]
+}
+{% endschema %}

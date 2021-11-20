@@ -72,6 +72,7 @@ html {
 body {
   background-color: var(--primary-98);
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 a,
@@ -857,34 +858,39 @@ section {
 
 .collection {
   width: 100%;
-  height: min-content;
+  height: 100%;
   background-color: var(--secondary-98);
 }
 .collection h1 {
   text-align: center;
   font-size: calc(1.5rem + 5vw);
+  color: var(--primary-80);
 }
 .collection__content {
+  background-color: var(--primary-99);
   margin: 0 auto 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  height: calc(40rem + 5vw);
+  height: 100%;
+  padding: 4rem 0;
 }
 .collection__content-product, .collection__content-product:active, .collection__content-product:link {
   display: flex;
   width: 30rem;
   height: 30rem;
-  background-color: var(--primary-90);
+  background-color: var(--primary-95);
   justify-content: center;
   align-items: center;
   margin: 1rem;
   border-radius: 10px;
+  color: var(--primary-30);
 }
 .collection__content-product h2, .collection__content-product:active h2, .collection__content-product:link h2 {
   font-size: calc(1.5rem + 1vw);
   display: block;
+  text-align: center;
 }
 
 .list-collection {
@@ -919,7 +925,7 @@ section {
   z-index: -1;
 }
 
-.hero__content, .services__content, .image-with-text__content, .map, .newsletter, .footer__content, .list-collection__content {
+.hero__content, .services__content, .image-with-text__content, .map, .newsletter, .footer__content, .collection, .list-collection__content {
   padding: 6vh 4vw;
 }
 

@@ -1,5 +1,3 @@
-{% render 'no-overflow'%}
-
 <header class="header">
     <div class="overlay"></div>
     <a class="header__logo" href="#">
@@ -15,11 +13,11 @@
                                 ">{{ link.title }}</a>
             {% endfor %}
         </div>
-        {% render 'cart-icon' %}
-        <div aria-hidden="true" class="hamburger-button" role="button">
-            <div class="lines"></div>
-        </div>
     </nav>
+    {% render 'cart-icon' %}
+    <div aria-hidden="true" class="hamburger-button" role="button">
+        <div class="lines"></div>
+    </div>
 </header>
 
 {% schema %}

@@ -1,0 +1,37 @@
+.list-collection {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 20rem;
+  &__content {
+    z-index: 2;
+
+    @extend %sec-padding;
+    &-title {
+      font-size: font-size(medium);
+      text-align: center;
+    }
+    &-collections {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      a,
+      a:link,
+      a:active {
+        width: 80%;
+        margin-top: 2rem;
+        padding: 4rem 0;
+        font-size: font-size(regular);
+        color: var(--secondary-95);
+      }
+    }
+  }
+  .services__flower-head {
+    &-1,
+    &-2,
+    &-3 {
+      z-index: -1;
+    }
+  }
+}

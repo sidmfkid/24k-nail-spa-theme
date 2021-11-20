@@ -10,8 +10,10 @@ console.log(hamburgerBtn.ariaHidden)
 const openMenu = () => {
     const navlinkContainer = document.querySelector('.navlink__container');
     const overlay = document.querySelector('.overlay');
+    const navContainer = document.querySelector('.nav-container');
     navlinkContainer.classList.toggle('open')
     overlay.classList.toggle('open')
+    navContainer.classList.toggle('open')
     hamburgerBtn.classList.toggle('open')
 }
 

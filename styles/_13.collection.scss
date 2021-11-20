@@ -1,0 +1,34 @@
+.collection {
+  width: 100%;
+  height: min-content;
+  background-color: var(--secondary-98);
+  h1 {
+    text-align: center;
+    font-size: font-size(large);
+  }
+  &__content {
+    margin: 0 auto 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    height: calc(40rem + 5vw);
+
+    &-product,
+    &-product:active,
+    &-product:link {
+      display: flex;
+      width: 30rem;
+      height: 30rem;
+      background-color: var(--primary-90);
+      justify-content: center;
+      align-items: center;
+      margin: 1rem;
+      border-radius: 10px;
+      h2 {
+        font-size: font-size(regular);
+        display: block;
+      }
+    }
+  }
+}

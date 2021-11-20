@@ -1,48 +1,52 @@
 .hero {
   width: 100%;
-  height: 80vh;
-  @extend %sec-padding;
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: center;
-  z-index: 1;
-  overflow-x: hidden;
-  &__title {
-    font-size: font-size(regular);
-    width: 100%;
-    text-align: center;
-    color: var(--primary-80);
-  }
-  &__cards {
-    margin-top: 5rem;
-    padding: 0 5rem;
-    width: 100%;
-    height: min-content;
+
+  &__content {
+    height: 80vh;
+    overflow: hidden;
+
+    @extend %sec-padding;
+    position: relative;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: flex-start;
     flex-wrap: wrap;
-    &-card {
-      width: calc(30rem + 5vw);
-      max-width: 100rem;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 1;
+    &-title {
+      font-size: font-size(regular);
+      width: 100%;
+      text-align: center;
+      color: var(--primary-80);
+    }
+    &-cards {
+      margin-top: 5rem;
+      padding: 0 5rem;
+      width: 100%;
       height: min-content;
-      max-height: 40rem;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: row;
       justify-content: space-evenly;
-      align-items: center;
-      background-color: var(--secondary-99);
-      padding: 3rem 3rem;
-      box-shadow: 0 18px 17px -12px rgba(0, 0, 0, 0.25);
-      h2 {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 2rem;
-        font-size: font-size(small);
-        color: var(--primary-40);
+      align-items: flex-start;
+      flex-wrap: wrap;
+      &-card {
+        width: calc(30rem + 5vw);
+        max-width: 100rem;
+        height: min-content;
+        max-height: 40rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items: center;
+        background-color: var(--secondary-99);
+        padding: 3rem 3rem;
+        box-shadow: 0 18px 17px -12px rgba(0, 0, 0, 0.25);
+        h2 {
+          width: 100%;
+          text-align: center;
+          margin-bottom: 2rem;
+          font-size: font-size(small);
+          color: var(--primary-40);
+        }
       }
     }
   }
@@ -52,7 +56,7 @@
     margin: 0 auto;
     height: auto;
     width: 30%;
-    bottom: 15%;
+    bottom: 5%;
     right: 35%;
   }
   #flowerHead-1 {
@@ -76,35 +80,37 @@
   }
   @include media-tablet {
     height: 80vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    &__cards {
-      margin-top: 0rem;
+    &__content {
       display: flex;
-      height: 100%;
-      padding: 0 0;
-      align-items: center;
+      flex-wrap: wrap;
       justify-content: center;
-      width: 100%;
-      &-card {
+      align-items: center;
+      &-cards {
+        margin-top: 0rem;
+        display: flex;
+        height: 100%;
+        padding: 0 0;
+        align-items: center;
+        justify-content: center;
         width: 100%;
-        max-width: none;
-        background-color: var(--secondary-99-m);
-        &:nth-of-type(2) {
-          // margin-top: 3rem;
+        &-card {
+          width: 100%;
+          max-width: none;
+          background-color: var(--secondary-99-m);
+          &:nth-of-type(2) {
+            // margin-top: 3rem;
+          }
         }
       }
     }
     .svg-illustration {
-      bottom: 0;
+      bottom: -6vh;
       width: 80%;
       right: 10%;
       height: 95%;
     }
     .svg-divider {
-      bottom: 0;
+      bottom: -6vh;
       z-index: -1;
       transform: scaleX(2);
       height: auto;

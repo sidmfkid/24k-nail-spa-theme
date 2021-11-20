@@ -1,3 +1,15 @@
+<div class="collection">
+    <h1>{{ collection.title }}</h1>
+    <div class="collection__content">
+        {% for product in collection.products %}
+        <a href="{{ product.url }}" class="collection__content-product">
+            <h2>{{ product.title }}</h2>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+
 {% schema %}
 {
 "name": "main_collection",

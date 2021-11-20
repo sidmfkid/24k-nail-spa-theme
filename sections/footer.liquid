@@ -1,12 +1,40 @@
 <footer class="footer">
 
-    <img src="" alt="" class="footer__logo">
-    <nav class="footer__nav">
-        {% for link in linklists.footer-menu.links %}
-        <a href="{{ link.url }}" class="footer__nav-link">{{ link.title }}</a>
+    <div class="footer__content">
+        <img width="150" height="150" src="{{ '24k-logo.png' | asset_img_url: '200x'}}" alt=""
+            class="footer__content-logo">
+        <nav class="footer__content-nav">
+            <h2>Quick Links</h2>
+            {% for link in linklists.footer.links %}
+            <a href="{{ link.url }}" class="footer__content-nav-link">{{ link.title }}</a>
 
-        {% endfor %}
-    </nav>
+            {% endfor %}
+        </nav>
+        <div class="footer__content-socials">
+            <h2>Social Links</h2>
+
+            <a href="{{ settings.social_facebook_link }}" class="footer__content-socials-link">
+                {% render 'icon-facebook' %}
+            </a>
+            <a href="{{ settings.social_twitter_link }}" class="footer__content-socials-link">
+                {% render 'icon-twitter' %}
+            </a>
+            <a href="{{ settings.social_tiktok_link }}" class="footer__content-socials-link">
+                {% render 'icon-tiktok' %}
+            </a>
+        </div>
+    </div>
+    <div class="footer__bottom_content">
+        {% if shop.enabled_payment_types < 0 %} <div class="footer__bottom_content-payment-icons">
+            {% for type in shop.enabled_payment_types %}
+            <img class="icon" src="{{ type | payment_type_img_url}}" alt="">
+            {% endfor %}
+    </div>
+    {% endif %}
+
+    <small class="copyright-content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: routes.root_url }}</small>
+    </div>
+
 </footer>
 
 {% schema %}
@@ -15,7 +43,7 @@
 "settings": [
 {
 "type": "link_list",
-"id": "footer-menu",
+"id": "footer",
 "label": "Links For Footer",
 "default": "footer",
 "info": "Choose a menu for the footer"

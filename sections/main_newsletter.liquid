@@ -1,28 +1,32 @@
 <section class="newsletter">
+    <h2>Sign Up & Save!</h2>
+    <p>Sign up for our newsletter for exclusive deals and special events just for our subscibers</p>
+
     {% form 'customer' %}
     {{ form_errors | default_errors }}
 
-    <div class="first-name">
+    <div class="newsletter__first-name">
         <label for="first-name">First name</label>
         <input type="text" name="contact[first_name]" />
     </div>
 
-    <div class="last-name">
+    <div class="newsletter__last-name">
         <label for="last-name">Last name</label>
         <input type="text" name="contact[last_name]" />
     </div>
 
-    <div class="email">
+    <div class="newsletter__email">
         <label for="email">Email</label>
         <input type="email" name="contact[email]" />
     </div>
 
 
-    <div class="submit">
-        <input type="submit" value="customer" />
+    <div class="newsletter__submit">
+        <input class="btn btn-primary" type="submit" value="Subscribe" />
     </div>
     {% endform %}
 
+    {% render 'flowers-1' %}
 </section>
 
 {% schema %}

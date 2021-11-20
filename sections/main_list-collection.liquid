@@ -1,7 +1,70 @@
+{%- assign sorts = section.settings.sort -%}
+
+{%- liquid
+case sorts
+when 'products_high' or 'products_low'
+assign collections = collections | sort: 'all_products_count'
+when 'date' or 'date_reversed'
+assign collections = collections | sort: 'published_at'
+endcase
+
+if sorts == 'products_high' or sorts == 'date_reversed' or sorts == 'alphabetical_reversed'
+assign collections = collections | reverse
+endif
+-%}
+
+<div class="list-collection">
+    <div class="list-collection__content">
+        <h1 class="list-collection__content-title">Our Services</h1>
+        <div class="list-collection__content-collections">
+
+            {% for collection in collections %}
+            <a href="{{ collection.url }}" class="btn btn-primary collection">
+                {{ collection.title }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% render 'flower-heads' %}
+</div>
+
+
 {% schema %}
 {
 "name": "main_list-collection",
 "settings": [
+{
+"type": "select",
+"id": "sort",
+"label": "Sort Collection List",
+"options": [
+{
+"value": "alphabetical",
+"label": "Alphabetical"
+},
+{
+"value": "alphabetical_reversed",
+"label": "Alphabetical"
+},
+{
+"value": "date_reversed",
+"label": "Alphabetical"
+},
+{
+"value": "date",
+"label": "Alphabetical"
+},
+{
+"value": "products_high",
+"label": "Alphabetical"
+},
+{
+"value": "products_low",
+"label": "Alphabetical"
+}
+],
+"default": "date"
+}
 ]
 }
 {% endschema %}

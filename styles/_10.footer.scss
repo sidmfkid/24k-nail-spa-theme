@@ -1,0 +1,113 @@
+.footer {
+  min-height: 30rem;
+  width: 100%;
+  background-color: var(--secondary-95);
+  &__content {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    @extend %sec-padding;
+    width: 100%;
+    &-logo {
+      width: auto;
+      height: 15rem;
+    }
+    &-nav {
+      display: flex;
+      flex-direction: column;
+      h2 {
+        width: max-content;
+        margin: 0 auto;
+        display: block;
+        font-size: font-size(regular);
+        color: var(--primary-80);
+      }
+
+      &-link,
+      &-link:active,
+      &-link:link {
+        width: max-content;
+        margin: 0 auto;
+        display: block;
+        font-size: font-size(small);
+        color: var(--primary-80);
+      }
+    }
+    &-socials {
+      align-self: flex-start;
+      h2 {
+        width: max-content;
+        margin: 0 auto;
+        display: block;
+        font-size: font-size(regular);
+        color: var(--primary-80);
+      }
+      a,
+      a:link,
+      a:active {
+        margin: 0 auto;
+        width: max-content;
+        color: var(--primary-80);
+        transition: color 0.3s ease-in-out;
+        svg {
+          height: calc(2rem + 1vw);
+          width: auto;
+        }
+      }
+      a:hover,
+      a:link:hover,
+      a:active:hover {
+        color: var(--secondary-70);
+      }
+    }
+  }
+  &__bottom_content {
+    width: 100%;
+    min-height: 5rem;
+    .icon {
+      width: 5rem;
+      height: auto;
+    }
+    .copyright-content {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+      font-size: font-size(xsmall);
+      a,
+      a:active,
+      a:link {
+        color: var(--primary-80);
+      }
+    }
+  }
+  @include media-medium {
+    &__content {
+      &-nav {
+        h2 {
+          font-size: font-size(medium);
+        }
+        width: 100%;
+        margin-top: 2rem;
+        &-link,
+        &-link:link,
+        &-link:active {
+          font-size: font-size(regular);
+        }
+      }
+      &-socials {
+        margin-top: 2rem;
+
+        h2 {
+          font-size: font-size(medium);
+        }
+        a,
+        a:link,
+        a:active {
+          display: block;
+        }
+      }
+    }
+  }
+}

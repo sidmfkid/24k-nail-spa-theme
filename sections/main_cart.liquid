@@ -1,3 +1,32 @@
+<section class="cart">
+
+    <div class="cart__content">
+        <form id="checkoutForm" method="POST" action="{{ routes.cart_url }}">
+            {% for item in cart.items %}
+            <div class="line-item">
+                <h2 class="line-item-title">
+                    {{ item.title }}
+                </h2>
+                <span class="line-item-price">{{ item.price | money }}</span>
+                <a class="btn btn-primary" href="{{ item.url_to_remove }}">Remove</a>
+            </div>
+
+            {% endfor %}
+            <div class="cart__content-total">
+                <h3>
+                    Cart Total: <strong>{{ cart.total_price | money }}</strong>
+                </h3>
+            </div>
+
+            <input type="date" name="attributes[appointment-date]" value="" min="">
+            <input type="time" name="attributes[appointment-time]" value="" min="">
+            <input class="btn btn-primary" type="submit" name="checkout" value="Checkout">
+        </form>
+    </div>
+</section>
+
+<script defer src="{{ 'cart.js' | asset_url }}"></script>
+
 {% schema %}
 {
 "name": "main_cart",

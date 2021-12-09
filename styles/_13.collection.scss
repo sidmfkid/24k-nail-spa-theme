@@ -8,33 +8,62 @@
     font-size: font-size(large);
     color: var(--primary-80);
   }
+  p {
+    text-align: center;
+    font-size: font-size(small);
+    color: var(--primary-50);
+    width: 70%;
+    display: block;
+    margin: 0 auto;
+  }
   &__content {
-    background-color: var(--primary-99);
     margin: 0 auto 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     padding: 4rem 0;
 
-    &-product,
-    &-product:active,
-    &-product:link {
+    &-product {
+      background-color: var(--primary-98);
+      padding: 2rem 0.5rem;
+
       display: flex;
-      width: 30rem;
-      height: 30rem;
-      background-color: var(--primary-95);
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      margin: 1rem;
-      border-radius: 10px;
-      color: var(--primary-30);
-      h2 {
+      width: calc(30rem + 5vw);
+      flex-wrap: wrap;
+      margin: 1rem 1rem;
+      label {
+        display: block;
+        margin: 0 auto;
+        // margin-right: 3rem;
+        order: 3;
+      }
+      &--title {
+        order: 0;
+        width: 100%;
         font-size: font-size(regular);
+        color: var(--primary-80);
         display: block;
         text-align: center;
       }
+      &--price {
+        order: 2;
+        width: 100%;
+        font-size: font-size(regular);
+        color: var(--primary-80);
+        display: block;
+        text-align: center;
+      }
+    }
+    .btn {
+      border: none;
+      margin-top: 3rem;
+      width: 70%;
+      font-size: font-size(regular);
     }
   }
 }

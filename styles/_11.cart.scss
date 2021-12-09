@@ -1,0 +1,27 @@
+.cart {
+  @extend %sec-padding;
+  &__content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    .line-item {
+      width: 100%;
+      padding: 3rem 0rem;
+      h2 {
+        font-size: font-size(medium);
+      }
+      &-price {
+        display: block;
+        font-size: font-size(regular);
+      }
+    }
+    &-total {
+      width: 100%;
+      font-size: font-size(regular);
+    }
+    input {
+      width: 100%;
+    }
+  }
+}

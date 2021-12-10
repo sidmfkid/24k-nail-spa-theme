@@ -17,7 +17,13 @@
 
                 <span class="slider round"></span>
             </label>
-            <input form="appointment-form" type="hidden" name="quantity" value="1">
+            <div class="box">
+                <div class="quantity">
+                    <span class="quantity-add quantity-button"></span>
+                    <input name="quantity" type="number" step="1" min="1" value="1">
+                    <span class="quantity-remove quantity-button"></span>
+                </div>
+            </div>
         </div>
         {% endform %}
         {% endfor %}

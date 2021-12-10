@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", checkCart);
 function addNumToCart(data) {
   if (data.item_count > 0) {
     cartNum.classList.toggle("hide");
-    cartNum.textContent = data.item_count;
+    cartNum.textContent = data.items.length;
     return;
   }
 }

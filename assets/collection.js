@@ -8,9 +8,14 @@ let formData = {
 };
 
 function updateForm(e) {
+  const serviceQuantity =
+    e.target.parentElement.nextElementSibling.children[0].children[1].value;
   if (e.target.checked) {
     e.target.setAttribute("checked", true);
-    const prodData = { id: Number(e.target.value), quantity: 1 };
+    const prodData = {
+      id: Number(e.target.value),
+      quantity: Number(serviceQuantity),
+    };
     let ID = prodData.id;
     let quantity = prodData.quantity;
     formData.items.push({ id: ID, quantity: quantity });
@@ -51,3 +56,26 @@ const postCart = async (e) => {
 
 const addToCart = document.querySelector("input[type=submit]");
 addToCart.addEventListener("click", postCart);
+
+$(".quantity-button")
+  .off("click")
+  .on("click", function () {
+    if ($(this).hasClass("quantity-add")) {
+      var addValue = parseInt($(this).parent().find("input").val()) + 1;
+      $(this).parent().find("input").val(addValue).trigger("change");
+    }
+
+    if ($(this).hasClass("quantity-remove")) {
+      var removeValue = parseInt($(this).parent().find("input").val()) - 1;
+      if (removeValue == 0) {
+        removeValue = 1;
+      }
+      $(this).parent().find("input").val(removeValue).trigger("change");
+    }
+  });
+
+$(".quantity input")
+  .off("change")
+  .on("change", function () {
+    console.log($(this).val());
+  });

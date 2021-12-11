@@ -1,0 +1,38 @@
+{% assign delivery_product = all_products['delivery'] %}
+
+<div class="cart-booking-form">
+  <div>
+    <label for="booking">Please enter the date for your order:</label>
+    <input id="booking" type="text" name="attributes[Date]" 
+           value="{{ cart.attributes["Date"] }}" 
+           data-bta-product-config="{{ delivery_product.metafields.bookthatapp.config }}"
+           data-duration="30"		
+           class="datepicker bta bta-dp-start required bta-load-enable" size="12" autocomplete="off" 
+           data-handle="{{ delivery_product.handle }}" data-variant="{{ delivery_product.variants.first.id }}" 
+           readonly="readonly" disabled="disabled" data-mindate="0" />
+  </div>
+
+  <div>
+    <label for="bookingTime">Please enter the time for your order:</label>
+    <select id="bookingTime" name="attributes[Time]" 
+            class="bta-opening-hours bta-load-enable" disabled="disabled"
+            data-datepicker="booking"
+            data-prompt="Select time..." data-bta-display-range="true" 
+            data-bta-slot-interval="30">
+      <option class="loading">Loading...</option>
+    </select>
+    <span class="bta-no-slots-available" style="display: none;">No times available</span>
+  </div>
+
+  <div class="bta-validation-messages" style="display:none">
+    <p class="bta-validation-date-missing">Please select a date</p>
+  </div>
+  
+  <input id="delivery_id" type="hidden" name="attributes['Booking Variant']" value="{{ delivery_product.variants.first.id }}" />
+</div>
+
+<script>
+var bta = {
+    product_id: {{ delivery_product.id }}
+}
+</script>

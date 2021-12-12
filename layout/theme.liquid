@@ -106,6 +106,7 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/bookthatapp-sdk/dist/bookthatapp-sdk.min.js"></script>
 </head>
 
 
@@ -153,8 +154,8 @@
     {%- endif -%}
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
         integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
-    <script defer="defer" src="{{ 'leaflet.js' | asset_url }}"></script>
     <script defer="defer" src="{{ 'app.js' | asset_url }}"></script>
+    <script defer="defer" src="{{ 'booking.js' | asset_url }}"></script>
 
 </body>
 

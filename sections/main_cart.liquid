@@ -1,5 +1,3 @@
-{% render 'bookthatapp-widgets'%}
-
 <section class="cart">
 
     <div class="cart__content">
@@ -20,7 +18,9 @@
                 </h3>
             </div>
 
-            {% render 'booking-form'%}
+            {% render 'cart-booking-form'%}
+
+
             <input class="btn btn-primary" type="submit" name="checkout" value="Checkout">
         </form>
     </div>

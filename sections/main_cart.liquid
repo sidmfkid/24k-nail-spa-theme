@@ -23,12 +23,12 @@
   <input id="date" type="text" name="attributes[Date]" value="{{ cart.attributes[Date] }}"
 
             <input class="btn btn-primary" type="submit" name="checkout" value="Checkout">
-          {% render 'cart-booking-form' %}
+          
 
         </form>
     </div>
 </section>
-
+{% render 'cart-booking-form' %}
 <script defer src="{{ 'cart.js' | asset_url }}"></script>
 
 {% schema %}

@@ -1087,7 +1087,7 @@ input:checked + .slider:before {
   order: 0;
   width: 100%;
   font-size: calc(1.5rem + 1vw);
-  color: var(--primary-80);
+  color: var(--primary-80) !important;
   display: block;
   text-align: center;
 }
@@ -1141,7 +1141,22 @@ input:checked + .slider:before {
   z-index: -1;
 }
 
-.hero__content, .services__content, .image-with-text__content, .map, .newsletter, .footer__content, .cart, .collection, .list-collection__content {
+.product .custom-select {
+  position: relative;
+}
+.product .custom-select select {
+  display: none;
+}
+.product .day-selection {
+  display: block;
+  margin: auto;
+  font-size: calc(1.5rem + 1vw);
+  padding: 1rem 2rem;
+  background-color: var(--secondary-90);
+  border-color: var(--secondary-70);
+}
+
+.hero__content, .services__content, .image-with-text__content, .map, .newsletter, .footer__content, .cart, .collection, .list-collection__content, .product {
   padding: 6vh 4vw;
 }
 

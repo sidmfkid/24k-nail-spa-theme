@@ -46,7 +46,7 @@
         order: 0;
         width: 100%;
         font-size: font-size(regular);
-        color: var(--primary-80);
+        color: var(--primary-80) !important;
         display: block;
         text-align: center;
       }

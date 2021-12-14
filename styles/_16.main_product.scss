@@ -1,0 +1,19 @@
+.product {
+  @extend %sec-padding;
+
+  .custom-select {
+    position: relative;
+    select {
+      display: none;
+    }
+  }
+
+  .day-selection {
+    display: block;
+    margin: auto;
+    font-size: font-size(regular);
+    padding: 1rem 2rem;
+    background-color: var(--secondary-90);
+    border-color: var(--secondary-70);
+  }
+}

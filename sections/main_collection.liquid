@@ -8,7 +8,7 @@
         {% for product in collection.products %}
         {% form 'product', product, id: 'appointment-form', class: 'product_form' %}
         <div class="collection__content-product">
-            <h2 class="collection__content-product--title">{{ product.title }}</h2>
+            <a href="{{ product.url }}" class="collection__content-product--title">{{ product.title }}</a>
             <span class="collection__content-product--price">{{ product.price | money }}</span>
             <label class="switch" for="{{ product.title | handleize }}">
 

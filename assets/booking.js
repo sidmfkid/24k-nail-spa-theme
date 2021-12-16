@@ -84,6 +84,8 @@ const getDaysAvailable = (data) => {
   console.log(blocks);
 };
 
+//** Creating Day Selector **/
+
 const createDaySlots = (blocks) => {
   const selectWrapper = bookingForm.appendChild(document.createElement("div"));
   selectWrapper.classList.add("custom-select");
@@ -111,9 +113,17 @@ const createDaySlots = (blocks) => {
   });
 
   const allOptions = document.querySelectorAll("option");
-  allOptions[1].selected = true;
+  allOptions[1].setAttribute("selected", "true");
   allOptions.forEach((option) => {
     option.addEventListener("click", handleClick.bind(this, slots));
+  });
+
+  const selectedDate = document.querySelector("option[selected='true']");
+  console.log(selectedDate);
+  slots.forEach((slot) => {
+    if (slot.date === selectedDate.value) {
+      createTimeSlots(slot);
+    }
   });
 
   // selectInput.addEventListener("change", handleChange.bind(this, slots));

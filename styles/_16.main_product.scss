@@ -1,19 +1,109 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 .product {
   @extend %sec-padding;
-
+  #bookingForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  h2 {
+    text-align: center;
+  }
   .custom-select {
+    order: 1;
+    display: block;
     position: relative;
-    select {
-      display: none;
+    margin: 0 auto;
+    width: calc(25rem + 10vw);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-indent: 1px;
+    text-overflow: "";
+    cursor: pointer;
+    &:hover::before {
+      color: rgba(255, 255, 255, 0.6);
+      background-color: var(--primary-40);
+    }
+    i {
+      position: absolute;
+      right: 1rem;
+      top: 30%;
+
+      font-size: font-size(small);
+      color: var(--secondary-90);
+    }
+    .day-selection {
+      background-color: var(--primary-70);
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      font-size: font-size(small);
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+      -webkit-appearance: none;
+      appearance: none;
+      outline: none;
+    }
+  }
+  .time-slots {
+    order: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    span {
+      color: var(--primary-98);
+    }
+    .slot {
+      display: block;
+      position: relative;
+      font-size: font-size(small);
+      padding: 0.5rem 1rem;
+      margin: 1rem 1rem;
+      width: 35%;
+
+      text-align: center;
+      input {
+        appearance: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: var(--primary-60);
+        border: 2px solid var(--primary-80);
+        border-radius: 5rem;
+        transition: all 0.3s linear;
+        &:checked {
+          background: var(--secondary-80);
+        }
+        &:checked::after {
+          color: var(--primary-40);
+        }
+        &::after {
+          display: block;
+          content: attr(data-text);
+          font-size: font-size(small);
+          text-align: center;
+          width: 100%;
+          height: 100%;
+          padding: 0.5rem 1rem;
+          color: var(--primary-98);
+        }
+      }
     }
   }
 
-  .day-selection {
-    display: block;
-    margin: auto;
-    font-size: font-size(regular);
-    padding: 1rem 2rem;
-    background-color: var(--secondary-90);
-    border-color: var(--secondary-70);
-  }
+  //   .day-selection {
+  //     display: block;
+  //     margin: auto;
+  //     font-size: font-size(regular);
+  //     padding: 1rem 2rem;
+  //     background-color: var(--secondary-90);
+  //     border-color: var(--secondary-70);
+  //   }
 }

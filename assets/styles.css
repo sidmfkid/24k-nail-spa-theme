@@ -1,3 +1,4 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 *,
 *::before,
 *::after {
@@ -1141,19 +1142,99 @@ input:checked + .slider:before {
   z-index: -1;
 }
 
+.product #bookingForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.product h2 {
+  text-align: center;
+}
 .product .custom-select {
-  position: relative;
-}
-.product .custom-select select {
-  display: none;
-}
-.product .day-selection {
+  order: 1;
   display: block;
-  margin: auto;
-  font-size: calc(1.5rem + 1vw);
-  padding: 1rem 2rem;
-  background-color: var(--secondary-90);
-  border-color: var(--secondary-70);
+  position: relative;
+  margin: 0 auto;
+  width: calc(25rem + 10vw);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-indent: 1px;
+  text-overflow: "";
+  cursor: pointer;
+}
+.product .custom-select:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: var(--primary-40);
+}
+.product .custom-select i {
+  position: absolute;
+  right: 1rem;
+  top: 30%;
+  font-size: calc(1.2rem + 0.5vw);
+  color: var(--secondary-90);
+}
+.product .custom-select .day-selection {
+  background-color: var(--primary-70);
+  color: white;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  font-size: calc(1.2rem + 0.5vw);
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+.product .time-slots {
+  order: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.product .time-slots span {
+  color: var(--primary-98);
+}
+.product .time-slots .slot {
+  display: block;
+  position: relative;
+  font-size: calc(1.2rem + 0.5vw);
+  padding: 0.5rem 1rem;
+  margin: 1rem 1rem;
+  width: 35%;
+  text-align: center;
+}
+.product .time-slots .slot input {
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--primary-60);
+  border: 2px solid var(--primary-80);
+  border-radius: 5rem;
+  transition: all 0.3s linear;
+}
+.product .time-slots .slot input:checked {
+  background: var(--secondary-80);
+}
+.product .time-slots .slot input:checked::after {
+  color: var(--primary-40);
+}
+.product .time-slots .slot input::after {
+  display: block;
+  content: attr(data-text);
+  font-size: calc(1.2rem + 0.5vw);
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 1rem;
+  color: var(--primary-98);
 }
 
 .hero__content, .services__content, .image-with-text__content, .map, .newsletter, .footer__content, .cart, .collection, .list-collection__content, .product {

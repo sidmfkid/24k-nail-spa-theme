@@ -4,11 +4,36 @@
 
 
     <h2>Select A Date For Your Appointment Then Choose A Slot</h2>
-    <form id="bookingForm" action="https://api.bookthatapp.com/v1/bookings">
+    <form method="post" id="bookingForm" action="/cart/add">
 
         <div class="time-slots">
 
         </div>
+
+        <div class="customer-info">
+
+            <div class="customer-info__input">
+                <label for="booking-name">Full Name</label>
+                <input placeholder="Last Name Here" type="text" name="properties[booking-name]" id="booking-name"
+                    required>
+            </div>
+            <div class="customer-info__input">
+                <label for="phone">Your Phone Number</label>
+                <input placeholder="Phone Number Here" type="text" name="properties[phone]" id="phone" required>
+            </div>
+            <div class="customer-info__input">
+                <label for="email">Your Email Address</label>
+                <input placeholder="Email Here" type="email" name="properties[email]" id="email" required>
+            </div>
+            <!-- <div class="customer-info__input">
+                <label for="zip">Your Zip Code</label>
+                <input type="hidden" name="fields[name]" value="zip">
+                <input placeholder="Zip Code Here" type="zip" name="fields[value]" id="zip" required>
+            </div> -->
+        </div>
+        <input type="hidden" name="items[quantity]" value="1">
+        <input type="hidden" name="items[id]" value="{{product.selected_or_first_available_variant.id}}">
+        <button class="btn btn-primary submit" type="submit">Create Booking</button>
 
     </form>
 

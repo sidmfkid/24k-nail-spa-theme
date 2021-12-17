@@ -17,26 +17,23 @@ console.log("here should be 404 due to no key", auth);
 console.log(btaApi);
 
 const product = document.getElementById("productBooking");
-console.log(product);
+
 const productID = product.dataset.productid;
 const variantID = product.dataset.variantid;
-console.log(productID);
 
 const bookingForm = document.getElementById("bookingForm");
+
+let btaProductID;
 
 btaApi
   .getProducts({ external_id: [productID] })
   .then((res) => {
     const productData = res.data;
-    console.log(productData);
+    btaProductID = productData.products[0].id;
+    // console.log(productData);
+    // console.log(btaProductID);
   })
   .catch((res) => console.log(res));
-
-const bookappointment = function (formData) {
-  btaApi.createBooking({
-    formData,
-  });
-};
 
 function getDay(date) {
   const weekDay = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(
@@ -59,7 +56,7 @@ const endDate = end;
 end.toISOString();
 console.log(`${today}`, `${startDate}`, `${endDate}`);
 
-btaApi.getLocations().then((res) => console.log(res.data));
+// btaApi.getLocations().then((res) => console.log(res.data));
 
 const timeslots = btaApi
   .getBlocks({
@@ -84,6 +81,16 @@ const getDaysAvailable = (data) => {
   console.log(blocks);
 };
 
+//***** Creating formData Object ******/
+let formData = {
+  items: [
+    {
+      external_id: variantID,
+      quantity: 1,
+    },
+  ],
+};
+
 //** Creating Day Selector **/
 
 const createDaySlots = (blocks) => {
@@ -106,7 +113,7 @@ const createDaySlots = (blocks) => {
     let blockDate = new Date(block.date);
     blockDate.setDate(block.date.slice(8, 10));
     const slotDate = blockDate.toDateString();
-    console.log(blockDate, block);
+    // console.log(blockDate, block);
 
     dayOptions.value = block.date;
     dayOptions.innerText = slotDate;
@@ -119,7 +126,7 @@ const createDaySlots = (blocks) => {
   });
 
   const selectedDate = document.querySelector("option[selected='true']");
-  console.log(selectedDate);
+  // console.log(selectedDate);
   slots.forEach((slot) => {
     if (slot.date === selectedDate.value) {
       createTimeSlots(slot);
@@ -162,10 +169,10 @@ function createTimeSlots(slot) {
     const timeRadios = timeLabels.appendChild(document.createElement("input"));
     timeRadios.setAttribute("form", "bookingForm");
     timeRadios.setAttribute("value", `${slot.start}`);
-    timeRadios.setAttribute("data-finishAt", `${slot.end}`);
-    timeRadios.setAttribute("name", "starts_at");
+    timeRadios.setAttribute("name", "properties[Start]");
+    timeRadios.setAttribute("data-finishAt", `${slot.finish}`);
 
-    console.log(timeRadios);
+    // console.log(timeRadios);
     const startTime = creatLabelText(slot.start);
     const finishTime = creatLabelText(slot.finish);
 
@@ -174,10 +181,12 @@ function createTimeSlots(slot) {
     timeRadios.setAttribute("data-text", `${inputText}`);
     timeText.textContent = inputText;
 
-    console.log(slot);
+    timeRadios.addEventListener("change", addSelected.bind(this));
+
+    // console.log(slot);
   });
 
-  console.log(slot);
+  // console.log(slot);
 }
 
 function creatLabelText(time) {
@@ -192,14 +201,69 @@ function creatLabelText(time) {
   }
 
   let bookingMinutes = bookingStart.getMinutes();
-  console.log(bookingMinutes);
   if (bookingMinutes === 0) {
     bookingMinutes = "00";
   }
 
   const bookingTime =
     `${bookingHour}` + ":" + `${bookingMinutes}` + " " + `${bookingTimeOfDay}`;
-  console.log(bookingHour, bookingTimeOfDay);
+  // console.log(bookingHour, bookingTimeOfDay);
 
   return bookingTime;
+}
+formData.properties = {};
+formData.fields = {};
+//** Adding :selected PsuedoClass to Radio Element  ***/
+
+function addSelected(e) {
+  // e.target.setAttribute("checked", "true");
+  let timeRadios = document.querySelector("input:checked");
+  let hiddenInput = document.querySelector("input[type='hidden']");
+
+  const startsAt = timeRadios.value;
+  const finishAt = timeRadios.dataset.finishat;
+  formData.properties.Start = startsAt;
+  formData.properties.Finish = finishAt;
+  hiddenInput.value = finishAt;
+  console.log(e.target.checked);
+  console.log(formData);
+}
+
+//** Save Form Inputs */
+
+const customerFormInputs = document.querySelectorAll(
+  ".customer-info__input input"
+);
+
+customerFormInputs.forEach((input) => {
+  input.addEventListener("input", addCustomerInfo.bind(this));
+});
+
+function addCustomerInfo(e) {
+  if (e.target.id === "booking-name") {
+    formData.properties.Name = e.target.value;
+  }
+  if (e.target.id === "email") {
+    formData.properties.Email = e.target.value;
+  }
+  if (e.target.id === "phone") {
+    formData.properties.phone = e.target.value;
+  }
+  console.log(e.target.value, e.target, formData);
+}
+
+//** Create Booking**/
+const submitFormBtn = document.querySelector(".submit");
+submitFormBtn.addEventListener("submit", submitForm.bind(this));
+console.log(submitFormBtn);
+// const bookappointment = function (data) {
+//   btaApi.createBooking({
+//     data,
+//   });
+// };
+
+function submitForm(e) {
+  console.log(e);
+  e.preventDefault();
+  console.log("hi");
 }

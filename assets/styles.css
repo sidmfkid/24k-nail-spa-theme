@@ -478,6 +478,7 @@ input:checked + .slider:before {
     transition: transform 0.5s ease-in-out;
   }
   .header .cart-icon {
+    height: 5rem;
     position: fixed;
     bottom: 0;
     top: 0rem;
@@ -1209,6 +1210,8 @@ input:checked + .slider:before {
   text-align: center;
 }
 .product .time-slots .slot input {
+  z-index: 2;
+  cursor: pointer;
   appearance: none;
   width: 100%;
   height: 100%;
@@ -1227,6 +1230,7 @@ input:checked + .slider:before {
   color: var(--primary-40);
 }
 .product .time-slots .slot input::after {
+  z-index: -1;
   display: block;
   content: attr(data-text);
   font-size: calc(1.2rem + 0.5vw);
@@ -1235,6 +1239,30 @@ input:checked + .slider:before {
   height: 100%;
   padding: 0.5rem 1rem;
   color: var(--primary-98);
+}
+.product .customer-info {
+  margin-top: 3rem;
+  order: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.product .customer-info__input {
+  width: 40%;
+  margin: 1rem 1rem;
+}
+.product .customer-info__input label {
+  display: block;
+  font-size: calc(1.2rem + 0.5vw);
+}
+.product .customer-info__input input {
+  width: 100%;
+  height: 4rem;
+}
+.product .submit {
+  order: 4;
+  margin-top: 3rem;
 }
 
 .hero__content, .services__content, .image-with-text__content, .map, .newsletter, .footer__content, .cart, .collection, .list-collection__content, .product {

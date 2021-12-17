@@ -85,11 +85,23 @@ const getDaysAvailable = (data) => {
 let formData = {
   items: [
     {
-      external_id: variantID,
+      id: productID,
       quantity: 1,
+      properties: [
+        {
+          Start: null,
+          Finish: null,
+          Name: null,
+          Email: null,
+          Phone: null,
+        },
+      ],
     },
   ],
 };
+
+const [items] = formData.items;
+const itemProps = items.properties;
 
 //** Creating Day Selector **/
 
@@ -211,8 +223,8 @@ function creatLabelText(time) {
 
   return bookingTime;
 }
-formData.properties = {};
-formData.fields = {};
+
+// formData.fields = {};
 //** Adding :selected PsuedoClass to Radio Element  ***/
 
 function addSelected(e) {
@@ -222,8 +234,8 @@ function addSelected(e) {
 
   const startsAt = timeRadios.value;
   const finishAt = timeRadios.dataset.finishat;
-  formData.properties.Start = startsAt;
-  formData.properties.Finish = finishAt;
+  itemProps.Start = startsAt;
+  itemProps.Finish = finishAt;
   hiddenInput.value = finishAt;
   console.log(e.target.checked);
   console.log(formData);
@@ -241,20 +253,20 @@ customerFormInputs.forEach((input) => {
 
 function addCustomerInfo(e) {
   if (e.target.id === "booking-name") {
-    formData.properties.Name = e.target.value;
+    itemProps.Name = e.target.value;
   }
   if (e.target.id === "email") {
-    formData.properties.Email = e.target.value;
+    itemProps.Email = e.target.value;
   }
   if (e.target.id === "phone") {
-    formData.properties.phone = e.target.value;
+    itemProps.Phone = e.target.value;
   }
   console.log(e.target.value, e.target, formData);
 }
 
 //** Create Booking**/
 const submitFormBtn = document.querySelector(".submit");
-submitFormBtn.addEventListener("submit", submitForm.bind(this));
+submitFormBtn.addEventListener("submit", submitForm);
 console.log(submitFormBtn);
 // const bookappointment = function (data) {
 //   btaApi.createBooking({
@@ -262,8 +274,15 @@ console.log(submitFormBtn);
 //   });
 // };
 
-function submitForm(e) {
-  console.log(e);
+async function submitForm(e) {
   e.preventDefault();
-  console.log("hi");
+  const req = await fetch("/cart/add.js", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+  const res = await req.data;
+  console.log(res);
 }

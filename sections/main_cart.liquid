@@ -8,6 +8,13 @@
                     {{ item.title }}
                 </h2>
                 <span class="line-item-price">{{ item.price | money }}</span>
+                {% unless line_item.properties == empty %}
+                <ul>
+                    {% for property in item.properties %}
+                    <li>{{ property.first }}: {{ property.last }}</li>
+                    {% endfor %}
+                </ul>
+                {% endunless %}
                 <a class="btn btn-primary" href="{{ item.url_to_remove }}">Remove</a>
             </div>
 

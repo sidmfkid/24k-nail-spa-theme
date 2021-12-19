@@ -129,23 +129,22 @@
       font-family: var(--font-heading-family);
       font-style: var(--font-heading-style);
 
-      .slot {
+      label {
         display: block;
         font-size: font-size(small);
         font-family: var(--font-heading-family);
         font-style: var(--font-heading-style);
-
-        input {
-          width: 100%;
-          height: 4rem;
-          padding-left: 1rem;
-          border: 2px solid var(--primary-40);
-          background: var(--primary-98);
-          color: var(--secondary-10);
-          border-radius: 3rem;
-          &:focus {
-            outline: 3px solid var(--primary-80);
-          }
+      }
+      input {
+        width: 100%;
+        height: 4rem;
+        padding-left: 1rem;
+        border: 2px solid var(--primary-40);
+        background: var(--primary-98);
+        color: var(--secondary-10);
+        border-radius: 3rem;
+        &:focus {
+          outline: 3px solid var(--primary-80);
         }
       }
     }

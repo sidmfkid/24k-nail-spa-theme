@@ -1412,13 +1412,13 @@ input:checked + .slider:before {
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
 }
-.product .customer-info__input .slot {
+.product .customer-info__input label {
   display: block;
   font-size: calc(1.2rem + 0.5vw);
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
 }
-.product .customer-info__input .slot input {
+.product .customer-info__input input {
   width: 100%;
   height: 4rem;
   padding-left: 1rem;
@@ -1427,7 +1427,7 @@ input:checked + .slider:before {
   color: var(--secondary-10);
   border-radius: 3rem;
 }
-.product .customer-info__input .slot input:focus {
+.product .customer-info__input input:focus {
   outline: 3px solid var(--primary-80);
 }
 .product .submit {

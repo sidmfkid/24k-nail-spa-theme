@@ -1276,45 +1276,11 @@ input:checked + .slider:before {
   display: block;
   position: relative;
   font-size: calc(1.2rem + 0.5vw);
-  padding: 0.5rem 0.5rem;
   margin: 1rem 0.5rem;
   width: 40%;
-  height: 6rem;
-  text-align: center;
-}
-.product .time-slots .slot input {
-  z-index: 2;
-  cursor: pointer;
-  appearance: none;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 6rem;
-  outline: none;
-  transition: all 0.3s linear;
-}
-.product .time-slots .slot input:checked {
-  background: var(--secondary-80);
-}
-.product .time-slots .slot input:checked::after {
-  color: var(--primary-40);
-}
-.product .time-slots .slot input::after:checked {
-  background: var(--primary-40);
-  color: var(--primary-90);
-}
-.product .time-slots .slot input::after {
-  z-index: -1;
-  display: block;
-  content: attr(data-text);
   font-size: calc(1.5rem + 1vw);
   text-align: center;
   line-height: 6rem;
-  width: 100%;
-  height: 100%;
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
   font-weight: var(--font-heading-weight);
@@ -1322,6 +1288,111 @@ input:checked + .slider:before {
   border: 2px solid var(--primary-80);
   color: var(--primary-98);
   border-radius: 6rem;
+  transition: all 0.3s linear;
+  text-align: center;
+}
+.product .time-slots input {
+  cursor: pointer;
+  border-radius: 6rem;
+  transition: all 0.3s linear;
+}
+.product .time-slots input#time-slot-0 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-0:checked ~ .time-slot-0 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-1 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-1:checked ~ .time-slot-1 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-2 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-2:checked ~ .time-slot-2 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-3 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-3:checked ~ .time-slot-3 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-4 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-4:checked ~ .time-slot-4 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-5 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-5:checked ~ .time-slot-5 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-6 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-6:checked ~ .time-slot-6 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-7 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-7:checked ~ .time-slot-7 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-8 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-8:checked ~ .time-slot-8 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-9 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-9:checked ~ .time-slot-9 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-10 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-10:checked ~ .time-slot-10 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-11 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-11:checked ~ .time-slot-11 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-12 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-12:checked ~ .time-slot-12 {
+  background: var(--primary-90);
+  color: var(--primary-40);
+}
+.product .time-slots input#time-slot-13 {
+  visibility: hidden;
+}
+.product .time-slots input#time-slot-13:checked ~ .time-slot-13 {
+  background: var(--primary-90);
+  color: var(--primary-40);
 }
 .product .customer-info {
   margin-top: 3rem;

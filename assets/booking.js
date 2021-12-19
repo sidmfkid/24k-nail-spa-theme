@@ -172,14 +172,20 @@ function createTimeSlots(slot) {
 
   const timeSlots = slot.timeslots;
   timeSlots.forEach((slot, i) => {
+    // const timeText = timeLabels.appendChild(document.createElement("span"));
+    // timeLabels.setAttribute("for", "slot-" + `${i}`);
+    const timeRadios = timeContainer.appendChild(
+      document.createElement("input")
+    );
     const timeLabels = timeContainer.appendChild(
       document.createElement("label")
     );
-    const timeText = timeLabels.appendChild(document.createElement("span"));
-    // timeLabels.setAttribute("for", "slot-" + `${i}`);
     timeLabels.classList.add("slot");
-    const timeRadios = timeLabels.appendChild(document.createElement("input"));
+
     timeRadios.setAttribute("form", "bookingForm");
+    timeRadios.setAttribute("id", `time-slot-${i}`);
+    timeLabels.setAttribute("for", `time-slot-${i}`);
+    timeLabels.setAttribute("class", `slot time-slot-${i}`);
     timeRadios.setAttribute("value", `${slot.start}`);
     timeRadios.setAttribute("name", "properties[Start]");
     timeRadios.setAttribute("data-finishAt", `${slot.finish}`);
@@ -191,7 +197,8 @@ function createTimeSlots(slot) {
     timeRadios.setAttribute("type", "radio");
     const inputText = "From " + `${startTime}` + " to " + `${finishTime}`;
     timeRadios.setAttribute("data-text", `${inputText}`);
-    timeText.textContent = inputText;
+    timeLabels.setAttribute("data-text", `${inputText}`);
+    timeLabels.textContent = inputText;
 
     timeRadios.addEventListener("change", addSelected.bind(this));
 

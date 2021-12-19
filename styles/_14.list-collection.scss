@@ -8,7 +8,7 @@
 
     @extend %sec-padding;
     &-title {
-      font-size: font-size(medium);
+      @extend %sec-heading;
       text-align: center;
     }
     &-collections {
@@ -23,7 +23,6 @@
         margin-top: 2rem;
         padding: 4rem 0;
         font-size: font-size(regular);
-        color: var(--secondary-95);
       }
     }
   }

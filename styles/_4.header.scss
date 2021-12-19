@@ -7,7 +7,9 @@
   justify-content: center;
   flex-wrap: wrap;
   z-index: 10;
-
+  background-color: white;
+  padding-bottom: 2rem;
+  border-radius: 0 0 3rem 3rem;
   .overlay {
     display: none;
     position: fixed;
@@ -25,13 +27,13 @@
     }
   }
   &__logo {
-    flex-basis: 100%;
+    // flex-basis: 100%;
     height: auto;
     img {
       display: block;
       margin: 2rem auto 0 auto;
-      height: 15rem;
-      width: auto;
+      height: auto;
+      width: 11.5rem;
     }
   }
 
@@ -53,7 +55,7 @@
         margin: 0 calc(2rem + 2vw);
         font-size: font-size(small);
         // font-weight: font-weight(light);
-        color: var(--primary-50);
+        color: var(--primary-10);
       }
       .nav-link-active,
       .nav-link-active:link,
@@ -61,34 +63,41 @@
         margin: 0 calc(2rem + 2vw);
         font-size: font-size(small);
         // font-weight: font-weight(light);
-        color: var(--secondary-50);
+        color: var(--primary-50);
       }
     }
   }
   .cart-icon {
     position: absolute;
-    bottom: 1rem;
-    right: 1rem;
+    bottom: 1.5rem;
+    right: 3rem;
     display: block;
     margin-left: auto;
     width: 5rem;
+    border-radius: 1rem;
     height: auto;
-    background-color: transparent;
+    background-color: var(--primary-99);
     border: none;
     cursor: pointer;
+    img {
+      display: block;
+      margin: 0.4rem auto;
+      width: 4rem;
+      height: 4rem;
+    }
     &-num {
       display: block;
-      position: relative;
-      top: 2rem;
-      left: 2.4rem;
-      background-color: var(--secondary-70);
-      width: 3rem;
+      position: absolute;
+      top: 0.4rem;
+      left: 2.6rem;
+      background-color: var(--primary-30);
+      width: 2rem;
       text-align: center;
       border-radius: 10rem;
-      line-height: 3rem;
-      font-size: font-size(small);
+      line-height: 2rem;
+      font-size: 1.5rem;
       font-weight: font-weight(bold);
-      color: var(--primary-50);
+      color: var(--primary-99);
     }
   }
   .hamburger-button {
@@ -99,7 +108,7 @@
     width: 5rem;
     height: 5rem;
     padding: 1rem 1rem;
-    background-color: var(--primary-80);
+    background-color: var(--primary-10);
     border-radius: 1rem;
     z-index: 1;
     cursor: pointer;
@@ -112,8 +121,8 @@
       left: 0;
       opacity: 1;
       width: 100%;
-      height: 0.4rem;
-      background-color: var(--primary-50);
+      height: 0.2rem;
+      background-color: var(--primary-30);
       transition: all 0.5s ease-in-out;
     }
     .lines::after {
@@ -195,16 +204,21 @@
       }
     }
     .cart-icon {
+      width: 5rem;
       height: 5rem;
       position: fixed;
       bottom: 0;
-      top: 0rem;
+      top: 2rem;
       right: 0.5rem;
+      border: 2px solid var(--primary-30);
+      border-radius: 1rem;
     }
     .hamburger-button {
       position: fixed;
       top: 9rem;
       display: block;
+      background-color: var(--primary-99);
+      border: 2px solid var(--primary-30);
     }
   }
 }

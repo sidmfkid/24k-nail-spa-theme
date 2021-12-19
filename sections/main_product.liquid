@@ -3,19 +3,21 @@
 
 
 
-    <h2>Select A Date For Your Appointment Then Choose A Slot</h2>
+    <h2>Step 1: Select A Date For Your Appointment</h2>
     {% form 'product', product, id: 'bookingForm'%}
 
 
     <div class="time-slots">
+        <h3 class="time-slots-info">Step 2: Once You Have Choosen A Date Choose From The Available Times Below</h3>
 
     </div>
 
     <div class="customer-info">
-
+        <h3 class="customer-info-info">Step 3: After You Have Completed Steps 1 & 2 Fill Out The Form Below And Click
+            Create Booking</h3>
         <div class="customer-info__input">
             <label for="booking-name">Full Name</label>
-            <input placeholder="Last Name Here" type="text" name="properties[booking-name]" id="booking-name" required>
+            <input placeholder="Full Name Here" type="text" name="properties[booking-name]" id="booking-name" required>
         </div>
         <div class="customer-info__input">
             <label for="phone">Your Phone Number</label>
@@ -33,7 +35,7 @@
     </div>
     <input type="hidden" name="quantity" value="1">
     <input type="hidden" name="id" value="{{product.selected_or_first_available_variant.id}}">
-    <button class="btn btn-primary submit">Create Booking</button>
+    <button class="btn btn-primary-outline submit">Create Booking</button>
 
 
     {% endform %}

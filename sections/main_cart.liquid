@@ -11,11 +11,22 @@
                 {% unless line_item.properties == empty %}
                 <ul>
                     {% for property in item.properties %}
-                    <li>{{ property.first }}: {{ property.last }}</li>
+                    {% if property.first == 'Start' %}
+                    <li>{{ property.first | replace: 'Start', 'Appointment Date & Time'}}: {{ property.last | time_tag |
+                        remove: '-0500'}}</li>
+                    {% else %}
+                    <li>{{ property.first | replace: 'booking-name', 'Client Name' | replace: 'phone', 'Phone
+                        Number' | replace: 'email', 'Email'}}: {{ property.last }}</li>
+                    {% endif %}
+
                     {% endfor %}
                 </ul>
                 {% endunless %}
-                <a class="btn btn-primary" href="{{ item.url_to_remove }}">Remove</a>
+                <p class="line-item-review">
+                    Please check that all information above is correct before proceeding to checkout. We don't want you
+                    to miss out on reminders for your appointment!
+                </p>
+                <a class="btn btn-primary-outline" href="{{ item.url_to_remove }}">Remove</a>
             </div>
 
             {% endfor %}
@@ -24,10 +35,6 @@
                     Cart Total: <strong>{{ cart.total_price | money }}</strong>
                 </h3>
             </div>
-
-            {% render 'cart-booking-form'%}
-
-
             <input class="btn btn-primary" type="submit" name="checkout" value="Checkout">
         </form>
     </div>

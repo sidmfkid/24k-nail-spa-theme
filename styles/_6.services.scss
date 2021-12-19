@@ -15,13 +15,13 @@
     flex-wrap: wrap;
     @extend %sec-padding;
     &-title {
+      @extend %sec-heading;
       display: block;
-      width: 100%;
       text-align: center;
-      font-size: font-size(medium);
-      color: var(--primary-40);
     }
     &-options {
+      position: relative;
+      z-index: 1;
       width: calc(90rem + 10vw);
 
       button {
@@ -30,8 +30,8 @@
         height: calc(8rem + 1vw);
       }
       &-btn.btn.btn-primary {
-        background-color: var(--primary-90-m);
-        color: var(--secondary-98);
+        background-color: var(--primary-80);
+        color: var(--primary-98);
       }
     }
   }
@@ -44,6 +44,7 @@
       height: auto;
       animation: 5s levitate cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite
         forwards;
+      z-index: -1;
     }
     &-2 {
       position: absolute;

@@ -53,6 +53,7 @@
 @import "14.list-collection";
 @import "15.book-appointment";
 @import "16.main_product";
+@import "17.gallery";
 
 // @import "4.product";
 // @import "5.cart-drawer";
@@ -76,10 +77,13 @@
 //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Section Headings h2 Styles  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
 %sec-heading {
-  font-size: var(--large);
+  font-size: font-size(medium);
   font-weight: font-weight(semibold);
+  padding: 3rem 0rem;
+  width: 100%;
+
   //   letter-spacing: 0.2rem;
-  color: var(--secondary-20);
+  color: var(--primary-30);
 }
 
 //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Section Paragraph p Styles  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-

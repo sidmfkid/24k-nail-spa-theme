@@ -1,36 +1,21 @@
 <div class="collection">
     <h1>{{ collection.title }}</h1>
-    <p>Select the services you want and click the "Add To Cart" button at the bottom of the page to add them to your
-        cart. Once you've added all your services you'll be able to set
-        up your appointment time and date as you checkout. </p>
+    <p></p>
     <div class="collection__content">
 
         {% for product in collection.products %}
-        {% form 'product', product, id: 'appointment-form', class: 'product_form' %}
         <div class="collection__content-product">
-            <a href="{{ product.url }}" class="collection__content-product--title">{{ product.title }}</a>
-            <span class="collection__content-product--price">{{ product.price | money }}</span>
-            <label class="switch" for="{{ product.title | handleize }}">
-
-                <input class="product_input" id="{{ product.title | handleize }}" name="id" form="appointment-form"
-                    type="checkbox" value="{{ product.first_available_variant.id }}">
-
-                <span class="slider round"></span>
-            </label>
-            <div class="box">
-                <div class="quantity">
-                    <span class="quantity-add quantity-button"></span>
-                    <input name="quantity" type="number" step="1" min="1" value="1">
-                    <span class="quantity-remove quantity-button"></span>
-                </div>
-            </div>
+            <a href="{{ product.url }}" class="collection__content-product-btn">
+                <h2 class="collection__content-product--title">{{ product.title }}</h2>
+                <span class="collection__content-product--price">Book Your Appointment {{ product.price | money
+                    }}</span>
+            </a>
         </div>
-        {% endform %}
         {% endfor %}
-        {% render 'booking-form'%}
-        <input form="appointment-form" class="btn btn-primary" type="submit" value="Add to cart">
-        <a href="/collections/pedicures" class="btn btn-secondary">Go To Pedicures</a>
-        <a href="/collections/additional-services" class="btn btn-secondary">Go To Additional Services</a>
+
+        <!-- <input form="appointment-form" class="btn btn-primary" type="submit" value="Add to cart"> -->
+        <!-- <a href="/collections/pedicures" class="btn btn-secondary">Go To Pedicures</a>
+        <a href="/collections/additional-services" class="btn btn-secondary">Go To Additional Services</a> -->
     </div>
 </div>
 

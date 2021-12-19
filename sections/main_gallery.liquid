@@ -1,0 +1,76 @@
+<section class="gallery">
+    <h2 class="gallery__title">Choose from over 90 dipping powder colors</h2>
+    <div class="gallery__content">
+        {% for block in section.blocks %}
+        {% case block.type %}
+        {% when 'gallery_image' %}
+        <div class="gallery__content-image-container" {{ block.shopify_attributes }}>
+            {% if block.settings.image == blank %}
+            {{ 'collection-1' | placeholder_svg_tag: 'place_holder' }}
+            {% else %}
+            {{ block.settings.image | image_url: width: 1000 | image_tag }}
+            {% endif %}
+        </div>
+        {% endcase %}
+        {% endfor %}
+    </div>
+</section>
+
+{% schema %}
+{
+"name": "main_gallery",
+"settings": [
+],
+"blocks": [
+{
+"name": "Gallery Image",
+"type": "gallery_image",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Gallery Image"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Gallery Image",
+"settings": {},
+"blocks": [
+{
+"type": "gallery_image"
+},
+{
+"type": "gallery_image"
+},
+{
+"type": "gallery_image"
+},
+{
+"type": "gallery_image"
+},
+{
+"type": "gallery_image"
+},
+{
+"type": "gallery_image"
+},
+{
+"type": "gallery_image"
+},
+{
+"type": "gallery_image"
+},
+{
+"type": "gallery_image"
+},
+{
+"type": "gallery_image"
+}
+]
+}
+]
+}
+{% endschema %}

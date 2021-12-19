@@ -31,19 +31,36 @@ button:active {
   padding: 1rem 4rem;
   text-align: center;
   font-size: font-size(small);
-  font-weight: font-weight(semibold);
+  font-weight: font-weight(bold);
   border: none;
   &.btn-primary {
     transform: scale(1);
     transition: all 0.3s ease-in-out;
-    background-color: var(--primary-80);
-    color: var(--secondary-90);
+    background-color: var(--primary-40);
+    color: var(--secondary-99);
 
     &:active,
     &:hover {
       transform: scale(1.05);
-      color: var(--secondary-80);
-      background-color: var(--primary-70);
+      color: var(--primary-40);
+      background-color: var(--primary-90);
+      border: 2px solid var(--primary-50);
+      border-radius: 1rem;
+    }
+  }
+  &.btn-primary-outline {
+    transform: scale(1);
+    transition: all 0.3s ease-in-out;
+    border: 2px solid var(--primary-50);
+    // background-color: var(--primary-80);
+    color: var(--primary-50);
+    letter-spacing: 2px;
+
+    &:active,
+    &:hover {
+      transform: scale(1.05);
+      color: var(--primary-99);
+      background-color: var(--primary-50);
       border-radius: 1rem;
     }
   }

@@ -19,7 +19,7 @@ endif
         <div class="list-collection__content-collections">
 
             {% for collection in collections %}
-            <a href="{{ collection.url }}" class="btn btn-primary collection">
+            <a href="{{ collection.url }}" class="btn btn-primary-outline collection">
                 {{ collection.title }}
             </a>
             {% endfor %}
@@ -44,23 +44,23 @@ endif
 },
 {
 "value": "alphabetical_reversed",
-"label": "Alphabetical"
+"label": "Alphabetical Reversed"
 },
 {
 "value": "date_reversed",
-"label": "Alphabetical"
+"label": "Date Reversed"
 },
 {
 "value": "date",
-"label": "Alphabetical"
+"label": "Date"
 },
 {
 "value": "products_high",
-"label": "Alphabetical"
+"label": "Highest Price"
 },
 {
 "value": "products_low",
-"label": "Alphabetical"
+"label": "Lowest Price"
 }
 ],
 "default": "date"

@@ -10,6 +10,18 @@
       "type": "main_services",
       "settings": {}
     },
+    "gallery": {
+      "type": "main_gallery",
+      "settings": {},
+      "blocks": {
+        "gallery_image": {
+          "type": "gallery_image",
+          "settings": {
+            "image": ""
+          }
+        }
+      }
+    },
     "image-with-text": {
       "type": "main_image-with-text",
       "settings": {}
@@ -26,6 +38,7 @@
   "order": [
     "hero",
     "services",
+    "gallery",
     "image-with-text",
     "map",
     "newsletter"

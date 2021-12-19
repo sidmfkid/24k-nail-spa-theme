@@ -9,6 +9,8 @@
     width: 100%;
   }
   h2 {
+    @extend %sec-heading;
+
     text-align: center;
   }
   .custom-select {
@@ -16,7 +18,7 @@
     display: block;
     position: relative;
     margin: 0 auto;
-    width: calc(25rem + 10vw);
+    width: calc(25rem + 15vw);
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -29,32 +31,44 @@
     }
     i {
       position: absolute;
-      right: 1rem;
-      top: 30%;
+      right: 1.4rem;
+      top: 1.5rem;
 
-      font-size: font-size(small);
-      color: var(--secondary-90);
+      font-size: 2.5rem;
+      color: var(--secondary-95);
     }
     .day-selection {
+      border-radius: 3rem;
+      cursor: pointer;
       background-color: var(--primary-70);
       color: white;
-      padding: 12px;
+      padding: 0.5rem 0.5rem;
       width: 100%;
       border: none;
-      font-size: font-size(small);
+      font-size: font-size(regular);
+      text-align: center;
       box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
       -webkit-appearance: none;
       appearance: none;
       outline: none;
+      font-family: var(--font-heading-family);
+      font-style: var(--font-heading-style);
+      font-weight: var(--font-heading-weight);
+      height: 6rem;
     }
   }
   .time-slots {
+    margin-top: 3rem;
     order: 2;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     flex-wrap: wrap;
+    &-info {
+      @extend %sec-heading;
+      text-align: center;
+    }
     span {
       color: var(--primary-98);
     }
@@ -62,9 +76,10 @@
       display: block;
       position: relative;
       font-size: font-size(small);
-      padding: 0.5rem 1rem;
-      margin: 1rem 1rem;
-      width: 35%;
+      padding: 0.5rem 0.5rem;
+      margin: 1rem 0.5rem;
+      width: 40%;
+      height: 6rem;
 
       text-align: center;
       input {
@@ -78,7 +93,7 @@
         right: 0;
         background: var(--primary-60);
         border: 2px solid var(--primary-80);
-        border-radius: 5rem;
+        border-radius: 6rem;
         transition: all 0.3s linear;
         &:checked {
           background: var(--secondary-80);
@@ -90,11 +105,15 @@
           z-index: -1;
           display: block;
           content: attr(data-text);
-          font-size: font-size(small);
+          font-size: font-size(regular);
           text-align: center;
+          line-height: 6rem;
           width: 100%;
           height: 100%;
-          padding: 0.5rem 1rem;
+          font-family: var(--font-heading-family);
+          font-style: var(--font-heading-style);
+          font-weight: var(--font-heading-weight);
+          // padding: 0.5rem 1rem;
           color: var(--primary-98);
         }
       }
@@ -107,16 +126,34 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
+    &-info {
+      @extend %sec-heading;
+      text-align: center;
+    }
     &__input {
       width: 40%;
       margin: 1rem 1rem;
+      font-family: var(--font-heading-family);
+      font-style: var(--font-heading-style);
+
       label {
         display: block;
         font-size: font-size(small);
+        font-family: var(--font-heading-family);
+        font-style: var(--font-heading-style);
       }
       input {
         width: 100%;
         height: 4rem;
+        padding-left: 1rem;
+        border: 2px solid var(--primary-40);
+        background: var(--primary-98);
+        color: var(--secondary-10);
+        border-radius: 3rem;
+        &:focus {
+          outline: 3px solid var(--primary-80);
+        }
       }
     }
   }
@@ -124,13 +161,16 @@
     order: 4;
     margin-top: 3rem;
   }
-
-  //   .day-selection {
-  //     display: block;
-  //     margin: auto;
-  //     font-size: font-size(regular);
-  //     padding: 1rem 2rem;
-  //     background-color: var(--secondary-90);
-  //     border-color: var(--secondary-70);
-  //   }
+  @include media-medium {
+    .time-slots {
+      .slot {
+        width: 100%;
+      }
+    }
+    .customer-info {
+      &__input {
+        width: 100%;
+      }
+    }
+  }
 }

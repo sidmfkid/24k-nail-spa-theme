@@ -1178,6 +1178,7 @@ input:checked + .slider:before {
   z-index: 1;
   width: 100%;
   min-height: 20rem;
+  overflow: hidden;
 }
 .list-collection__content {
   z-index: 2;

@@ -86,21 +86,25 @@
         z-index: 2;
         cursor: pointer;
         appearance: none;
-        // pointer-events: none;
+        pointer-events: none;
         width: 100%;
         height: 100%;
         position: absolute;
         top: 0;
         right: 0;
-        background: var(--primary-60);
-        border: 2px solid var(--primary-80);
         border-radius: 6rem;
+
         transition: all 0.3s linear;
         &:checked {
           background: var(--secondary-80);
         }
         &:checked::after {
           color: var(--primary-40);
+        }
+        &::after:checked {
+          background: var(--primary-40);
+
+          color: var(--primary-90);
         }
         &::after {
           z-index: -1;
@@ -114,8 +118,11 @@
           font-family: var(--font-heading-family);
           font-style: var(--font-heading-style);
           font-weight: var(--font-heading-weight);
+          background: var(--primary-60);
+          border: 2px solid var(--primary-80);
           // padding: 0.5rem 1rem;
           color: var(--primary-98);
+          border-radius: 6rem;
         }
       }
     }

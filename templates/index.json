@@ -55,6 +55,24 @@
           "settings": {
             "image": "shopify:\/\/shop_images\/24k-dipping-powder-22.jpg"
           }
+        },
+        "27f994af-c932-48bb-aea7-b7abbddf903c": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/24k-dipping-powder-23.jpg"
+          }
+        },
+        "e18ac069-5932-4027-b321-1b910410cad2": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/24k-dipping-powder-6.jpg"
+          }
+        },
+        "f699d7d8-9aac-4aff-ba80-58413977c803": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/24k-dipping-powder-14.jpg"
+          }
         }
       },
       "block_order": [
@@ -63,7 +81,10 @@
         "08f49fb0-50fb-482e-8d38-7f68160f940c",
         "31ab2800-ff4b-45cf-9651-d522655cf4a3",
         "1e4c9c7e-fdaf-480f-a37c-16790891706f",
-        "802b3ec3-7653-4f24-9923-4d5f08c13eb0"
+        "802b3ec3-7653-4f24-9923-4d5f08c13eb0",
+        "27f994af-c932-48bb-aea7-b7abbddf903c",
+        "e18ac069-5932-4027-b321-1b910410cad2",
+        "f699d7d8-9aac-4aff-ba80-58413977c803"
       ],
       "settings": {
       }

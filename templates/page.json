@@ -1,10 +1,10 @@
 {
   "sections": {
-    "main": {
-      "type": "main-page"
+    "Location": {
+      "type": "main_map"
     }
   },
   "order": [
-    "main"
+    "Location"
   ]
 }

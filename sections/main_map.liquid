@@ -1,13 +1,17 @@
 {% render 'no-overflow'%}
 
 
-<section class="map">
+
+
+<section class="map{% if page.title == 'Locations' %}-page{% endif %}">
     <h2 class="map__title">Location</h2>
     <div class="map__content">
         <div id="map" class="map__content-container"></div>
         <div class="map__content-info">
             <h3>Address</h3>
-            <p class="address">{{ shop.address.street }}, {{ shop.address.city }} {{ shop.address.province }}<br>Right
+            <address class="address">{{ shop.address.street }}, {{ shop.address.city }} {{ shop.address.province }}
+            </address>
+            <p>Right
                 Next
                 To Insomnia Cookie </p>
         </div>

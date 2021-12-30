@@ -1,0 +1,206 @@
+<section class="booking-form open">
+    <div class="booking-form__overlay">
+        <span id="closeBookingForm"></span>
+    </div>
+
+    <div class="booking-form__content">
+
+        <div class="booking-form__content-header">
+            <img loading="lazy" width="408" height="370" src="{{ '24k-logo.png' | asset_img_url: '500x' }}" alt="">
+            <i id="goBack" class="fa fa-chevron-left"></i>
+        </div>
+
+        <div class="booking-form__content-step">
+            <div class="booking-form__content-step-1">
+                <div class="booking-form__content-step-1-heading">
+                    <h2>Appointment Preference</h2>
+
+                </div>
+                <div id="singleAppointment" class="booking-form__content-step-1-option">
+                    <div class="booking-form__content-step-1-option__info">
+                        <span class="title">Individual Appointment</span>
+                        <small>Schedule Services For Yourself</small>
+                    </div>
+                    <i class="fa fa-chevron-right"></i>
+                </div>
+            </div>
+            <div class="booking-form__content-step-2">
+                <div class="booking-form__content-step-2-heading">
+                    <h2>Menu</h2>
+                </div>
+                {% assign collectionOptions = collections %}
+                {% for collection in collectionOptions %}
+                <div data-id="{{ collection.id }}" class="booking-form__content-step-2-option collection-option">
+                    <div class="booking-form__content-step-2-option__info">
+
+                        <span data-id="{{ collection.id }}" class="title">{{ collection.title }}</span>
+
+                    </div>
+                    <i data-id="{{ collection.id }}" class="fa fa-chevron-right"></i>
+                </div>
+                {% endfor %}
+            </div>
+            <div id="collectionProducts" data-id="" class="booking-form__content-step-3">
+                <div class="booking-form__content-step-3-heading">
+                    <i id="stepBack" class="fa fa-chevron-left"></i>
+                    <h2>Acrylic</h2>
+                </div>
+            </div>
+            <div id="formProduct" class="booking-form__content-step-4">
+                <div class="booking-form__content-step-4-heading">
+                    <i id="stepBack" class="fa fa-chevron-left"></i>
+                    <h2>Manicures</h2>
+                </div>
+                <div class="booking-form__content-step-4-option__info">
+                    <h3 class="product-title">Classic Manicure</h3>
+                    <p class="product-description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error
+                        excepturi, dolor sapiente id laboriosam nam repellat voluptate, quae corrupti quam cum quas
+                        eaque incidunt repudiandae. Veritatis sequi voluptatibus numquam consectetur.
+                        Sapiente veniam reiciendis dolore molestiae possimus. Non nobis provident, quae tenetur sit
+                        vero fuga architecto consectetur. Blanditiis praesentium explicabo libero eligendi, facere
+                        dolor mollitia delectus, aperiam natus assumenda, incidunt accusamus?</p>
+                </div>
+                <div class="product-btns">
+
+                    <button class="go-to-cart hide">View Cart</button>
+                    <button data-quantity="1" data-id="" data-title="" data-price="" class="product-atc">Add
+                        $55</button>
+                </div>
+            </div>
+            <div id="cartForm" class="booking-form__content-step-5">
+                <div class="booking-form__content-step-5-heading">
+                    <i id="stepBack" class="fa fa-chevron-left"></i>
+                    <h2>Your Cart</h2>
+                </div>
+                <div class="booking-form__content-step-5-items">
+                    <div class="item-wrapper">
+                        <div class="title">Classic Manicure</div>
+                        <div class="price">$35</div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="dateSelector" class="booking-form__content-step-6 selected">
+                <div class="booking-form__content-step-6-heading">
+                    <i id="stepBack" class="fa fa-chevron-left"></i>
+                    <h2>Select Appointment Time</h2>
+                    <i id="calendar" class="fa fa-calendar">
+                    </i>
+                    <form class="open" id="dateSelection" action="">
+                        <div class="calendar-container">
+                            <div class="calendar-container_content">
+                                <select name="month" id="month"></select>
+                                <div class="weekdays">
+                                    <div>Sun</div>
+                                    <div>Mon</div>
+                                    <div>Tue</div>
+                                    <div>Wed</div>
+                                    <div>Thu</div>
+                                    <div>Fri</div>
+                                    <div>Sat</div>
+                                </div>
+                                <div class="calendar-container_content-days" id="days">
+
+                                </div>
+                                <div class="calendar-container_content-select-days">
+                                    <h2>Selected Date: <span id="selectedDate">None Selected</span></h2>
+                                </div>
+                                <div class="calendar-container_content-time">
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="cart-btns hide">
+            <button class="add-more">Add More</button>
+            <button class="set-date">Next</button>
+        </div>
+    </div>
+    </div>
+</section>
+
+{%- liquid
+
+for collection in collections
+case collection.title
+when 'Acrylic'
+assign acrylicProducts = collection.products
+assign acrylicProductsID = collection.id
+when 'Additional Services'
+assign addtionalServices = collection.products
+assign addtionalServicesID = collection.id
+when 'Dip Powder'
+assign dipPowder = collection.products
+assign dipPowderID = collection.id
+when 'Manicure Add-ons'
+assign manicureAddOns = collection.products
+assign manicureAddOnsID = collection.id
+when 'Manicures'
+assign manicureProducts = collection.products
+assign manicureProductsID = collection.id
+when 'Pedicures'
+assign pedicureProducts = collection.products
+assign pedicureProductsID = collection.id
+endcase
+endfor
+
+-%}
+
+
+<script>
+
+    const jsonCollection = {{ collections | json }}
+
+    const acrylicProducts = {{ acrylicProducts | json }}
+    const addtionalServices = {{ addtionalServices | json }}
+    const dipPowder = {{ dipPowder | json }}
+    const manicureAddOns = {{ manicureAddOns | json }}
+    const manicureProducts = {{ manicureProducts | json }}
+    const pedicureProducts = {{ pedicureProducts | json }}
+    const acrylicProductsID = {{ acrylicProductsID }}
+    const addtionalServicesID = {{ addtionalServicesID }}
+    const dipPowderID = {{ dipPowderID }}
+    const manicureAddOnsID = {{ manicureAddOnsID }}
+    const manicureProductsID = {{ manicureProductsID }}
+    const pedicureProductsID = {{ pedicureProductsID }}
+
+    const collectionProducts = [
+        {
+            collection: "Acrylic",
+            id: acrylicProductsID,
+            products: acrylicProducts
+        },
+        {
+            collection: 'Additional Services',
+            id: addtionalServicesID,
+            products: addtionalServices
+        },
+        {
+            collection: "Dip Powder",
+            id: dipPowderID,
+            products: dipPowder
+        },
+        {
+            collection: "Manicure Add-ons",
+            id: manicureAddOnsID,
+            products: manicureAddOns
+        },
+        {
+            collection: "Manicures",
+            id: manicureProductsID,
+            products: manicureProducts
+        },
+        {
+            collection: "Pedicures",
+            id: pedicureProductsID,
+            products: pedicureProducts
+        }
+    ]
+    console.log(jsonCollection);
+
+</script>

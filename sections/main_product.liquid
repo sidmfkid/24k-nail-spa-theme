@@ -3,17 +3,42 @@
 
 
 
-    <h2>Step 1: Select A Date For Your Appointment</h2>
+    <h2>Step 1: Select Any Add-Ons For Your Appointment</h2>
+    <div class="extras">
+        {% for collection in collections %}
+        {% if collection.title == 'Manicure Add-ons' %}
+        {% assign addOns = collection %}
+        {% endif %}
+        {% endfor %}
+        <div class="extras-custom-select">
+            <i class="fa fa-chevron-down"></i>
+
+            <select class="extras-selection" data-productId="{{ product.selected_or_first_available_variant.id }}">
+                {% for product in addOns.products %}
+                <!-- {% form 'product', product, id: 'product-add-ons' %} -->
+
+                <option id="add-on-{{ forloop.index }}" name="id"
+                    value="{{ product.selected_or_first_available_variant.id }}">{{ product.title }}</option>
+
+
+
+                <!-- {% endform %} -->
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <h2>Step 2: Select A Date For Your Appointment</h2>
+
     {% form 'product', product, id: 'bookingForm'%}
 
 
     <div class="time-slots">
-        <h3 class="time-slots-info">Step 2: Once You Have Choosen A Date Choose From The Available Times Below</h3>
+        <h3 class="time-slots-info">Step 3: Once You Have Choosen A Date Choose From The Available Times Below</h3>
 
     </div>
 
     <div class="customer-info">
-        <h3 class="customer-info-info">Step 3: After You Have Completed Steps 1 & 2 Fill Out The Form Below And Click
+        <h3 class="customer-info-info">Step 4: After You Have Completed Steps 1 & 2 Fill Out The Form Below And Click
             Create Booking</h3>
         <div class="customer-info__input">
             <label for="booking-name">Full Name</label>
@@ -33,6 +58,8 @@
                 <input placeholder="Zip Code Here" type="zip" name="fields[value]" id="zip" required>
             </div> -->
     </div>
+
+
     <input type="hidden" name="quantity" value="1">
     <input type="hidden" name="id" value="{{product.selected_or_first_available_variant.id}}">
     <button class="btn btn-primary-outline submit">Create Booking</button>

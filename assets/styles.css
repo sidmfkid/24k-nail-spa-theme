@@ -361,6 +361,7 @@ input:checked + .slider:before {
   margin: 0 calc(2rem + 2vw);
   font-size: calc(1.2rem + 0.5vw);
   color: var(--primary-10);
+  font-family: var(--font-heading-family);
 }
 .header .nav-container .navlink__container .nav-link-active,
 .header .nav-container .navlink__container .nav-link-active:link,
@@ -368,6 +369,36 @@ input:checked + .slider:before {
   margin: 0 calc(2rem + 2vw);
   font-size: calc(1.2rem + 0.5vw);
   color: var(--primary-50);
+  padding: 1rem 0;
+}
+.header .nav-container .navlink__container #bookAppointment {
+  position: relative;
+  padding: 1rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--primary-99);
+  background-color: var(--primary-80-m);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.header .nav-container .navlink__container #bookAppointment::after {
+  position: absolute;
+  display: block;
+  content: "";
+  top: 0;
+  left: -5rem;
+  width: 19%;
+  height: 120%;
+  transform: skewX(30deg);
+  background-color: rgba(255, 255, 255, 0.474);
+  transition: all 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.header .nav-container .navlink__container #bookAppointment:hover::after {
+  left: 12rem;
+}
+.header .nav-container .navlink__container #bookAppointment:hover {
+  transform: scale(1.06);
+  background-color: var(--primary-80);
 }
 .header .cart-icon {
   position: absolute;
@@ -1229,6 +1260,55 @@ input:checked + .slider:before {
 .product h2 {
   text-align: center;
 }
+.product .extras {
+  order: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.product .extras-custom-select {
+  order: 1;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  width: calc(25rem + 15vw);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-indent: 1px;
+  text-overflow: "";
+  cursor: pointer;
+}
+.product .extras-custom-select:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: var(--primary-40);
+}
+.product .extras-custom-select i {
+  position: absolute;
+  right: 1.4rem;
+  top: 1.5rem;
+  font-size: 2.5rem;
+  color: var(--secondary-95);
+}
+.product .extras-custom-select .extras-selection {
+  border-radius: 3rem;
+  cursor: pointer;
+  background-color: var(--primary-70);
+  color: white;
+  padding: 0.5rem 0.5rem;
+  width: 100%;
+  border: none;
+  font-size: calc(1.5rem + 1vw);
+  text-align: center;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: var(--font-heading-weight);
+  height: 6rem;
+}
 .product .custom-select {
   order: 1;
   display: block;
@@ -1509,7 +1589,708 @@ input:checked + .slider:before {
   }
 }
 
-.hero__content, .services__content, .image-with-text__content, .map, .map-page, .newsletter, .footer__content, .cart, .collection, .list-collection__content, .product {
+.booking-form {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 10;
+}
+.booking-form__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.444);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.booking-form__overlay span {
+  z-index: 2;
+  display: block;
+  width: 6rem;
+  height: 6rem;
+  margin-left: auto;
+  margin-right: 3rem;
+  margin-top: 3rem;
+  position: relative;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.booking-form__overlay span::before, .booking-form__overlay span::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 0.6rem;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+.booking-form__overlay span::after {
+  transform: rotate(45deg);
+}
+.booking-form__overlay span::before {
+  transform: rotate(-45deg);
+}
+.booking-form__content {
+  position: absolute;
+  top: 0;
+  left: 0%;
+  width: 50%;
+  height: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.booking-form__content-header {
+  position: relative;
+  width: 100%;
+  height: 15rem;
+  padding: 1.4rem 0rem;
+}
+.booking-form__content-header::after {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: url("https://cdn.shopify.com/s/files/1/0579/4758/6733/files/cherry-blossom-tree.jpg?v=1640633469");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: brightness(0.5);
+}
+.booking-form__content-header img {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: auto;
+  margin: auto;
+  display: block;
+}
+.booking-form__content-header i {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 2rem;
+  color: white;
+  z-index: 2;
+  cursor: pointer;
+}
+.booking-form__content-step {
+  position: relative;
+  width: 100%;
+}
+.booking-form__content-step-1 {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  transition: all 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+.booking-form__content-step-1.selected {
+  left: 0%;
+}
+.booking-form__content-step-1-heading {
+  height: 4.5rem;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px #cdcdcd solid;
+}
+.booking-form__content-step-1-heading h2 {
+  display: block;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.booking-form__content-step-1-option {
+  cursor: pointer;
+  height: 6.5rem;
+  width: 100%;
+  border-bottom: 1px #cdcdcd solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem 0.9rem 2rem;
+  transition: all 0.1s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+.booking-form__content-step-1-option:hover {
+  background-color: var(--primary-95);
+}
+.booking-form__content-step-1-option__info .title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary-60);
+}
+.booking-form__content-step-1-option__info small {
+  display: block;
+  font-size: 1.4rem;
+  color: #848484;
+  font-family: var(--body-font-family);
+  line-height: auto;
+}
+.booking-form__content-step-1-option i {
+  font-size: 1.5rem;
+  color: #848484;
+}
+.booking-form__content-step-2 {
+  transition: all 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+}
+.booking-form__content-step-2.selected {
+  left: 0%;
+}
+.booking-form__content-step-2-heading {
+  height: 4.5rem;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px #cdcdcd solid;
+}
+.booking-form__content-step-2-heading h2 {
+  display: block;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.booking-form__content-step-2-option {
+  cursor: pointer;
+  height: 6.5rem;
+  width: 100%;
+  border-bottom: 1px #cdcdcd solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem 0.9rem 2rem;
+  transition: all 0.1s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  position: relative;
+  background: transparent;
+  z-index: 3;
+}
+.booking-form__content-step-2-option:hover {
+  background-color: var(--primary-95);
+}
+.booking-form__content-step-2-option__info {
+  position: relative;
+  z-index: 0;
+}
+.booking-form__content-step-2-option__info .title {
+  position: relative;
+  font-size: 2rem;
+  font-weight: 400;
+  color: black;
+  z-index: -1;
+}
+.booking-form__content-step-2-option i {
+  position: relative;
+  z-index: 1;
+  font-size: 1.5rem;
+  color: #848484;
+}
+.booking-form__content-step-3 {
+  transition: all 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+}
+.booking-form__content-step-3.selected {
+  left: 0%;
+}
+.booking-form__content-step-3-heading {
+  height: 4.5rem;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px #cdcdcd solid;
+}
+.booking-form__content-step-3-heading i {
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: black;
+  display: inline-block;
+  width: 3rem;
+  height: 100%;
+  cursor: pointer;
+}
+.booking-form__content-step-3-heading h2 {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 600;
+  width: fit-content;
+}
+.booking-form__content-step-3-option {
+  cursor: pointer;
+  height: 6.5rem;
+  width: 100%;
+  border-bottom: 1px #cdcdcd solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem 0.9rem 2rem;
+  transition: all 0.1s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  position: relative;
+  background: transparent;
+  z-index: 3;
+}
+.booking-form__content-step-3-option:hover {
+  background-color: var(--primary-95);
+}
+.booking-form__content-step-3-option__info {
+  position: relative;
+  z-index: 0;
+}
+.booking-form__content-step-3-option__info .title {
+  position: relative;
+  font-size: 2rem;
+  font-weight: 400;
+  color: black;
+  z-index: -1;
+}
+.booking-form__content-step-3-option i {
+  position: relative;
+  z-index: 1;
+  font-size: 1.5rem;
+  color: #848484;
+}
+.booking-form__content-step-4 {
+  transition: all 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.booking-form__content-step-4.selected {
+  left: 0%;
+}
+.booking-form__content-step-4 .product-btns {
+  width: 100%;
+}
+.booking-form__content-step-4 .product-btns .product-atc {
+  display: block;
+  margin: 0 auto;
+  margin-top: 5rem;
+  background-color: #2f2f2f;
+  box-shadow: 0 2px 8px #2f2f2f;
+  color: white;
+  line-height: 5rem;
+  padding: 0 5rem;
+  border-radius: 10rem;
+  font-size: calc(1.2rem + 0.5vw);
+  font-weight: 400;
+  transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  cursor: pointer;
+}
+.booking-form__content-step-4 .product-btns .product-atc:hover, .booking-form__content-step-4 .product-btns .product-atc:active {
+  background-color: #141414;
+}
+.booking-form__content-step-4 .product-btns .go-to-cart {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #2f2f2f;
+  margin-top: 2rem;
+  color: #4c4c4c;
+  line-height: 3rem;
+  max-height: 5rem;
+  padding: 0 10rem;
+  border-radius: 10rem;
+  font-size: calc(1.2rem + 0.5vw);
+  font-weight: 400;
+  transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  cursor: pointer;
+}
+.booking-form__content-step-4 .product-btns .go-to-cart:hover, .booking-form__content-step-4 .product-btns .go-to-cart:active {
+  background-color: #141414;
+  color: white;
+}
+.booking-form__content-step-4-heading {
+  height: 4.5rem;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px #cdcdcd solid;
+  width: 100%;
+}
+.booking-form__content-step-4-heading i {
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: black;
+  display: inline-block;
+  width: 3rem;
+  height: 100%;
+  cursor: pointer;
+}
+.booking-form__content-step-4-heading h2 {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 600;
+  width: fit-content;
+}
+.booking-form__content-step-4-option__info {
+  position: relative;
+  z-index: 0;
+  padding: 4rem 2.5rem 0 2.5rem;
+  width: 100%;
+}
+.booking-form__content-step-4-option__info .product-title {
+  position: relative;
+  font-size: calc(1.5rem + 1vw);
+  font-weight: 600;
+  color: black;
+  z-index: -1;
+  width: 100%;
+}
+.booking-form__content-step-4-option__info .product-description {
+  font-size: calc(1.2rem + 0.5vw);
+  font-weight: 400;
+  margin-top: 2rem;
+}
+.booking-form__content-step-4-option i {
+  position: relative;
+  z-index: 1;
+  font-size: 1.5rem;
+  color: #848484;
+}
+.booking-form__content-step-5 {
+  transition: all 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+}
+.booking-form__content-step-5.selected {
+  left: 0%;
+}
+.booking-form__content-step-5-heading {
+  height: 4.5rem;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px #cdcdcd solid;
+  width: 100%;
+}
+.booking-form__content-step-5-heading i {
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: black;
+  display: inline-block;
+  width: 3rem;
+  height: 100%;
+  cursor: pointer;
+}
+.booking-form__content-step-5-heading h2 {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 600;
+  width: fit-content;
+}
+.booking-form__content-step-5-items {
+  position: relative;
+  z-index: 0;
+  padding: 2rem 2.5rem 0 2.5rem;
+  align-self: flex-start;
+  width: 100%;
+  height: 60vh;
+  overflow-y: scroll;
+}
+.booking-form__content-step-5-items .item-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.booking-form__content-step-5-items .item-wrapper .title {
+  position: relative;
+  font-size: calc(1.5rem + 1vw);
+  font-weight: 600;
+  color: black;
+  z-index: -1;
+  width: 100%;
+}
+.booking-form__content-step-5-items .item-wrapper .price {
+  font-size: calc(1.5rem + 1vw);
+  font-weight: 500;
+}
+.booking-form__content-step-6 {
+  transition: all 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+}
+.booking-form__content-step-6.selected {
+  left: 0%;
+}
+.booking-form__content-step-6-heading {
+  height: 4.5rem;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px #cdcdcd solid;
+  width: 100%;
+}
+.booking-form__content-step-6-heading #stepBack {
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: black;
+  display: inline-block;
+  width: 3rem;
+  height: 100%;
+  cursor: pointer;
+}
+.booking-form__content-step-6-heading #calendar {
+  font-size: 2.7rem;
+  position: relative;
+  color: black;
+  cursor: pointer;
+  width: 4rem;
+  z-index: 2;
+  line-height: 4rem;
+  display: block;
+  float: inline-end;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  border-radius: 10rem;
+}
+.booking-form__content-step-6-heading #calendar::after {
+  content: "";
+  display: block;
+  position: absolute;
+  margin: auto;
+  background-color: var(--primary-60);
+  z-index: -1;
+  top: -10%;
+  left: -10%;
+  right: 0;
+  width: 120%;
+  height: 120%;
+  transform: scale(0.2);
+  opacity: 0;
+  border-radius: 10rem;
+  transition: all 0.3s ease-in-out;
+}
+.booking-form__content-step-6-heading #calendar:hover, .booking-form__content-step-6-heading #calendar:active {
+  background-color: var(--primary-95);
+  width: 4rem;
+  line-height: 4rem;
+  color: var(--primary-99);
+}
+.booking-form__content-step-6-heading #calendar:hover::after, .booking-form__content-step-6-heading #calendar:active::after {
+  transform: scale(1.2);
+  opacity: 0.6;
+}
+.booking-form__content-step-6-heading h2 {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 600;
+  width: fit-content;
+}
+.booking-form__content-step-6-heading form {
+  position: absolute;
+  display: block;
+  width: auto;
+  height: auto;
+  top: 2rem;
+  right: 0rem;
+  transform-origin: top;
+  perspective-origin: top;
+  opacity: 1;
+  transform: scaleY(0);
+  transition: all 0.6s cubic-bezier(0.45, 0.285, 0.18, 0.43);
+}
+.booking-form__content-step-6-heading form::after {
+  content: "";
+  position: absolute;
+  top: -1.3rem;
+  right: 2rem;
+  width: 0rem;
+  height: 0rem;
+  border: 2rem solid transparent;
+  border-bottom: 2rem solid var(--secondary-90);
+  border-left: width;
+  border-radius: rem;
+}
+.booking-form__content-step-6-heading form .calendar-container {
+  width: 40rem;
+  height: min-content;
+  padding: 2rem;
+}
+.booking-form__content-step-6-heading form .calendar-container_content {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  border: 2px solid var(--primary-90);
+  padding: 1rem;
+  background: var(--secondary-90);
+  border-radius: 1rem;
+}
+.booking-form__content-step-6-heading form .calendar-container_content select {
+  grid-column: 1/5;
+  font-size: 2rem;
+  background: var(--primary-95);
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.booking-form__content-step-6-heading form .calendar-container_content .weekdays {
+  font-size: 2.5rem;
+  grid-column: 1/8;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  place-items: center;
+  font-family: var(--body-font-family);
+  font-size: calc(1.2rem + 0.5vw);
+  font-weight: 300;
+}
+.booking-form__content-step-6-heading form .calendar-container_content-days {
+  grid-column: 1/8;
+  grid-row: 3/9;
+  font-size: 2.3rem;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(auto-fit, 1fr);
+  background: var(--primary-95);
+  padding: 0.4rem;
+  border-radius: 1rem;
+  position: relative;
+  place-items: center;
+}
+.booking-form__content-step-6-heading form .calendar-container_content-days .day-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.booking-form__content-step-6-heading form .calendar-container_content-days .prev-day {
+  display: block;
+  font-size: 2rem;
+  width: 95%;
+  height: 95%;
+  text-align: end;
+  padding: 0.4rem;
+  border-radius: 1rem;
+  background: var(--secondary-90);
+}
+.booking-form__content-step-6-heading form .calendar-container_content-days .day {
+  display: block;
+  background: var(--secondary-70);
+  width: 95%;
+  height: 95%;
+  text-align: end;
+  padding: 0.4rem;
+  border-radius: 1rem;
+  font-size: 2rem;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.booking-form__content-step-6-heading form .calendar-container_content-days input[type=radio] {
+  visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.booking-form__content-step-6-heading form .calendar-container_content-days input[type=radio]:checked ~ .day {
+  position: relative;
+  color: blanchedalmond;
+  outline: 0px solid rgba(255, 138, 102, 0.66);
+  animation: grow 2s cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite both;
+  z-index: 2;
+}
+.booking-form__content-step-6-heading form .calendar-container_content-days .selected {
+  background: #950ea4;
+  color: blanchedalmond;
+  width: 95%;
+  height: 95%;
+  text-align: end;
+  padding: 0.4rem;
+  border-radius: 1rem;
+  display: block;
+  font-size: 2rem;
+}
+.booking-form__content-step-6-heading form .calendar-container_content-select-days {
+  grid-column: 1/8;
+  margin: 1rem auto;
+}
+.booking-form__content-step-6-heading form .calendar-container_content-select-days h2 {
+  font-size: 2rem;
+}
+.booking-form__content-step-6-heading form .calendar-container_content-select-days h2 span {
+  font-size: 2rem;
+}
+.booking-form__content-step-6-heading form.open {
+  transform: scaleY(1);
+  opacity: 1;
+}
+.booking-form__content .cart-btns {
+  position: absolute;
+  bottom: 0rem;
+  right: 0;
+  left: 0;
+  padding-top: 3rem;
+  box-shadow: 10rem 20px 50px var(--primary-90), -30rem 10px 70px var(--secondary-80);
+  border-radius: 20rem 20rem 0rem 0rem;
+  transition: all 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+.booking-form__content .cart-btns .hide {
+  bottom: -15rem;
+}
+.booking-form__content .cart-btns .set-date {
+  display: block;
+  margin: 2rem auto 2rem auto;
+  background-color: #2f2f2f;
+  color: white;
+  line-height: 4rem;
+  padding: 0 7rem;
+  border-radius: 10rem;
+  font-size: calc(1.2rem + 0.5vw);
+  font-weight: 400;
+  transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  cursor: pointer;
+}
+.booking-form__content .cart-btns .set-date:hover, .booking-form__content .cart-btns .set-date:active {
+  background-color: #141414;
+}
+.booking-form__content .cart-btns .add-more {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #2f2f2f;
+  color: #4c4c4c;
+  line-height: 3rem;
+  padding: 0 10rem;
+  border-radius: 10rem;
+  font-size: calc(1.2rem + 0.5vw);
+  font-weight: 400;
+  transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  cursor: pointer;
+}
+.booking-form__content .cart-btns .add-more:hover, .booking-form__content .cart-btns .add-more:active {
+  background-color: #141414;
+  color: white;
+}
+.booking-form.open {
+  left: 0;
+  transition: all 0.6s cubic-bezier(0.47, 0, 0.745, 0.715);
+}
+.booking-form.open .booking-form__overlay {
+  opacity: 1;
+  top: 0;
+  left: 0;
+}
+
+@keyframes grow {
+  0% {
+    outline: 0px solid, 0px solid rgba(255, 138, 102, 0.473);
+  }
+  50% {
+    outline: 6px solid, 8px solid rgba(255, 138, 102, 0.473);
+  }
+  100% {
+    outline: 0px solid, 0px solid rgba(255, 138, 102, 0.473);
+  }
+}
+.hero__content, .services__content, .image-with-text__content, .map, .map-page, .newsletter, .footer__content, .cart, .collection, .list-collection__content, .product, .product .extras {
   padding: 6vh 4vw;
 }
 

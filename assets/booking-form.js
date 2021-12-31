@@ -519,19 +519,34 @@ function renderDate(val) {
     "November",
     "December",
   ];
+  const years = ["2021", "2022", "2023", "2024", "2025", "2026"];
   const selectMonth = document.getElementById("month");
-  months.forEach((month) => {
+  months.forEach((month, i) => {
     const monthOptions = selectMonth.appendChild(
       document.createElement("option")
     );
     monthOptions.value = `${month}`;
     monthOptions.textContent = `${month}`;
-    if (!val) {
-      if (month === monthOptions.value) {
-        monthOptions.selected = true;
-      }
+    console.log(monthOptions.value, dt.getMonth());
+    if (i === dt.getMonth()) {
+      monthOptions.selected = true;
+    }
+    if (!val && month === monthOptions.value) {
+      monthOptions.selected = true;
     }
   });
+
+  const selectYear = document.getElementById("year");
+  years.forEach((year) => {
+    const yearOptions = selectYear.appendChild(
+      document.createElement("option")
+    );
+    yearOptions.value = year;
+    yearOptions.textContent = year;
+  });
+
+  const yearOptions = document.querySelectorAll("#year option");
+  selectYear.addEventListener("change", renderYear.bind(this, yearOptions));
   const monthDays = document.getElementById("days");
 
   for (let i = day; i > 0; i--) {
@@ -560,16 +575,31 @@ function renderDate(val) {
       dayEl.value = `${i}`;
     }
   }
-  const options = document.querySelectorAll("option");
-  selectMonth.addEventListener("change", pickMonth.bind(this, options));
+  const monthOptions = document.querySelectorAll("#month option");
+  selectMonth.addEventListener("change", pickMonth.bind(this, monthOptions));
   const radioDays = document.querySelectorAll('input[type="radio"]');
 
   radioDays.forEach((radio) => {
+    if (radio.value === new Date().getDate) {
+      console.log(radio.value);
+    }
     radio.addEventListener("change", updateDate.bind());
   });
 }
 
 renderDate();
+
+function renderYear(options, e) {
+  e.preventDefault();
+  options.forEach((option) => {
+    if (option.selected) {
+      const selectedYear = Number(option.value);
+      dt.setFullYear(selectedYear);
+      console.log(dt);
+      handleChange();
+    }
+  });
+}
 
 function pickMonth(options, e) {
   options.forEach((option, i = 1) => {
@@ -583,7 +613,7 @@ function pickMonth(options, e) {
   console.log(options, e);
 }
 
-function handleChange() {
+function handleChange(option) {
   let day = dt.getDay();
   let today = new Date();
   let endDate = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate();
@@ -648,19 +678,42 @@ function handleChange() {
 }
 
 function updateDate(e) {
-  const options = document.querySelectorAll("option");
+  const monthOptions = document.querySelectorAll("#month option");
+  const yearOptions = document.querySelectorAll("#year option");
   let string;
-  options.forEach((option) => {
+  let yearVal;
+
+  yearOptions.forEach((option) => {
     if (option.selected) {
-      string =
-        `${option.value}` + " " + `${e.target.value}` + ", " + dt.getFullYear();
+      yearVal = option.value;
     }
   });
+  if (!e) {
+    monthOptions.forEach((option, i) => {
+      if (option.selected) {
+        string =
+          `${option.value}` +
+          " " +
+          `${new Date().getDate()}` +
+          ", " +
+          `${yearVal}`;
+      }
+    });
+  } else {
+    monthOptions.forEach((option, i) => {
+      if (option.selected) {
+        string =
+          `${option.value}` + " " + `${e.target.value}` + ", " + `${yearVal}`;
+      }
+    });
+  }
 
   const selectedDate = document.querySelector(
     ".calendar-container_content-select-days h2 span"
   );
   selectedDate.textContent = "";
   selectedDate.textContent = string;
-  console.log(e, options);
+  // console.log(e, options);
 }
+
+updateDate();

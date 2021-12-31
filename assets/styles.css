@@ -2127,8 +2127,16 @@ input:checked + .slider:before {
   background: var(--secondary-90);
   border-radius: 1rem;
 }
-.booking-form__content-step-6-heading form .calendar-container_content select {
+.booking-form__content-step-6-heading form .calendar-container_content #month {
   grid-column: 1/5;
+  font-size: 2rem;
+  background: var(--primary-95);
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.booking-form__content-step-6-heading form .calendar-container_content #year {
+  grid-column: 6/8;
   font-size: 2rem;
   background: var(--primary-95);
   border: 2px solid transparent;
@@ -2194,7 +2202,7 @@ input:checked + .slider:before {
 .booking-form__content-step-6-heading form .calendar-container_content-days input[type=radio]:checked ~ .day {
   position: relative;
   color: blanchedalmond;
-  outline: 0px solid rgba(255, 138, 102, 0.66);
+  box-shadow: 0px 0px 0.5rem rgba(255, 138, 102, 0.66), 0px 0px 1.5rem rgba(255, 138, 102, 0.66);
   animation: grow 2s cubic-bezier(0.55, 0.085, 0.68, 0.53) infinite both;
   z-index: 2;
 }
@@ -2281,13 +2289,13 @@ input:checked + .slider:before {
 
 @keyframes grow {
   0% {
-    outline: 0px solid, 0px solid rgba(255, 138, 102, 0.473);
+    box-shadow: 0px 0px 0rem rgba(255, 138, 102, 0.66), 0px 0px 0rem rgba(255, 138, 102, 0.66);
   }
   50% {
-    outline: 6px solid, 8px solid rgba(255, 138, 102, 0.473);
+    box-shadow: 0px 0px 1.5rem rgba(255, 83, 31, 0.46), 0px 0px 2.5rem rgba(255, 228, 219, 0.66);
   }
   100% {
-    outline: 0px solid, 0px solid rgba(255, 138, 102, 0.473);
+    box-shadow: 0px 0px 0rem rgba(255, 138, 102, 0.66), 0px 0px 0rem rgba(255, 138, 102, 0.66);
   }
 }
 .hero__content, .services__content, .image-with-text__content, .map, .map-page, .newsletter, .footer__content, .cart, .collection, .list-collection__content, .product, .product .extras {

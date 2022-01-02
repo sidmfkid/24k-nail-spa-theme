@@ -2127,21 +2127,25 @@ input:checked + .slider:before {
   background: var(--secondary-90);
   border-radius: 1rem;
 }
+.booking-form__content-step-6-heading form .calendar-container_content #previousMonth {
+  grid-column: 1/2;
+  place-self: center;
+  font-size: 2.3rem;
+  cursor: pointer;
+}
 .booking-form__content-step-6-heading form .calendar-container_content #month {
-  grid-column: 1/5;
+  grid-column: 2/7;
   font-size: 2rem;
   background: var(--primary-95);
   border: 2px solid transparent;
   border-radius: 1rem;
   padding: 1rem;
 }
-.booking-form__content-step-6-heading form .calendar-container_content #year {
-  grid-column: 6/8;
-  font-size: 2rem;
-  background: var(--primary-95);
-  border: 2px solid transparent;
-  border-radius: 1rem;
-  padding: 1rem;
+.booking-form__content-step-6-heading form .calendar-container_content #nextMonth {
+  place-self: center;
+  grid-column: 7/8;
+  font-size: 2.3rem;
+  cursor: pointer;
 }
 .booking-form__content-step-6-heading form .calendar-container_content .weekdays {
   font-size: 2.5rem;

@@ -105,6 +105,11 @@ function toggleSelected(e) {
   ) {
     cartBtns.classList.add("hide");
   }
+  if (e.target.id === "goBack" && step2.classList.contains("selected")) {
+    step2.classList.remove("selected");
+    step1.classList.add("selected");
+    return;
+  }
 
   if (
     step5.classList.contains("selected") &&
@@ -493,11 +498,11 @@ function toggleCalendar(e) {
     calendarForm.classList.remove("open");
   }
 }
-//******** Calendar Widget Code *************/
+//********++++++------********* Calendar Widget Code ********++++++------*********/
 
 const dt = new Date();
 
-function renderDate(val) {
+function renderDate(e) {
   dt.setDate(1);
   console.log(dt);
   let day = dt.getDay();
@@ -519,35 +524,20 @@ function renderDate(val) {
     "November",
     "December",
   ];
-  const years = ["2021", "2022", "2023", "2024", "2025", "2026"];
+
   const selectMonth = document.getElementById("month");
-  months.forEach((month, i) => {
-    const monthOptions = selectMonth.appendChild(
-      document.createElement("option")
-    );
-    monthOptions.value = `${month}`;
-    monthOptions.textContent = `${month}`;
-    console.log(monthOptions.value, dt.getMonth());
-    if (i === dt.getMonth()) {
-      monthOptions.selected = true;
-    }
-    if (!val && month === monthOptions.value) {
-      monthOptions.selected = true;
-    }
-  });
+  selectMonth.textContent = months[dt.getMonth()];
 
-  const selectYear = document.getElementById("year");
-  years.forEach((year) => {
-    const yearOptions = selectYear.appendChild(
-      document.createElement("option")
-    );
-    yearOptions.value = year;
-    yearOptions.textContent = year;
-  });
-
-  const yearOptions = document.querySelectorAll("#year option");
-  selectYear.addEventListener("change", renderYear.bind(this, yearOptions));
   const monthDays = document.getElementById("days");
+  if (e) {
+    if (e.target.id === "previousMonth" || e.target.id === "nextMonth") {
+      const allDays = document.querySelectorAll(".day-wrapper, .prev-day");
+      allDays.forEach((day) => {
+        day.remove();
+      });
+    }
+    console.log("delete");
+  }
 
   for (let i = day; i > 0; i--) {
     const dayEl = monthDays.appendChild(document.createElement("div"));
@@ -575,44 +565,68 @@ function renderDate(val) {
       dayEl.value = `${i}`;
     }
   }
-  const monthOptions = document.querySelectorAll("#month option");
-  selectMonth.addEventListener("change", pickMonth.bind(this, monthOptions));
+
   const radioDays = document.querySelectorAll('input[type="radio"]');
 
   radioDays.forEach((radio) => {
-    if (radio.value === new Date().getDate) {
-      console.log(radio.value);
-    }
-    radio.addEventListener("change", updateDate.bind());
+    radio.addEventListener("change", updateDate.bind(this));
+
+    // radio.addEventListener("change", updateDate.bind());
   });
+}
+
+function updateDate(e) {
+  const currentMonth = document.getElementById("month");
+  const currentYear = dt.getFullYear();
+  const currentDay = e.target.value;
+  const selectDate = document.getElementById("selectedDate");
+  selectDate.textContent =
+    currentMonth.textContent + " " + currentDay + ", " + currentYear;
+
+  const variantID = localStorage.getItem("id");
+  const locationID = 35770;
+
+  const timeslots = btaApi
+    .getBlocks({
+      external_id: variantID,
+      location_ids: [locationID],
+      start: startDate,
+      finish: endDate,
+      interval: null,
+    })
+    .then((res) => {
+      const blocks = res.data;
+      getDaysAvailable(blocks);
+      console.log(blocks);
+    });
+
+  const getDaysAvailable = (data) => {
+    let blocks = [];
+    data.blocks.forEach((block) => {
+      blocks.push(block);
+    });
+    // createDaySlots(blocks);
+    console.log(blocks);
+  };
 }
 
 renderDate();
 
-function renderYear(options, e) {
-  e.preventDefault();
-  options.forEach((option) => {
-    if (option.selected) {
-      const selectedYear = Number(option.value);
-      dt.setFullYear(selectedYear);
-      console.log(dt);
-      handleChange();
-    }
-  });
+const nextDate = document.getElementById("nextMonth");
+const previousDate = document.getElementById("previousMonth");
+
+nextDate.addEventListener("click", moveDate.bind(this, "next"));
+previousDate.addEventListener("click", moveDate.bind(this, "prev"));
+function moveDate(params, e) {
+  console.log(params);
+  if (params === "prev") {
+    dt.setMonth(dt.getMonth() - 1);
+  } else if (params === "next") {
+    dt.setMonth(dt.getMonth() + 1);
+  }
+  renderDate(e);
 }
-
-function pickMonth(options, e) {
-  options.forEach((option, i = 1) => {
-    if (option.selected) {
-      dt.setMonth(i);
-      console.log(option, dt);
-      handleChange(option);
-    }
-  });
-
-  console.log(options, e);
-}
-
+/*
 function handleChange(option) {
   let day = dt.getDay();
   let today = new Date();
@@ -678,42 +692,15 @@ function handleChange(option) {
 }
 
 function updateDate(e) {
-  const monthOptions = document.querySelectorAll("#month option");
-  const yearOptions = document.querySelectorAll("#year option");
-  let string;
-  let yearVal;
-
-  yearOptions.forEach((option) => {
-    if (option.selected) {
-      yearVal = option.value;
-    }
-  });
-  if (!e) {
-    monthOptions.forEach((option, i) => {
-      if (option.selected) {
-        string =
-          `${option.value}` +
-          " " +
-          `${new Date().getDate()}` +
-          ", " +
-          `${yearVal}`;
-      }
-    });
-  } else {
-    monthOptions.forEach((option, i) => {
-      if (option.selected) {
-        string =
-          `${option.value}` + " " + `${e.target.value}` + ", " + `${yearVal}`;
-      }
-    });
-  }
+  const monthOptions = document.querySelector("#month");
 
   const selectedDate = document.querySelector(
     ".calendar-container_content-select-days h2 span"
   );
   selectedDate.textContent = "";
   selectedDate.textContent = string;
-  // console.log(e, options);
+  console.log(e, options);
 }
 
 updateDate();
+*/

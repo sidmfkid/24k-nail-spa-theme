@@ -1,20 +1,3 @@
-const btaSdk = BookThatApp.init(
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NTI5MzQsInNob3AiOiIyNGstbmFpbC1zcGEifQ.vLHdGJPbu4mi4X_xNu0QBpaVdu6d5ci53p9dy898K0E"
-);
-
-const auth = btaSdk.auth(
-  '{"key": "d74dde71f5faf29f0051d003249d9871", "password": "69187b40386656a51fb83ede57a43a66"}'
-);
-
-let btaApi = btaSdk.init(
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NTI5MzQsInNob3AiOiIyNGstbmFpbC1zcGEifQ.vLHdGJPbu4mi4X_xNu0QBpaVdu6d5ci53p9dy898K0E"
-);
-
-console.log("sdk methods here", btaSdk);
-
-console.log("here should be 404 due to no key", auth);
-
-console.log(btaApi);
 if (window.location.pathname.includes("product")) {
   const product = document.getElementById("productBooking");
 

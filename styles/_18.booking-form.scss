@@ -690,6 +690,21 @@
             }
           }
         }
+        &-date {
+          height: 5rem;
+          width: 100%;
+          border-bottom: 1px solid #cdcdcd;
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          i {
+            font-size: 1.4rem;
+            cursor: pointer;
+          }
+          .date-option {
+            width: 15rem;
+          }
+        }
       }
     }
     .cart-btns {

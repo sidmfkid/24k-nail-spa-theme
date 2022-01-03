@@ -2235,6 +2235,21 @@ input:checked + .slider:before {
   transform: scaleY(1);
   opacity: 1;
 }
+.booking-form__content-step-6-date {
+  height: 5rem;
+  width: 100%;
+  border-bottom: 1px solid #cdcdcd;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.booking-form__content-step-6-date i {
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+.booking-form__content-step-6-date .date-option {
+  width: 15rem;
+}
 .booking-form__content .cart-btns {
   position: absolute;
   bottom: 0rem;

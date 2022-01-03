@@ -70,6 +70,10 @@ const cartStepBack = document.querySelector(
   ".booking-form__content-step-5 #stepBack"
 );
 
+const appointmentStepBack = document.querySelector(
+  ".booking-form__content-step-6 #stepBack"
+);
+
 const goToCart = document.querySelector(".go-to-cart");
 const addMoreItems = document.querySelector(".add-more");
 goToCart.addEventListener("click", viewCart.bind(this));
@@ -78,6 +82,7 @@ addMoreItems.addEventListener("click", toggleSelected.bind(this));
 backToProducts.addEventListener("click", toggleSelected.bind(this));
 backToCollections.addEventListener("click", toggleSelected.bind(this));
 cartStepBack.addEventListener("click", toggleSelected.bind(this));
+appointmentStepBack.addEventListener("click", toggleSelected.bind(this));
 
 function viewCart(e) {
   e.preventDefault();
@@ -108,6 +113,16 @@ function toggleSelected(e) {
   if (e.target.id === "goBack" && step2.classList.contains("selected")) {
     step2.classList.remove("selected");
     step1.classList.add("selected");
+    return;
+  }
+  if (
+    (step6.classList.contains("selected") && e.target.id === "stepBack") ||
+    (step6.classList.contains("selected") && e.target.id === "goBack")
+  ) {
+    step6.classList.remove("selected");
+    step5.classList.add("selected");
+    cartBtns.classList.toggle("hide");
+    removeProducts();
     return;
   }
 
@@ -199,8 +214,10 @@ function toggleSelected(e) {
   if (
     (e.target.classList.contains("booking-form__content-step-3-option") &&
       step3.classList.contains("selected")) ||
-    e.target.classList.contains("booking-form__content-step-3-option__info") ||
-    e.target.classList.contains("title")
+    (e.target.classList.contains("booking-form__content-step-3-option__info") &&
+      step3.classList.contains("selected")) ||
+    (e.target.classList.contains("title") &&
+      step3.classList.contains("selected"))
   ) {
     step4.classList.add("selected");
     step3.classList.remove("selected");
@@ -358,6 +375,7 @@ async function renderCollectionInfo(targetID, el) {
     const itemDiv = itemWrapper.appendChild(document.createElement("div"));
     itemDiv.classList.add("booking-form__content-step-3-option__info");
     itemDiv.dataset.id = item.id;
+    itemDiv.dataset.variantId = item.variants[0].id;
     const itemIcon = itemWrapper.appendChild(document.createElement("i"));
     itemIcon.classList.add("fa");
     itemIcon.classList.add("fa-chevron-right");
@@ -399,6 +417,7 @@ function showProductInfo(item, e) {
   productTitle.textContent = item.title;
   productDescription.textContent = item.description;
   productATC.dataset.id = item.id;
+  productATC.dataset.variantId = item.variants[0].id;
   productATC.dataset.title = item.title;
   productATC.dataset.price = item.price;
   productATC.textContent = `Add $${item.price * 0.01}`;
@@ -418,6 +437,7 @@ function storeCartItem(e) {
     title: e.target.dataset.title,
     price: e.target.dataset.price,
     id: e.target.dataset.id,
+    id: e.target.dataset.variantId,
     quantity: 1,
   };
 
@@ -502,7 +522,7 @@ function toggleCalendar(e) {
 
 const dt = new Date();
 
-function renderDate(e) {
+function renderDate(e, selectedDate) {
   dt.setDate(1);
   console.log(dt);
   let day = dt.getDay();
@@ -526,10 +546,68 @@ function renderDate(e) {
   ];
 
   const selectMonth = document.getElementById("month");
+  const monthDayOptions = document.querySelectorAll(".monthDay");
+  const weekDayOptions = document.querySelectorAll(".weekDay");
+  const options = { weekday: "short" };
+
+  let monthNum;
+  let dayNum;
+  if (selectedDate) {
+    monthNum = dt.getMonth() + 1;
+    dayNum = dt.getDay() + 1;
+  } else {
+    monthNum = dt.getMonth() + 1;
+    dayNum = dt.getDay() + 1;
+  }
+
+  console.log(selectedDate);
+
+  monthDayOptions.forEach((option, i) => {
+    let newDay;
+    if (i === 0) {
+      newDay = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDay() - 1
+      );
+
+      const dayShort = new Intl.DateTimeFormat("en-US", options).format(newDay);
+      option.textContent = monthNum + "/" + `${dayNum - 1}`;
+      console.log(dayShort);
+      weekDayOptions[i].textContent = `${dayShort}`;
+    }
+    if (i === 1) {
+      const newDay = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDay()
+      );
+      const dayShort = new Intl.DateTimeFormat("en-US", options).format(newDay);
+
+      console.log(dayShort);
+
+      option.textContent = monthNum + "/" + `${dayNum}`;
+      weekDayOptions[i].textContent = `${dayShort}`;
+    }
+    if (i === 2) {
+      const newDay = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDay() + 1
+      );
+      const dayShort = new Intl.DateTimeFormat("en-US", options).format(newDay);
+
+      console.log(dayShort);
+      option.textContent = monthNum + "/" + `${dayNum + 1}`;
+      weekDayOptions[i].textContent = `${dayShort}`;
+    }
+  });
+
   selectMonth.textContent = months[dt.getMonth()];
 
   const monthDays = document.getElementById("days");
   if (e) {
+    console.log(e);
     if (e.target.id === "previousMonth" || e.target.id === "nextMonth") {
       const allDays = document.querySelectorAll(".day-wrapper, .prev-day");
       allDays.forEach((day) => {
@@ -539,54 +617,68 @@ function renderDate(e) {
     console.log("delete");
   }
 
-  for (let i = day; i > 0; i--) {
-    const dayEl = monthDays.appendChild(document.createElement("div"));
-    dayEl.classList.add(`prev-day`);
-    dayEl.textContent = `${prevDate - i + 1}`;
-  }
-
-  for (let i = 1; i <= endDate; i++) {
-    const daysWrapper = monthDays.appendChild(document.createElement("div"));
-    daysWrapper.classList.add("day-wrapper");
-    const dayEl = daysWrapper.appendChild(document.createElement("input"));
-    const labelEl = daysWrapper.appendChild(document.createElement("label"));
-    dayEl.setAttribute("type", "radio");
-    dayEl.setAttribute("name", "day");
-    dayEl.setAttribute("id", `day-${i}`);
-    labelEl.setAttribute("for", `day-${i}`);
-    if (i == today.getDate() && dt.getMonth() == today.getMonth()) {
-      labelEl.classList.add(`day`);
-      labelEl.textContent = `${i}`;
-      dayEl.value = `${i}`;
-      dayEl.checked = true;
-    } else {
-      labelEl.classList.add(`day`);
-      labelEl.textContent = `${i}`;
-      dayEl.value = `${i}`;
+  if (!e || e.type !== "change") {
+    for (let i = day; i > 0; i--) {
+      const dayEl = monthDays.appendChild(document.createElement("div"));
+      dayEl.classList.add(`prev-day`);
+      dayEl.textContent = `${prevDate - i + 1}`;
     }
+
+    for (let i = 1; i <= endDate; i++) {
+      const daysWrapper = monthDays.appendChild(document.createElement("div"));
+      daysWrapper.classList.add("day-wrapper");
+      const dayEl = daysWrapper.appendChild(document.createElement("input"));
+      const labelEl = daysWrapper.appendChild(document.createElement("label"));
+      dayEl.setAttribute("type", "radio");
+      dayEl.setAttribute("name", "day");
+      dayEl.setAttribute("id", `day-${i}`);
+      labelEl.setAttribute("for", `day-${i}`);
+      if (i == today.getDate() && dt.getMonth() == today.getMonth()) {
+        labelEl.classList.add(`day`);
+        labelEl.textContent = `${i}`;
+        dayEl.value = `${i}`;
+        dayEl.checked = true;
+      } else {
+        labelEl.classList.add(`day`);
+        labelEl.textContent = `${i}`;
+        dayEl.value = `${i}`;
+      }
+    }
+
+    const radioDays = document.querySelectorAll('input[type="radio"]');
+
+    radioDays.forEach((radio) => {
+      radio.addEventListener("change", updateDate.bind(this));
+
+      // radio.addEventListener("change", updateDate.bind());
+    });
   }
-
-  const radioDays = document.querySelectorAll('input[type="radio"]');
-
-  radioDays.forEach((radio) => {
-    radio.addEventListener("change", updateDate.bind(this));
-
-    // radio.addEventListener("change", updateDate.bind());
-  });
 }
 
 function updateDate(e) {
+  e.preventDefault();
   const currentMonth = document.getElementById("month");
   const currentYear = dt.getFullYear();
   const currentDay = e.target.value;
   const selectDate = document.getElementById("selectedDate");
-  selectDate.textContent =
+  const selectedRadioDate =
     currentMonth.textContent + " " + currentDay + ", " + currentYear;
+  selectDate.textContent = selectedRadioDate;
 
-  const variantID = localStorage.getItem("id");
+  const items = JSON.parse(localStorage.getItem("cartStorage"));
+  const variantID = items[0].id;
   const locationID = 35770;
-
-  const timeslots = btaApi
+  const today = new Date(selectedRadioDate);
+  const end = new Date(selectedRadioDate);
+  today.setHours(10, 0, 0);
+  const startDate = today;
+  startDate.toISOString();
+  end.setHours(19, 0, 0);
+  const endDate = end;
+  end.toISOString();
+  let btaApi = btaSdk.init(token);
+  console.log(startDate, endDate);
+  btaApi
     .getBlocks({
       external_id: variantID,
       location_ids: [locationID],
@@ -605,9 +697,10 @@ function updateDate(e) {
     data.blocks.forEach((block) => {
       blocks.push(block);
     });
-    // createDaySlots(blocks);
+
     console.log(blocks);
   };
+  renderDate(e, selectDate);
 }
 
 renderDate();

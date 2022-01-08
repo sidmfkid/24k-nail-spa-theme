@@ -522,7 +522,7 @@ function toggleCalendar(e) {
 
 const dt = new Date();
 
-function renderDate(e, selectedDate) {
+function renderDate(e, divNum) {
   dt.setDate(1);
   console.log(dt);
   let day = dt.getDay();
@@ -546,70 +546,26 @@ function renderDate(e, selectedDate) {
   ];
 
   const selectMonth = document.getElementById("month");
-  const monthDayOptions = document.querySelectorAll(".monthDay");
-  const weekDayOptions = document.querySelectorAll(".weekDay");
-  const options = { weekday: "short" };
-
-  let monthNum;
-  let dayNum;
-  if (selectedDate) {
-    monthNum = dt.getMonth() + 1;
-    dayNum = dt.getDay() + 1;
-  } else {
-    monthNum = dt.getMonth() + 1;
-    dayNum = dt.getDay() + 1;
-  }
-
-  console.log(selectedDate);
-
-  monthDayOptions.forEach((option, i) => {
-    let newDay;
-    if (i === 0) {
-      newDay = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDay() - 1
-      );
-
-      const dayShort = new Intl.DateTimeFormat("en-US", options).format(newDay);
-      option.textContent = monthNum + "/" + `${dayNum - 1}`;
-      console.log(dayShort);
-      weekDayOptions[i].textContent = `${dayShort}`;
-    }
-    if (i === 1) {
-      const newDay = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDay()
-      );
-      const dayShort = new Intl.DateTimeFormat("en-US", options).format(newDay);
-
-      console.log(dayShort);
-
-      option.textContent = monthNum + "/" + `${dayNum}`;
-      weekDayOptions[i].textContent = `${dayShort}`;
-    }
-    if (i === 2) {
-      const newDay = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDay() + 1
-      );
-      const dayShort = new Intl.DateTimeFormat("en-US", options).format(newDay);
-
-      console.log(dayShort);
-      option.textContent = monthNum + "/" + `${dayNum + 1}`;
-      weekDayOptions[i].textContent = `${dayShort}`;
-    }
-  });
+  const formMonth = document.querySelector(".date-month");
+  const formDay = document.querySelector(".date-day");
 
   selectMonth.textContent = months[dt.getMonth()];
+  formMonth.textContent = months[dt.getMonth()];
 
   const monthDays = document.getElementById("days");
   if (e) {
     console.log(e);
-    if (e.target.id === "previousMonth" || e.target.id === "nextMonth") {
-      const allDays = document.querySelectorAll(".day-wrapper, .prev-day");
+    if (
+      e.target.id === "previousMonth" ||
+      e.target.id === "nextMonth" ||
+      e.target.id === "nextDate" ||
+      e.target.id === "prevDate" ||
+      e.target.id === "nextDay" ||
+      e.target.id === "prevDay"
+    ) {
+      const allDays = document.querySelectorAll(
+        ".day-wrapper, .prev-day, .visible-day, .hidden-day"
+      );
       allDays.forEach((day) => {
         day.remove();
       });
@@ -617,7 +573,12 @@ function renderDate(e, selectedDate) {
     console.log("delete");
   }
 
-  if (!e || e.type !== "change") {
+  if (
+    !e ||
+    e.type !== "change" ||
+    e.target.id === "nextDay" ||
+    e.target.id === "prevDay"
+  ) {
     for (let i = day; i > 0; i--) {
       const dayEl = monthDays.appendChild(document.createElement("div"));
       dayEl.classList.add(`prev-day`);
@@ -629,22 +590,59 @@ function renderDate(e, selectedDate) {
       daysWrapper.classList.add("day-wrapper");
       const dayEl = daysWrapper.appendChild(document.createElement("input"));
       const labelEl = daysWrapper.appendChild(document.createElement("label"));
+      const formDays = formDay.appendChild(document.createElement("span"));
       dayEl.setAttribute("type", "radio");
       dayEl.setAttribute("name", "day");
       dayEl.setAttribute("id", `day-${i}`);
       labelEl.setAttribute("for", `day-${i}`);
-      if (i == today.getDate() && dt.getMonth() == today.getMonth()) {
-        labelEl.classList.add(`day`);
-        labelEl.textContent = `${i}`;
-        dayEl.value = `${i}`;
-        dayEl.checked = true;
-      } else {
-        labelEl.classList.add(`day`);
-        labelEl.textContent = `${i}`;
-        dayEl.value = `${i}`;
+
+      if (!divNum || e.type === "change") {
+        if (i == today.getDate() && dt.getMonth() == today.getMonth()) {
+          console.log(divNum);
+          formDays.classList.add(`visible-day`);
+
+          formDays.textContent = `${i}`;
+          labelEl.classList.add(`day`);
+          labelEl.textContent = `${i}`;
+          dayEl.value = `${i}`;
+          dayEl.checked = true;
+        } else {
+          formDays.classList.add(`hidden-day`);
+
+          formDays.textContent = `${i}`;
+          labelEl.classList.add(`day`);
+          labelEl.textContent = `${i}`;
+          dayEl.value = `${i}`;
+        }
+      }
+      if (divNum) {
+        if (i === divNum) {
+          console.log(divNum);
+          formDays.classList.add(`visible-day`);
+
+          formDays.textContent = `${i}`;
+          labelEl.classList.add(`day`);
+          labelEl.textContent = `${i}`;
+          dayEl.value = `${i}`;
+          dayEl.checked = true;
+        } else {
+          formDays.classList.add(`hidden-day`);
+
+          formDays.textContent = `${i}`;
+          labelEl.classList.add(`day`);
+          labelEl.textContent = `${i}`;
+          dayEl.value = `${i}`;
+        }
       }
     }
 
+    let dayOptions = document.querySelector(".visible-day");
+    if (!dayOptions) {
+      const firstDay = document.querySelector(".date-day > span");
+      firstDay.classList.remove("hidden-day");
+      firstDay.classList.add("visible-day");
+      dayOptions = firstDay;
+    }
     const radioDays = document.querySelectorAll('input[type="radio"]');
 
     radioDays.forEach((radio) => {
@@ -655,11 +653,12 @@ function renderDate(e, selectedDate) {
   }
 }
 
-function updateDate(e) {
+function updateDate(e, divNum) {
   e.preventDefault();
   const currentMonth = document.getElementById("month");
   const currentYear = dt.getFullYear();
-  const currentDay = e.target.value;
+  const currentDay = e.target.value || divNum;
+  console.log(currentDay);
   const selectDate = document.getElementById("selectedDate");
   const selectedRadioDate =
     currentMonth.textContent + " " + currentDay + ", " + currentYear;
@@ -698,21 +697,83 @@ function updateDate(e) {
       blocks.push(block);
     });
 
-    console.log(blocks);
+    renderBlocks(blocks);
   };
-  renderDate(e, selectDate);
+  renderDate(e, divNum);
+}
+
+function renderBlocks(blocks) {
+  console.log(blocks, "BLOCKS!!!!");
+  const dateBlocks = blocks[0].timeslots;
+  const timeWrapper = document.querySelector(
+    ".booking-form__content-step-6-time"
+  );
+  console.log(timeWrapper);
+  if (timeWrapper.children >= 1) {
+    timeWrapper.children.forEach((child) => {
+      child.remove();
+    });
+  }
+  dateBlocks.forEach((block, i) => {
+    const startTime = new Date(block.start);
+    const startTimeString = new Intl.DateTimeFormat("en-US", {
+      timeStyle: "short",
+    }).format(startTime);
+
+    const timeSlots = timeWrapper.appendChild(document.createElement("input"));
+    const timeSlotsLabel = timeWrapper.appendChild(
+      document.createElement("label")
+    );
+    timeSlots.classList.add("time-slot-container");
+    timeSlots.type = "radio";
+    timeSlots.id = "timeslot-" + i;
+    timeSlotsLabel.setAttribute("for", "timeslot-" + i);
+    timeSlotsLabel.textContent = startTimeString;
+    console.log(block);
+  });
 }
 
 renderDate();
 
-const nextDate = document.getElementById("nextMonth");
-const previousDate = document.getElementById("previousMonth");
+const nextMonth = document.getElementById("nextMonth");
+const previousMonth = document.getElementById("previousMonth");
+const nextDate = document.getElementById("nextDate");
+const previousDate = document.getElementById("prevDate");
+const nextDay = document.getElementById("nextDay");
+const previousDay = document.getElementById("prevDay");
 
 nextDate.addEventListener("click", moveDate.bind(this, "next"));
 previousDate.addEventListener("click", moveDate.bind(this, "prev"));
+nextMonth.addEventListener("click", moveDate.bind(this, "next"));
+previousMonth.addEventListener("click", moveDate.bind(this, "prev"));
+nextDay.addEventListener("click", moveDate.bind(this, "nextDay"));
+previousDay.addEventListener("click", moveDate.bind(this, "prevDay"));
+
 function moveDate(params, e) {
-  console.log(params);
-  if (params === "prev") {
+  let dayOptions = document.querySelector(".visible-day");
+  if (!dayOptions) {
+    const firstDay = document.querySelector(".date-day > span");
+    firstDay.classList.remove("hidden-day");
+    firstDay.classList.add("visible-day");
+    dayOptions = firstDay;
+  }
+
+  if (params === "prevDay") {
+    // dayOptions.previousElementSibling.classList.remove("hidden-day");
+    // dayOptions.previousElementSibling.classList.add("visible-day");
+
+    const dayNum = Number(dayOptions.previousElementSibling.textContent);
+
+    updateDate(e, dayNum);
+    // dayOptions.classList.remove("visible-day");
+    // dayOptions.classList.add("hidden-day");
+    return;
+  } else if (params === "nextDay") {
+    const dayNum = Number(dayOptions.nextElementSibling.textContent);
+
+    updateDate(e, dayNum);
+    return;
+  } else if (params === "prev") {
     dt.setMonth(dt.getMonth() - 1);
   } else if (params === "next") {
     dt.setMonth(dt.getMonth() + 1);

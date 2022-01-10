@@ -1,4 +1,4 @@
-<section class="booking-form open">
+<section class="booking-form">
     <div class="booking-form__overlay">
         <span id="closeBookingForm"></span>
     </div>
@@ -11,7 +11,7 @@
         </div>
 
         <div class="booking-form__content-step">
-            <div class="booking-form__content-step-1">
+            <div class="booking-form__content-step-1 selected">
                 <div class="booking-form__content-step-1-heading">
                     <h2>Appointment Preference</h2>
 
@@ -81,7 +81,7 @@
                 </div>
 
             </div>
-            <div id="dateSelector" class="booking-form__content-step-6 selected">
+            <div id="dateSelector" class="booking-form__content-step-6">
                 <div class="booking-form__content-step-6-heading">
                     <i id="stepBack" class="fa fa-chevron-left"></i>
                     <h2>Select Appointment Time</h2>
@@ -130,10 +130,88 @@
 
                 </div>
                 <div class="booking-form__content-step-6-time">
+                    <form id="appointmentTime" action="">
 
+                    </form>
+
+                    <div class="select-time">
+                        <button data-time="" class="select-time-btn hidden"></button>
+                    </div>
                 </div>
             </div>
 
+            <div id="dateSelector" class="booking-form__content-step-7">
+                <div class="booking-form__content-step-7-heading">
+                    <h2>Review Your Booking</h2>
+                </div>
+                <div class="booking-form__content-step-7-location">
+                    <div>Location</div>
+                    <div></div>
+                </div>
+                <div class="booking-form__content-step-7-date">
+                    <div>Date</div>
+                    <div></div>
+                </div>
+                <div class="booking-form__content-step-7-time">
+                    <div>Time</div>
+                    <div></div>
+                </div>
+                <div class="booking-form__content-step-7-items">
+                    <div class="items-heading">
+                        <span>Items</span><span>Cost</span>
+                    </div>
+
+                </div>
+                <div class="booking-form__content-step-7-total">
+                    <div>Total</div>
+                    <div id="totalPrice">25$</div>
+                </div>
+                <div class="booking-form__content-step-7-btn">
+                    <button id="toCustomerInfo"><span>25$</span>Next</button>
+                </div>
+            </div>
+            <div id="dateSelector" class="booking-form__content-step-8">
+                <div class="booking-form__content-step-8-heading">
+                    <h2>Complete Your Booking</h2>
+                </div>
+                <div class="booking-form__content-step-8-form">
+                    <div class="heading">Contact Info</div>
+                    <form id="contactInfo" action="">
+                        <div class="input">
+                            <label for="firstName">First Name</label>
+                            <input id="firstName" name="properties[firstName]" type="text">
+
+                        </div>
+                        <div class="input">
+                            <label for="lastName">Last Name</label>
+                            <input id="lastName" name="properties[lastName]" type=" text">
+                        </div>
+                        <div class="input">
+                            <label for="email">Email</label>
+                            <input id="email" name="properties[email]" type="text">
+                            <small>So we can send you a confirmation for your order</small>
+                        </div>
+
+                        <!-- <div class="input">
+                            <label for="phone">Cell Phone</label>
+                            <input id="phone" name="properties[phone]" type="text">
+                            <small>Just in case we need to give you a call. Also, we'll send you a text message
+                                reminder.</small>
+                        </div> -->
+                    </form>
+
+                    <div id="customerBtn" class="customer-form-btn">
+                        <button id="addCustomerInfo"><span id="priceCustomer"></span>
+                            Submit</button>
+                    </div>
+                    <form action="{{ routes.cart_url }}" method="POST">
+                        <div class="checkout">
+                            <input class="btn btn-primary" type="submit" name="checkout" value="Checkout">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </div>
         <div class="cart-btns hide">
             <button class="add-more">Add More</button>

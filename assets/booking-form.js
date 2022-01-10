@@ -5,6 +5,8 @@ const step3 = document.querySelector(".booking-form__content-step-3");
 const step4 = document.querySelector(".booking-form__content-step-4");
 const step5 = document.querySelector(".booking-form__content-step-5");
 const step6 = document.querySelector(".booking-form__content-step-6");
+const step7 = document.querySelector(".booking-form__content-step-7");
+const step8 = document.querySelector(".booking-form__content-step-8");
 bookNowBtn.addEventListener("click", toggleForm.bind(this));
 const cartBtns = document.querySelector(".cart-btns");
 
@@ -115,6 +117,11 @@ function toggleSelected(e) {
     step1.classList.add("selected");
     return;
   }
+  if (step7.classList.contains("selected") && e.target.id === "goBack") {
+    step7.classList.remove("selected");
+    step4.classList.add("selected");
+  }
+
   if (
     (step6.classList.contains("selected") && e.target.id === "stepBack") ||
     (step6.classList.contains("selected") && e.target.id === "goBack")
@@ -132,6 +139,7 @@ function toggleSelected(e) {
   ) {
     step5.classList.remove("selected");
     step6.classList.add("selected");
+    e.target.parentNode.classList.add("hide");
     removeProducts();
     return;
   }
@@ -430,79 +438,78 @@ const productATC = document.querySelector(
 productATC.addEventListener("click", storeCartItem.bind(this), false);
 
 function storeCartItem(e) {
-  e.stopPropagation();
   e.preventDefault();
 
   const selectedItem = {
-    title: e.target.dataset.title,
-    price: e.target.dataset.price,
-    id: e.target.dataset.id,
     id: e.target.dataset.variantId,
     quantity: 1,
   };
-
-  cartStorage.push(selectedItem);
-
-  localStorage.setItem("cartStorage", JSON.stringify(cartStorage));
-  console.log(cartStorage, e, localStorage.cartStorage);
-  renderCart();
+  addToCart(selectedItem);
+  getCart();
 }
 
-function renderCart() {
-  if (localStorage.getItem("cartStorage")) {
-    goToCart.classList.remove("hide");
-  }
-  const items = JSON.parse(localStorage.getItem("cartStorage"));
-  const itemsWrapper = document.querySelector(
-    ".booking-form__content-step-5-items"
-  );
-  const itemWrapper = document.querySelectorAll(
-    ".booking-form__content-step-5-items .item-wrapper"
-  );
+function renderCart(cartData) {
+  setTimeout(() => {
+    console.log("rendered Cart", cartData);
+    if (cartData) {
+      goToCart.classList.remove("hide");
+    }
+    const items = cartData.items;
+    const itemsWrapper = document.querySelector(
+      ".booking-form__content-step-5-items"
+    );
+    const itemWrapper = document.querySelectorAll(
+      ".booking-form__content-step-5-items .item-wrapper"
+    );
 
-  if (itemWrapper.length > 0) {
-    itemWrapper.forEach((item) => {
-      item.remove();
-    });
-  }
+    if (itemWrapper.length > 0) {
+      itemWrapper.forEach((item) => {
+        item.remove();
+      });
+    }
 
-  if (items) {
-    items.forEach((item) => {
-      const cartItems = itemsWrapper.appendChild(document.createElement("div"));
-      const itemTitle = cartItems.appendChild(document.createElement("div"));
-      const itemPrice = cartItems.appendChild(document.createElement("div"));
-      cartItems.classList.add("item-wrapper");
-      itemTitle.classList.add("title");
-      itemPrice.classList.add("price");
-      itemTitle.textContent = item.title;
-      itemPrice.textContent = "$" + item.price * 0.01;
-    });
-  }
-  if (step4.classList.contains("selected")) {
-    step4.classList.remove("selected");
-    step5.classList.add("selected");
-    console.log(items);
-  }
+    if (items) {
+      items.forEach((item) => {
+        const cartItems = itemsWrapper.appendChild(
+          document.createElement("div")
+        );
+        const itemTitle = cartItems.appendChild(document.createElement("div"));
+        const itemPrice = cartItems.appendChild(document.createElement("div"));
+        cartItems.classList.add("item-wrapper");
+        itemTitle.classList.add("title");
+        itemPrice.classList.add("price");
+        itemTitle.textContent = item.title;
+        itemPrice.textContent = "$" + item.price * 0.01;
+      });
+    }
+    if (step4.classList.contains("selected")) {
+      step4.classList.remove("selected");
+      step5.classList.add("selected");
+      console.log(items);
+    }
 
-  // const cartBtns = document.querySelector(".cart-btns");
+    // const cartBtns = document.querySelector(".cart-btns");
 
-  if (
-    cartBtns.classList.contains("hide") &&
-    step5.classList.contains("selected")
-  ) {
-    cartBtns.classList.remove("hide");
-    return;
-  } else if (
-    !step5.classList.contains("selected") &&
-    cartBtns.classList.contains("hide")
-  ) {
-    cartBtns.classList.add("hide");
-    return;
-  }
+    if (
+      cartBtns.classList.contains("hide") &&
+      step5.classList.contains("selected")
+    ) {
+      cartBtns.classList.remove("hide");
+      return;
+    } else if (
+      !step5.classList.contains("selected") &&
+      cartBtns.classList.contains("hide")
+    ) {
+      cartBtns.classList.add("hide");
+      return;
+    }
+  }, 500);
 }
 
-if (localStorage.getItem("cartStorage")) {
-  renderCart();
+const currentCart = getCart();
+
+if (currentCart) {
+  getCart();
 }
 
 const calendarIcon = document.getElementById("calendar");
@@ -519,6 +526,17 @@ function toggleCalendar(e) {
   }
 }
 //********++++++------********* Calendar Widget Code ********++++++------*********/
+let currentCartItems;
+async function getItemsInCart() {
+  const req = await fetch("/cart.js", {
+    method: "GET",
+  });
+  const res = await req.json();
+  currentCartItems = res.items;
+  console.log(currentCartItems, "current ITems!~!!");
+}
+
+getItemsInCart();
 
 const dt = new Date();
 
@@ -646,26 +664,41 @@ function renderDate(e, divNum) {
     const radioDays = document.querySelectorAll('input[type="radio"]');
 
     radioDays.forEach((radio) => {
-      radio.addEventListener("change", updateDate.bind(this));
-
-      // radio.addEventListener("change", updateDate.bind());
+      radio.addEventListener(
+        "change",
+        updateDate.bind(this, "", currentCartItems)
+      );
     });
   }
 }
 
-function updateDate(e, divNum) {
-  e.preventDefault();
+function updateDate(divNum, cartItems, e) {
+  // e.preventDefault();
+
+  console.log(e, divNum, cartItems);
   const currentMonth = document.getElementById("month");
   const currentYear = dt.getFullYear();
   const currentDay = e.target.value || divNum;
+  const allFormDays = document.querySelectorAll(".hidden-day, .visible-day");
+  allFormDays.forEach((day) => {
+    if (Number(day.textContent) === Number(currentDay)) {
+      day.classList.remove("hidden-day");
+      day.classList.add("visible-day");
+    } else {
+      console.log(Number(day.textContent));
+
+      day.classList.add("hidden-day");
+    }
+  });
   console.log(currentDay);
   const selectDate = document.getElementById("selectedDate");
   const selectedRadioDate =
     currentMonth.textContent + " " + currentDay + ", " + currentYear;
   selectDate.textContent = selectedRadioDate;
 
-  const items = JSON.parse(localStorage.getItem("cartStorage"));
-  const variantID = items[0].id;
+  const items = cartItems;
+  const variantID = 41179086717101;
+  console.log(variantID);
   const locationID = 35770;
   const today = new Date(selectedRadioDate);
   const end = new Date(selectedRadioDate);
@@ -683,12 +716,12 @@ function updateDate(e, divNum) {
       location_ids: [locationID],
       start: startDate,
       finish: endDate,
-      interval: null,
+      interval: "60:00",
     })
     .then((res) => {
       const blocks = res.data;
-      getDaysAvailable(blocks);
       console.log(blocks);
+      getDaysAvailable(blocks);
     });
 
   const getDaysAvailable = (data) => {
@@ -709,28 +742,287 @@ function renderBlocks(blocks) {
     ".booking-form__content-step-6-time"
   );
   console.log(timeWrapper);
-  if (timeWrapper.children >= 1) {
-    timeWrapper.children.forEach((child) => {
-      child.remove();
+
+  const timeEl = document.querySelectorAll(
+    ".booking-form__content-step-6-time input, .booking-form__content-step-6-time label, .evening, .morning, .afternoon"
+  );
+  if (timeEl) {
+    timeEl.forEach((el) => {
+      el.remove();
     });
   }
+
   dateBlocks.forEach((block, i) => {
     const startTime = new Date(block.start);
+    const finishTime = new Date(block.finish);
     const startTimeString = new Intl.DateTimeFormat("en-US", {
       timeStyle: "short",
     }).format(startTime);
+    const timeForm = document.querySelector(
+      ".booking-form__content-step-6-time form"
+    );
+    const prevMorning = document.querySelector(".morning");
+    const prevAfternoon = document.querySelector(".afternoon");
+    const prevEvening = document.querySelector(".evening");
 
-    const timeSlots = timeWrapper.appendChild(document.createElement("input"));
-    const timeSlotsLabel = timeWrapper.appendChild(
+    if (startTimeString.includes("AM") && !prevMorning) {
+      const timeOfDay = timeForm.appendChild(document.createElement("div"));
+      timeOfDay.classList.add("morning");
+      timeOfDay.textContent = "Morning";
+    }
+    if (
+      (startTimeString.includes("PM") &&
+        !prevAfternoon &&
+        startTimeString.includes("12:")) ||
+      (startTimeString.includes("PM") &&
+        !prevAfternoon &&
+        startTimeString.includes("1:")) ||
+      (startTimeString.includes("PM") &&
+        !prevAfternoon &&
+        startTimeString.includes("2:")) ||
+      (startTimeString.includes("PM") &&
+        !prevAfternoon &&
+        startTimeString.includes("3:")) ||
+      (startTimeString.includes("PM") &&
+        !prevAfternoon &&
+        startTimeString.includes("4:"))
+    ) {
+      const timeOfDay = timeForm.appendChild(document.createElement("div"));
+      timeOfDay.classList.add("afternoon");
+      timeOfDay.textContent = "Afternoon";
+    }
+
+    if (
+      startTimeString.includes("PM") &&
+      !prevEvening &&
+      startTimeString.includes("5:")
+    ) {
+      const timeOfDay = timeForm.appendChild(document.createElement("div"));
+      timeOfDay.classList.add("evening");
+      timeOfDay.textContent = "Evening";
+    }
+
+    const timeSlotsContainer = timeForm.appendChild(
+      document.createElement("div")
+    );
+    const timeSlots = timeSlotsContainer.appendChild(
+      document.createElement("input")
+    );
+    const timeSlotsLabel = timeSlotsContainer.appendChild(
       document.createElement("label")
     );
-    timeSlots.classList.add("time-slot-container");
+    timeSlotsContainer.classList.add("time-slot-container");
     timeSlots.type = "radio";
+    timeSlots.name = "start";
+    timeSlots.value = startTime;
+    timeSlots.dataset.endTime = finishTime;
+
     timeSlots.id = "timeslot-" + i;
     timeSlotsLabel.setAttribute("for", "timeslot-" + i);
     timeSlotsLabel.textContent = startTimeString;
     console.log(block);
   });
+
+  const timeSlots = document.querySelectorAll(
+    ".booking-form__content-step-6-time input"
+  );
+  timeSlots.forEach((slot) => {
+    slot.addEventListener("change", handleSlotChange.bind(this));
+  });
+}
+
+function handleSlotChange(e) {
+  e.preventDefault();
+  console.log(e.target.value);
+  const startTime = new Date(e.target.value);
+  const finishTime = e.target.dataset.endTime;
+  const selectTimeBtn = document.querySelector(".select-time-btn");
+  selectTimeBtn.classList.remove("hidden");
+
+  const startTimeString = new Intl.DateTimeFormat("en-us", {
+    dateStyle: "long",
+    timeStyle: "short",
+  }).format(startTime);
+  const weekDayString = new Intl.DateTimeFormat("en-us", {
+    weekday: "short",
+  }).format(startTime);
+  selectTimeBtn.textContent = "Select " + weekDayString + " " + startTimeString;
+  selectTimeBtn.dataset.startTime = startTime;
+  selectTimeBtn.dataset.finishTime = finishTime;
+}
+
+const selectTimeBtn = document.querySelector(".select-time-btn");
+selectTimeBtn.addEventListener("click", addDateTime.bind(this));
+
+function addDateTime(e) {
+  e.preventDefault();
+  const currentStep = document.querySelector(".booking-form__content-step-6");
+  const nextStep = document.querySelector(".booking-form__content-step-7");
+
+  const startTime = new Date(e.target.dataset.startTime);
+  const finishTime = new Date(e.target.dataset.finishTime);
+
+  const selectedTime = {
+    line: 1,
+    properties: {
+      Start: startTime.toISOString(),
+      Finish: finishTime.toISOString(),
+    },
+  };
+
+  updateCart(selectedTime);
+
+  currentStep.classList.remove("selected");
+  nextStep.classList.add("selected");
+}
+
+async function updateCart(itemProps) {
+  const req = await fetch("/cart/change.js", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(itemProps),
+  });
+  const res = await req.json();
+  await getItemsInCart();
+  await renderReview(currentCartItems);
+
+  console.log(res, "updatedCart");
+}
+
+function renderReview(items) {
+  const bookingInfo = items[0].properties;
+  const cartInfo = items;
+  console.log(bookingInfo);
+  const startDate = new Date(bookingInfo.Start);
+  const startString = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+  }).format(startDate);
+  const weekDayString = new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+  }).format(startDate);
+  const timeString = new Intl.DateTimeFormat("en-US", {
+    timeStyle: "short",
+  }).format(startDate);
+
+  const section = document.querySelector(
+    ".booking-form__content-step-7"
+  ).children;
+
+  for (let i = 1; i < section.length; i++) {
+    if (section[i].classList[0].includes("location")) {
+      section[i].children[1].textContent = "24K Broadripple Ave";
+    }
+    if (section[i].classList[0].includes("date")) {
+      section[i].children[1].textContent = weekDayString + ", " + startString;
+    }
+    if (section[i].classList[0].includes("time")) {
+      section[i].children[1].textContent = timeString;
+    }
+  }
+  const allItemsInfo = document.querySelectorAll(
+    ".booking-form__content-step-7-items .item-info"
+  );
+  console.log(allItemsInfo);
+  if (allItemsInfo) {
+    allItemsInfo.forEach((item) => {
+      item.remove();
+    });
+  }
+
+  let itemTotalPrice;
+  cartInfo.forEach((item, i = 0) => {
+    const itemsWrapper = document.querySelector(
+      ".booking-form__content-step-7-items"
+    );
+    const itemContainer = itemsWrapper.appendChild(
+      document.createElement("div")
+    );
+    const itemTitle = itemContainer.appendChild(document.createElement("div"));
+    const itemPrice = itemContainer.appendChild(document.createElement("div"));
+    itemTitle.classList.add("item-info-title");
+    itemPrice.classList.add("item-info-price");
+    itemTitle.textContent = item.title;
+    itemPrice.textContent = "$" + item.price * 0.01;
+    const itemStaff = itemTitle.appendChild(document.createElement("span"));
+    itemContainer.classList.add("item-info");
+  });
+
+  const allItems = document.querySelectorAll(".item-info-price");
+  let itemPrices = [];
+  for (let i = 0; i < allItems.length; i++) {
+    itemPrices.push(Number(allItems[i].textContent.slice(1)));
+    console.log(itemPrices);
+  }
+  const cartTotal = itemPrices.reduce((a, b) => a + b, 0);
+  const totalPriceEl = document.getElementById("totalPrice");
+  const customerBtn = document.getElementById("priceCustomer");
+  const totalPriceBtn = document.querySelector(
+    ".booking-form__content-step-7-btn>button>span"
+  );
+  totalPriceEl.textContent = "$" + cartTotal;
+  if (totalPriceBtn) {
+    totalPriceBtn.textContent = "$" + cartTotal;
+  }
+  customerBtn.textContent = "$" + cartTotal;
+
+  console.log(bookingInfo, cartInfo, cartTotal, "heyyy LOOK HERE");
+}
+
+const customerInfoBtn = document.getElementById("toCustomerInfo");
+customerInfoBtn.addEventListener("click", renderCustomerForm.bind(this));
+
+function renderCustomerForm(e) {
+  e.preventDefault();
+  step7.classList.remove("selected");
+  step8.classList.add("selected");
+}
+
+const submitCustomerInfo = document.querySelector("#addCustomerInfo");
+submitCustomerInfo.addEventListener("click", addCustomerInfo.bind(this));
+
+function addCustomerInfo(e) {
+  e.preventDefault();
+  const firstName = document.querySelector("#firstName").value;
+  const lastName = document.querySelector("#lastName").value;
+  const email = document.querySelector("#email").value;
+
+  const customerInformation = {
+    line: 1,
+    properties: {
+      Start: currentCartItems[0].properties.Start,
+      Finish: currentCartItems[0].properties.Finish,
+      Name: firstName + " " + lastName,
+      Email: email,
+    },
+  };
+  updateCart(customerInformation);
+}
+
+async function addToCart(cart) {
+  try {
+    const req = await fetch("/cart/add.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cart),
+    });
+    const res = await req.json();
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getCart() {
+  const req = await fetch("/cart.js", {
+    method: "GET",
+  });
+  const res = await req.json();
+
+  renderCart(res);
 }
 
 renderDate();
@@ -764,14 +1056,14 @@ function moveDate(params, e) {
 
     const dayNum = Number(dayOptions.previousElementSibling.textContent);
 
-    updateDate(e, dayNum);
+    updateDate(dayNum, currentCartItems, e);
     // dayOptions.classList.remove("visible-day");
     // dayOptions.classList.add("hidden-day");
     return;
   } else if (params === "nextDay") {
     const dayNum = Number(dayOptions.nextElementSibling.textContent);
 
-    updateDate(e, dayNum);
+    updateDate(dayNum, currentCartItems, e);
     return;
   } else if (params === "prev") {
     dt.setMonth(dt.getMonth() - 1);

@@ -1,4 +1,4 @@
-<section class="booking-form">
+<section class="booking-form open">
     <div class="booking-form__overlay">
         <span id="closeBookingForm"></span>
     </div>
@@ -6,12 +6,13 @@
     <div class="booking-form__content">
 
         <div class="booking-form__content-header">
+            <span id="closeBookingForm"></span>
             <img loading="lazy" width="408" height="370" src="{{ '24k-logo.png' | asset_img_url: '500x' }}" alt="">
             <i id="goBack" class="fa fa-chevron-left"></i>
         </div>
 
         <div class="booking-form__content-step">
-            <div class="booking-form__content-step-1 selected">
+            <div class="booking-form__content-step-1">
                 <div class="booking-form__content-step-1-heading">
                     <h2>Appointment Preference</h2>
 
@@ -67,7 +68,7 @@
                         $55</button>
                 </div>
             </div>
-            <div id="cartForm" class="booking-form__content-step-5">
+            <div id="cartForm" class="booking-form__content-step-5 selected">
                 <div class="booking-form__content-step-5-heading">
                     <i id="stepBack" class="fa fa-chevron-left"></i>
                     <h2>Your Cart</h2>

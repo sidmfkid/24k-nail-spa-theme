@@ -801,8 +801,8 @@
         top: 0;
         left: 100%;
         width: 100%;
-        // height: 50vh;
-
+        height: 80vh;
+        overflow-y: scroll;
         &.selected {
           left: 0%;
         }
@@ -1042,6 +1042,56 @@
       opacity: 1;
       top: 0;
       left: 0;
+    }
+  }
+  @include media-small {
+    &__overlay {
+      background-color: none;
+      width: 0;
+      height: 0;
+      z-index: 1;
+      #closeBookingForm {
+        z-index: 10;
+      }
+    }
+    &__content {
+      width: 100%;
+      &-header {
+        span {
+          z-index: 2;
+          display: block;
+          width: 5rem;
+          height: 5rem;
+
+          top: 0.5rem;
+          right: 1rem;
+          position: absolute;
+          //   background-color: black;
+          border-radius: 0.5rem;
+          cursor: pointer;
+          &::before,
+          &::after {
+            content: "";
+            display: block;
+
+            width: 100%;
+            height: 0.5rem;
+            background-color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+          }
+          &::after {
+            transform: rotate(45deg);
+          }
+          &::before {
+            transform: rotate(-45deg);
+          }
+        }
+      }
     }
   }
 }

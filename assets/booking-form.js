@@ -43,6 +43,10 @@ function toggleForm(e) {
     step3.classList.remove("selected");
     step4.classList.remove("selected");
     step5.classList.remove("selected");
+    step6.classList.remove("selected");
+    step7.classList.remove("selected");
+    step8.classList.remove("selected");
+    cartBtns.classList.add("hide");
 
     !goBack.classList.contains("hide")
       ? goBack.classList.add("hide")
@@ -51,8 +55,14 @@ function toggleForm(e) {
   }
 }
 
-const closeBookingForm = document.getElementById("closeBookingForm");
+const closeBookingForm = document.querySelector(
+  ".booking-form__overlay #closeBookingForm"
+);
+const closeBookingFormSmall = document.querySelector(
+  ".booking-form__content-header #closeBookingForm"
+);
 closeBookingForm.addEventListener("click", toggleForm.bind(this));
+closeBookingFormSmall.addEventListener("click", toggleForm.bind(this));
 const singleAppointment = document.getElementById("singleAppointment");
 const goBack = document.querySelector(".booking-form__content #goBack");
 singleAppointment.addEventListener("click", toggleSelected.bind(this));
@@ -101,6 +111,11 @@ function viewCart(e) {
 function toggleSelected(e) {
   e.preventDefault();
 
+  if (e.target.id === "goBack" && step8.classList.contains("selected")) {
+    step8.classList.remove("selected");
+    step7.classList.add("selected");
+    return;
+  }
   if (
     (e.target.id === "stepBack" &&
       step5.classList.contains("selected") &&
@@ -132,6 +147,12 @@ function toggleSelected(e) {
     removeProducts();
     return;
   }
+  if (step3.classList.contains("selected") && e.target.id === "goBack") {
+    step3.classList.remove("selected");
+    step2.classList.add("selected");
+    removeProducts();
+    return;
+  }
 
   if (
     step5.classList.contains("selected") &&
@@ -157,7 +178,6 @@ function toggleSelected(e) {
     e.target.classList.contains("add-more") &&
     step5.classList.contains("selected")
   ) {
-    console.log("addmore");
     step5.classList.remove("selected");
     step2.classList.add("selected");
     cartBtns.classList.add("hide");
@@ -168,7 +188,6 @@ function toggleSelected(e) {
     (step5.classList.contains("selected") && e.target.id === "stepBack") ||
     (step5.classList.contains("selected") && e.target.id === "goBack")
   ) {
-    console.log("goback");
     step5.classList.remove("selected");
     step2.classList.add("selected");
     removeProducts();
@@ -216,6 +235,7 @@ function toggleSelected(e) {
     if (step3.children.length > 2) {
       removeProducts();
     }
+
     return;
   }
 
@@ -265,10 +285,12 @@ function toggleSelected(e) {
       step3.children.length > 1) ||
     (e.target.id === "stepBack" &&
       step3.classList.contains("selected") &&
-      step3.children.length > 1)
+      step3.children.length > 1) ||
+    (e.target.id === "goBack" && step3.classList.contains("selected"))
   ) {
     step3.classList.remove("selected");
     step2.classList.add("selected");
+
     removeProducts();
     return;
   }
@@ -324,7 +346,7 @@ function removeProducts() {
 }
 
 const collectionOptions = document.querySelectorAll(".collection-option");
-console.log(collectionOptions);
+
 collectionOptions.forEach((option) => {
   option.addEventListener("click", toggleCollection.bind(this), {
     bubbles: true,
@@ -339,13 +361,8 @@ function toggleCollection(e) {
   const step2 = document.querySelector(".booking-form__content-step-2");
   step3.dataset.id = collectionID;
 
-  console.log(step3);
-
   renderCollectionInfo(Number(collectionID), step3);
-  //   const url = new URL(window.location);
-  //   url.searchParams.set("collection", `${handle}`);
-  //   window.history.pushState({}, "", url);
-  console.log(collectionID, step3);
+
   if (!step3.classList.contains("selected")) {
     step3.classList.add("selected");
     step2.classList.remove("selected");
@@ -362,8 +379,6 @@ async function renderCollectionInfo(targetID, el) {
   jsonCollection.forEach((collection) => {
     if (collection.id === targetID) {
       selectedCollection = collection;
-      console.log(collection);
-      console.log(jsonCollection, collectionProducts);
     }
   });
   const optionHeading = document.querySelector(
@@ -393,26 +408,9 @@ async function renderCollectionInfo(targetID, el) {
 
     itemWrapper.addEventListener("click", showProductInfo.bind(this, item));
   });
-  console.log(selectedCollection);
-  console.log(collectionItems);
-
-  // await fetch("?section_id=booking-form")
-  //   .then((res) => res.text())
-  //   .then((resText) => {
-  //     const id = "collectionProducts";
-  //     const html = new DOMParser().parseFromString(resText, "text/html");
-  //     const destination = document.getElementById(id);
-  //     const source = html.getElementById(id);
-  //     console.log(source);
-  //     console.log(destination);
-  //     if (source && destination) {
-  //       destination.outerHTML = source.outerHTML;
-  //     }
-  //   });
 }
 
 function showProductInfo(item, e) {
-  console.log(e, item);
   const productTitle = document.querySelector(
     ".booking-form__content-step-4-option__info .product-title"
   );
@@ -450,7 +448,6 @@ function storeCartItem(e) {
 
 function renderCart(cartData) {
   setTimeout(() => {
-    console.log("rendered Cart", cartData);
     if (cartData) {
       goToCart.classList.remove("hide");
     }
@@ -485,7 +482,6 @@ function renderCart(cartData) {
     if (step4.classList.contains("selected")) {
       step4.classList.remove("selected");
       step5.classList.add("selected");
-      console.log(items);
     }
 
     // const cartBtns = document.querySelector(".cart-btns");
@@ -527,13 +523,14 @@ function toggleCalendar(e) {
 }
 //********++++++------********* Calendar Widget Code ********++++++------*********/
 let currentCartItems;
+let fullCart;
 async function getItemsInCart() {
   const req = await fetch("/cart.js", {
     method: "GET",
   });
   const res = await req.json();
   currentCartItems = res.items;
-  console.log(currentCartItems, "current ITems!~!!");
+  fullCart = res;
 }
 
 getItemsInCart();
@@ -542,12 +539,12 @@ const dt = new Date();
 
 function renderDate(e, divNum) {
   dt.setDate(1);
-  console.log(dt);
+
   let day = dt.getDay();
   let today = new Date();
   let endDate = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate();
   let prevDate = new Date(dt.getFullYear(), dt.getMonth(), 0).getDate();
-  console.log(day, today, endDate, prevDate);
+
   const months = [
     "January",
     "February",
@@ -572,7 +569,6 @@ function renderDate(e, divNum) {
 
   const monthDays = document.getElementById("days");
   if (e) {
-    console.log(e);
     if (
       e.target.id === "previousMonth" ||
       e.target.id === "nextMonth" ||
@@ -588,7 +584,6 @@ function renderDate(e, divNum) {
         day.remove();
       });
     }
-    console.log("delete");
   }
 
   if (
@@ -616,7 +611,6 @@ function renderDate(e, divNum) {
 
       if (!divNum || e.type === "change") {
         if (i == today.getDate() && dt.getMonth() == today.getMonth()) {
-          console.log(divNum);
           formDays.classList.add(`visible-day`);
 
           formDays.textContent = `${i}`;
@@ -635,7 +629,6 @@ function renderDate(e, divNum) {
       }
       if (divNum) {
         if (i === divNum) {
-          console.log(divNum);
           formDays.classList.add(`visible-day`);
 
           formDays.textContent = `${i}`;
@@ -673,9 +666,6 @@ function renderDate(e, divNum) {
 }
 
 function updateDate(divNum, cartItems, e) {
-  // e.preventDefault();
-
-  console.log(e, divNum, cartItems);
   const currentMonth = document.getElementById("month");
   const currentYear = dt.getFullYear();
   const currentDay = e.target.value || divNum;
@@ -685,12 +675,10 @@ function updateDate(divNum, cartItems, e) {
       day.classList.remove("hidden-day");
       day.classList.add("visible-day");
     } else {
-      console.log(Number(day.textContent));
-
       day.classList.add("hidden-day");
     }
   });
-  console.log(currentDay);
+
   const selectDate = document.getElementById("selectedDate");
   const selectedRadioDate =
     currentMonth.textContent + " " + currentDay + ", " + currentYear;
@@ -698,7 +686,7 @@ function updateDate(divNum, cartItems, e) {
 
   const items = cartItems;
   const variantID = 41179086717101;
-  console.log(variantID);
+
   const locationID = 35770;
   const today = new Date(selectedRadioDate);
   const end = new Date(selectedRadioDate);
@@ -708,8 +696,6 @@ function updateDate(divNum, cartItems, e) {
   end.setHours(19, 0, 0);
   const endDate = end;
   end.toISOString();
-
-  console.log(startDate, endDate);
 
   const body = {
     external_id: variantID,
@@ -728,7 +714,6 @@ function updateDate(divNum, cartItems, e) {
       body: JSON.stringify(body),
     });
     const res = await req.json();
-    console.log(res);
     getDaysAvailable(res);
   }
   testProxy();
@@ -745,12 +730,10 @@ function updateDate(divNum, cartItems, e) {
 }
 
 function renderBlocks(blocks) {
-  console.log(blocks, "BLOCKS!!!!");
   const dateBlocks = blocks[0].timeslots;
   const timeWrapper = document.querySelector(
     ".booking-form__content-step-6-time"
   );
-  console.log(timeWrapper);
 
   const timeEl = document.querySelectorAll(
     ".booking-form__content-step-6-time input, .booking-form__content-step-6-time label, .evening, .morning, .afternoon"
@@ -829,7 +812,6 @@ function renderBlocks(blocks) {
     timeSlots.id = "timeslot-" + i;
     timeSlotsLabel.setAttribute("for", "timeslot-" + i);
     timeSlotsLabel.textContent = startTimeString;
-    console.log(block);
   });
 
   const timeSlots = document.querySelectorAll(
@@ -842,7 +824,7 @@ function renderBlocks(blocks) {
 
 function handleSlotChange(e) {
   e.preventDefault();
-  console.log(e.target.value);
+
   const startTime = new Date(e.target.value);
   const finishTime = e.target.dataset.endTime;
   const selectTimeBtn = document.querySelector(".select-time-btn");
@@ -872,8 +854,7 @@ function addDateTime(e) {
   const finishTime = new Date(e.target.dataset.finishTime);
 
   const selectedTime = {
-    line: 1,
-    properties: {
+    attributes: {
       Start: startTime.toISOString(),
       Finish: finishTime.toISOString(),
     },
@@ -886,7 +867,7 @@ function addDateTime(e) {
 }
 
 async function updateCart(itemProps) {
-  const req = await fetch("/cart/change.js", {
+  const req = await fetch("/cart/update.js", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -895,16 +876,15 @@ async function updateCart(itemProps) {
   });
   const res = await req.json();
   await getItemsInCart();
-  await renderReview(currentCartItems);
-
-  console.log(res, "updatedCart");
+  await renderReview(fullCart);
 }
 
 function renderReview(items) {
-  const bookingInfo = items[0].properties;
-  const cartInfo = items;
-  console.log(bookingInfo);
+  const bookingInfo = items.attributes;
+  const cartInfo = items.items;
+  console.log(items);
   const startDate = new Date(bookingInfo.Start);
+
   const startString = new Intl.DateTimeFormat("en-US", {
     dateStyle: "medium",
   }).format(startDate);
@@ -933,7 +913,7 @@ function renderReview(items) {
   const allItemsInfo = document.querySelectorAll(
     ".booking-form__content-step-7-items .item-info"
   );
-  console.log(allItemsInfo);
+
   if (allItemsInfo) {
     allItemsInfo.forEach((item) => {
       item.remove();
@@ -962,7 +942,7 @@ function renderReview(items) {
   let itemPrices = [];
   for (let i = 0; i < allItems.length; i++) {
     itemPrices.push(Number(allItems[i].textContent.slice(1)));
-    console.log(itemPrices);
+    // console.log(itemPrices);
   }
   const cartTotal = itemPrices.reduce((a, b) => a + b, 0);
   const totalPriceEl = document.getElementById("totalPrice");
@@ -976,7 +956,7 @@ function renderReview(items) {
   }
   customerBtn.textContent = "$" + cartTotal;
 
-  console.log(bookingInfo, cartInfo, cartTotal, "heyyy LOOK HERE");
+  // console.log(bookingInfo, cartInfo, cartTotal, "heyyy LOOK HERE");
 }
 
 const customerInfoBtn = document.getElementById("toCustomerInfo");
@@ -998,8 +978,7 @@ function addCustomerInfo(e) {
   const email = document.querySelector("#email").value;
 
   const customerInformation = {
-    line: 1,
-    properties: {
+    attributes: {
       Start: currentCartItems[0].properties.Start,
       Finish: currentCartItems[0].properties.Finish,
       Name: firstName + " " + lastName,
@@ -1019,7 +998,6 @@ async function addToCart(cart) {
       body: JSON.stringify(cart),
     });
     const res = await req.json();
-    console.log(res);
   } catch (error) {
     console.log(error);
   }
@@ -1081,81 +1059,3 @@ function moveDate(params, e) {
   }
   renderDate(e);
 }
-/*
-function handleChange(option) {
-  let day = dt.getDay();
-  let today = new Date();
-  let endDate = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate();
-  let nextDate = new Date(dt.getFullYear(), dt.getMonth() + 1, 1).getDate();
-  let nextDay = new Date(dt.getFullYear(), dt.getMonth() + 1, 1).getDay();
-  let endDay = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDay();
-  let prevDate = new Date(dt.getFullYear(), dt.getMonth(), 0).getDate();
-  console.log(day, endDay, today, nextDate, nextDay, endDate, prevDate);
-  const daysWrapper = document.getElementById("days");
-  const selectMonth = document.getElementById("month");
-
-  const allDays = document.querySelectorAll(
-    "#days input[type='radio'], #days label, #days div, .days-wrapper"
-  );
-  const val = 7 - nextDay;
-  console.log(val);
-  if (allDays.length > 0) {
-    allDays.forEach((day) => {
-      day.remove();
-    });
-  }
-
-  for (let i = day; i > 0; i--) {
-    const dayEl = daysWrapper.appendChild(document.createElement("div"));
-    dayEl.classList.add(`prev-day`);
-    dayEl.textContent = `${prevDate - i + 1}`;
-  }
-
-  for (let i = 1; i <= endDate; i++) {
-    const dayWrap = daysWrapper.appendChild(document.createElement("div"));
-    dayWrap.classList.add("day-wrapper");
-    const dayEl = dayWrap.appendChild(document.createElement("input"));
-    const labelEl = dayWrap.appendChild(document.createElement("label"));
-    dayEl.setAttribute("type", "radio");
-    dayEl.setAttribute("name", "day");
-    dayEl.setAttribute("id", `day-${i}`);
-    labelEl.setAttribute("for", `day-${i}`);
-    if (i == today.getDate() && dt.getMonth() == today.getMonth()) {
-      labelEl.classList.add(`day`);
-      labelEl.selected = true;
-      labelEl.textContent = `${i}`;
-      dayEl.value = `${i}`;
-    } else {
-      labelEl.classList.add(`day`);
-      labelEl.textContent = `${i}`;
-      dayEl.value = `${i}`;
-    }
-  }
-
-  for (let i = 1; i <= val; i++) {
-    const dayEl = daysWrapper.appendChild(document.createElement("div"));
-    dayEl.classList.add(`prev-day`);
-    dayEl.textContent = `${i}`;
-  }
-  const options = document.querySelectorAll("option");
-  selectMonth.addEventListener("change", pickMonth.bind(this, options));
-  const radioDays = document.querySelectorAll('input[type="radio"]');
-
-  radioDays.forEach((radio) => {
-    radio.addEventListener("change", updateDate.bind(this));
-  });
-}
-
-function updateDate(e) {
-  const monthOptions = document.querySelector("#month");
-
-  const selectedDate = document.querySelector(
-    ".calendar-container_content-select-days h2 span"
-  );
-  selectedDate.textContent = "";
-  selectedDate.textContent = string;
-  console.log(e, options);
-}
-
-updateDate();
-*/

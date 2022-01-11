@@ -1,5 +1,5 @@
 async function testProxy() {
-  const req = await fetch("/app_proxy", {
+  const req = await fetch("/apps/app_proxy", {
     method: "GET",
     host: "24knailspa.com",
     headers: {

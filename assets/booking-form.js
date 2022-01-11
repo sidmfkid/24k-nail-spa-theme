@@ -708,7 +708,7 @@ function updateDate(divNum, cartItems, e) {
   end.setHours(19, 0, 0);
   const endDate = end;
   end.toISOString();
-  let btaApi = btaSdk.init(token);
+
   console.log(startDate, endDate);
 
   const body = {

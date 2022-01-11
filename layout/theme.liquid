@@ -137,6 +137,7 @@
     {% section 'header' %}
     {% section 'booking-form' %}
     <main class="" id="MainContent" role="main" tabindex="-1">
+
         {{ content_for_layout }}
     </main>
     {% section 'footer' %}
@@ -144,6 +145,7 @@
     <ul hidden>
         <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
     </ul>
+
 
     <script>
         window.shopUrl = '{{ shop.url }}';

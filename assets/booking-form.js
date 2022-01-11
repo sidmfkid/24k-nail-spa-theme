@@ -710,19 +710,28 @@ function updateDate(divNum, cartItems, e) {
   end.toISOString();
   let btaApi = btaSdk.init(token);
   console.log(startDate, endDate);
-  btaApi
-    .getBlocks({
-      external_id: variantID,
-      location_ids: [locationID],
-      start: startDate,
-      finish: endDate,
-      interval: "60:00",
-    })
-    .then((res) => {
-      const blocks = res.data;
-      console.log(blocks);
-      getDaysAvailable(blocks);
+
+  const body = {
+    external_id: variantID,
+    location_ids: [locationID],
+    start: startDate,
+    finish: endDate,
+    interval: "60:00",
+  };
+
+  async function testProxy() {
+    const req = await fetch("/apps/app_proxy/blocks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
     });
+    const res = await req.json();
+    console.log(res);
+    getDaysAvailable(res);
+  }
+  testProxy();
 
   const getDaysAvailable = (data) => {
     let blocks = [];

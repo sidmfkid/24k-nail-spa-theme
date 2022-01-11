@@ -1,3 +1,17 @@
+async function testProxy() {
+  const req = await fetch("/app_proxy", {
+    method: "GET",
+    host: "24knailspa.com",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res = await req;
+  console.log(res);
+}
+testProxy();
+
+
 const bookNowBtn = document.getElementById("bookAppointment");
 const step1 = document.querySelector(".booking-form__content-step-1");
 const step2 = document.querySelector(".booking-form__content-step-2");

@@ -506,7 +506,7 @@ input:checked + .slider:before {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 90vh;
+    height: 80vh;
     width: 100vw;
     transform: translate(100%, 0);
     transition: transform 0.5s ease-in-out;
@@ -1825,6 +1825,7 @@ input:checked + .slider:before {
   font-size: 2rem;
   font-weight: 600;
   width: fit-content;
+  cursor: pointer;
 }
 .booking-form__content-step-3-option {
   cursor: pointer;
@@ -2640,4 +2641,39 @@ html.transition *::before,
 html.transition *::after {
   transition: all 0.5s !important;
   transition-delay: 0 !important;
+}
+
+.loading-svg {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading-svg.hide {
+  display: none;
+}
+.loading-svg div {
+  width: 7rem;
+  height: 7rem;
+}
+.loading-svg div svg circle {
+  stroke: #d4d4d4;
+  fill: #a4a4a4;
+  animation: loading 0.7s infinite cubic-bezier(0.47, 0, 0.745, 0.715);
+}
+
+@keyframes loading {
+  0% {
+    stroke: #d4d4d4;
+    fill: #a4a4a4;
+  }
+  50% {
+    stroke: #a4a4a4;
+    fill: #d4d4d4;
+  }
+  100% {
+    stroke: #d4d4d4;
+    fill: #a4a4a4;
+  }
 }

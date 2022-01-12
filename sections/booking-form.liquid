@@ -1,4 +1,4 @@
-<section class="booking-form">
+<section class="booking-form open">
     <div class="booking-form__overlay">
         <span id="closeBookingForm"></span>
     </div>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="booking-form__content-step">
-            <div class="booking-form__content-step-1 selected">
+            <div class="booking-form__content-step-1">
                 <div class="booking-form__content-step-1-heading">
                     <h2>Appointment Preference</h2>
 
@@ -32,7 +32,7 @@
                 {% assign collectionOptions = collections %}
                 {% for collection in collectionOptions %}
                 <div data-id="{{ collection.id }}" class="booking-form__content-step-2-option collection-option">
-                    <div class="booking-form__content-step-2-option__info">
+                    <div data-id="{{ collection.id }}" class="booking-form__content-step-2-option__info">
 
                         <span data-id="{{ collection.id }}" class="title">{{ collection.title }}</span>
 
@@ -44,7 +44,7 @@
             <div id="collectionProducts" data-id="" class="booking-form__content-step-3">
                 <div class="booking-form__content-step-3-heading">
                     <i id="stepBack" class="fa fa-chevron-left"></i>
-                    <h2>Acrylic</h2>
+                    <h2 id="stepBack">Acrylic</h2>
                 </div>
             </div>
             <div id="formProduct" class="booking-form__content-step-4">
@@ -82,7 +82,7 @@
                 </div>
 
             </div>
-            <div id="dateSelector" class="booking-form__content-step-6">
+            <div id="dateSelector" class="booking-form__content-step-6 selected">
                 <div class="booking-form__content-step-6-heading">
                     <i id="stepBack" class="fa fa-chevron-left"></i>
                     <h2>Select Appointment Time</h2>
@@ -130,7 +130,30 @@
                     <i id="nextDay" class="fa fa-chevron-right"></i>
 
                 </div>
+
+                <div class="loading-svg">
+                    <div>
+                        <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100"
+                            enable-background="new 0 0 0 0" xml:space="preserve">
+                            <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
+                                <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite"
+                                    begin="0.1" />
+                            </circle>
+                            <circle fill="#fff" stroke="none" cx="26" cy="50" r="6">
+                                <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite"
+                                    begin="0.2" />
+                            </circle>
+                            <circle fill="#fff" stroke="none" cx="46" cy="50" r="6">
+                                <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite"
+                                    begin="0.3" />
+                            </circle>
+                        </svg>
+                    </div>
+                </div>
+
                 <div class="booking-form__content-step-6-time">
+
                     <form id="appointmentTime" action="">
 
                     </form>

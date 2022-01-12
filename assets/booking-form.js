@@ -10,6 +10,20 @@ const step8 = document.querySelector(".booking-form__content-step-8");
 bookNowBtn.addEventListener("click", toggleForm.bind(this));
 const cartBtns = document.querySelector(".cart-btns");
 
+// document.addEventListener("DOMContentLoaded", (e) => {
+//   console.log(e);
+//   const loadingIcon = document.querySelector(".loading-svg");
+//   loadingIcon.classList.add("hide");
+//   console.log(loadingIcon);
+// });
+const loadingIcon = document.querySelector(".loading-svg");
+
+window.addEventListener("load", (e) => {
+  console.log(e);
+  loadingIcon.classList.add("hide");
+  console.log(loadingIcon);
+});
+
 function toggleForm(e) {
   e.preventDefault();
   const bookingForm = document.querySelector(".booking-form");
@@ -74,8 +88,8 @@ const stepBack = document.querySelector("#stepBack");
 const backToProducts = document.querySelector(
   ".booking-form__content-step-4 #stepBack"
 );
-const backToCollections = document.querySelector(
-  ".booking-form__content-step-3 #stepBack"
+const backToCollections = document.querySelectorAll(
+  ".booking-form__content-step-3 #stepBack, .booking-form__content-step-3 #stepBack ~ h2"
 );
 
 const cartStepBack = document.querySelector(
@@ -92,7 +106,11 @@ goToCart.addEventListener("click", viewCart.bind(this));
 stepBack.addEventListener("click", toggleSelected.bind(this));
 addMoreItems.addEventListener("click", toggleSelected.bind(this));
 backToProducts.addEventListener("click", toggleSelected.bind(this));
-backToCollections.addEventListener("click", toggleSelected.bind(this));
+
+backToCollections.forEach((el) => {
+  el.addEventListener("click", toggleSelected.bind(this));
+});
+
 cartStepBack.addEventListener("click", toggleSelected.bind(this));
 appointmentStepBack.addEventListener("click", toggleSelected.bind(this));
 
@@ -345,17 +363,20 @@ function removeProducts() {
   });
 }
 
-const collectionOptions = document.querySelectorAll(".collection-option");
+const collectionOptions = document.querySelectorAll(
+  ".collection-option, .collection-option .booking-form__content-step-2-option__info, .collection-option .booking-form__content-step-2-option__info .title"
+);
 
 collectionOptions.forEach((option) => {
   option.addEventListener("click", toggleCollection.bind(this), {
-    bubbles: true,
+    bubbles: false,
   });
 });
 
 function toggleCollection(e) {
   e.stopPropagation();
   e.preventDefault();
+  console.log(e.target);
   const collectionID = e.target.dataset.id;
   const step3 = document.getElementById("collectionProducts");
   const step2 = document.querySelector(".booking-form__content-step-2");
@@ -435,71 +456,67 @@ const productATC = document.querySelector(
 );
 productATC.addEventListener("click", storeCartItem.bind(this), false);
 
-function storeCartItem(e) {
+async function storeCartItem(e) {
   e.preventDefault();
 
   const selectedItem = {
     id: e.target.dataset.variantId,
     quantity: 1,
   };
-  addToCart(selectedItem);
-  getCart();
+  await addToCart(selectedItem);
+  await getCart();
 }
 
 function renderCart(cartData) {
-  setTimeout(() => {
-    if (cartData) {
-      goToCart.classList.remove("hide");
-    }
-    const items = cartData.items;
-    const itemsWrapper = document.querySelector(
-      ".booking-form__content-step-5-items"
-    );
-    const itemWrapper = document.querySelectorAll(
-      ".booking-form__content-step-5-items .item-wrapper"
-    );
+  if (cartData) {
+    goToCart.classList.remove("hide");
+  }
+  const items = cartData.items;
+  const itemsWrapper = document.querySelector(
+    ".booking-form__content-step-5-items"
+  );
+  const itemWrapper = document.querySelectorAll(
+    ".booking-form__content-step-5-items .item-wrapper"
+  );
 
-    if (itemWrapper.length > 0) {
-      itemWrapper.forEach((item) => {
-        item.remove();
-      });
-    }
+  if (itemWrapper.length > 0) {
+    itemWrapper.forEach((item) => {
+      item.remove();
+    });
+  }
 
-    if (items) {
-      items.forEach((item) => {
-        const cartItems = itemsWrapper.appendChild(
-          document.createElement("div")
-        );
-        const itemTitle = cartItems.appendChild(document.createElement("div"));
-        const itemPrice = cartItems.appendChild(document.createElement("div"));
-        cartItems.classList.add("item-wrapper");
-        itemTitle.classList.add("title");
-        itemPrice.classList.add("price");
-        itemTitle.textContent = item.title;
-        itemPrice.textContent = "$" + item.price * 0.01;
-      });
-    }
-    if (step4.classList.contains("selected")) {
-      step4.classList.remove("selected");
-      step5.classList.add("selected");
-    }
+  if (items) {
+    items.forEach((item) => {
+      const cartItems = itemsWrapper.appendChild(document.createElement("div"));
+      const itemTitle = cartItems.appendChild(document.createElement("div"));
+      const itemPrice = cartItems.appendChild(document.createElement("div"));
+      cartItems.classList.add("item-wrapper");
+      itemTitle.classList.add("title");
+      itemPrice.classList.add("price");
+      itemTitle.textContent = item.title;
+      itemPrice.textContent = "$" + item.price * 0.01;
+    });
+  }
+  if (step4.classList.contains("selected")) {
+    step4.classList.remove("selected");
+    step5.classList.add("selected");
+  }
 
-    // const cartBtns = document.querySelector(".cart-btns");
+  // const cartBtns = document.querySelector(".cart-btns");
 
-    if (
-      cartBtns.classList.contains("hide") &&
-      step5.classList.contains("selected")
-    ) {
-      cartBtns.classList.remove("hide");
-      return;
-    } else if (
-      !step5.classList.contains("selected") &&
-      cartBtns.classList.contains("hide")
-    ) {
-      cartBtns.classList.add("hide");
-      return;
-    }
-  }, 500);
+  if (
+    cartBtns.classList.contains("hide") &&
+    step5.classList.contains("selected")
+  ) {
+    cartBtns.classList.remove("hide");
+    return;
+  } else if (
+    !step5.classList.contains("selected") &&
+    cartBtns.classList.contains("hide")
+  ) {
+    cartBtns.classList.add("hide");
+    return;
+  }
 }
 
 const currentCart = getCart();
@@ -706,6 +723,11 @@ function updateDate(divNum, cartItems, e) {
   };
 
   async function testProxy() {
+    const timeWrapper = document.querySelector(
+      ".booking-form__content-step-6-time"
+    );
+    timeWrapper.classList.add("hide");
+    loadingIcon.classList.remove("hide");
     const req = await fetch("/apps/app_proxy/blocks", {
       method: "POST",
       headers: {
@@ -715,6 +737,8 @@ function updateDate(divNum, cartItems, e) {
     });
     const res = await req.json();
     getDaysAvailable(res);
+    loadingIcon.classList.add("hide");
+    timeWrapper.classList.remove("hide");
   }
   testProxy();
 
@@ -1004,12 +1028,15 @@ async function addToCart(cart) {
 }
 
 async function getCart() {
+  loadingIcon.classList.remove("hide");
+
   const req = await fetch("/cart.js", {
     method: "GET",
   });
   const res = await req.json();
 
-  renderCart(res);
+  renderCart(await res);
+  loadingIcon.classList.add("hide");
 }
 
 renderDate();

@@ -2566,7 +2566,7 @@ input:checked + .slider:before {
   top: 0;
   left: 0;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 900px) {
   .booking-form__overlay {
     background-color: none;
     width: 0;

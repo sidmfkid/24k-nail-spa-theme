@@ -1044,7 +1044,7 @@
       left: 0;
     }
   }
-  @include media-small {
+  @include media-tablet {
     &__overlay {
       background-color: none;
       width: 0;

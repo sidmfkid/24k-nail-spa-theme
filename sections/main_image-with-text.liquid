@@ -3,6 +3,7 @@
 
 <section class="image-with-text">
     <div class="image-with-text__content">
+
         <div class="image-with-text__content-title">
             <h2>Newly Renovated Everything!</h2>
         </div>
@@ -17,17 +18,13 @@
             </ul>
         </div>
     </div>
-    <div class="image-with-text__svg"></div>
+    <div class="img-container">
+        <img loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0579/4758/6733/files/24k-nail-spa-renovations-web_0951.jpg?v=1642046628"
+            width="800" height="1101" alt="" class="image-with-text__content-bg-img">
+    </div>
 </section>
 
-{% style%}
-.image-with-text__svg {
-background: url({{ 'subtract.svg' | asset_url }});
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
-}
-{% endstyle%}
 
 {% schema %}
 {

@@ -753,11 +753,10 @@ input:checked + .slider:before {
   }
 }
 .image-with-text {
-  background-color: var(--primary-95);
   height: 100%;
   width: 100%;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 .image-with-text__content {
   height: 100%;
@@ -765,14 +764,19 @@ input:checked + .slider:before {
   justify-content: space-evenly;
   align-items: center;
 }
+.image-with-text__content-img {
+  position: absolute;
+}
 .image-with-text__content-title {
   flex-basis: 50%;
   text-align: left;
   font-size: calc(1.5rem + 2vw);
-  color: var(--primary-20);
+  color: var(--primary-99);
+  text-shadow: 0px 5px 2rem var(--primary-98);
 }
 .image-with-text__content-list {
-  flex-basis: 40%;
+  flex-basis: 50%;
+  text-align: center;
 }
 .image-with-text__content-list ul li {
   margin: 7rem 0;
@@ -781,17 +785,43 @@ input:checked + .slider:before {
   font-size: calc(1.5rem + 1vw);
   color: var(--primary-20);
 }
-.image-with-text__svg {
+.image-with-text .img-container {
   position: absolute;
-  z-index: -1;
   top: 0;
-  left: calc(-30rem - 5vw);
-  width: 100%;
+  left: 0;
+  width: 50%;
   height: 100%;
+}
+.image-with-text .img-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 10%, var(--primary-90) 40%, var(--primary-98) 60%);
+}
+.image-with-text .img-container .image-with-text__content-bg-img {
+  position: relative;
+  width: auto;
+  height: 100%;
+  z-index: -1;
 }
 @media screen and (max-width: 900px) {
   .image-with-text {
     overflow-y: hidden;
+  }
+  .image-with-text .img-container {
+    width: 100%;
+  }
+  .image-with-text .img-container::after {
+    background: linear-gradient(to top, rgba(255, 250, 253, 0.64) 7%, rgba(255, 204, 235, 0.64) 16%, rgba(255, 204, 235, 0.64) 36%, rgba(255, 255, 255, 0) 60%, rgba(255, 204, 235, 0.64) 65%, var(--primary-98) 78%, white 97%);
+  }
+  .image-with-text .img-container .image-with-text__content-bg-img {
+    height: auto;
+    top: 18%;
+    height: 100%;
   }
   .image-with-text__content {
     flex-wrap: wrap;
@@ -799,9 +829,13 @@ input:checked + .slider:before {
   .image-with-text__content-title {
     flex-basis: 100%;
     text-align: center;
+    color: var(--primary-30);
   }
   .image-with-text__content-list {
     text-align: center;
+  }
+  .image-with-text__content-list ul li {
+    color: white;
   }
   .image-with-text__svg {
     transform: rotate(90deg);

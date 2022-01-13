@@ -1,24 +1,29 @@
 .image-with-text {
-  background-color: var(--primary-95);
+  // background-color: var(--primary-95);
   height: 100%;
   width: 100%;
   position: relative;
-  overflow-x: hidden;
-
+  overflow: hidden;
   &__content {
     height: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     @extend %sec-padding;
+    &-img {
+      position: absolute;
+      // z-index: -1;
+    }
     &-title {
       flex-basis: 50%;
       text-align: left;
       font-size: font-size(medium);
-      color: var(--primary-20);
+      color: var(--primary-99);
+      text-shadow: 0px 5px 2rem var(--primary-98);
     }
     &-list {
-      flex-basis: 40%;
+      flex-basis: 50%;
+      text-align: center;
       ul {
         li {
           margin: 7rem 0;
@@ -30,25 +35,72 @@
       }
     }
   }
-  &__svg {
+  .img-container {
     position: absolute;
-    z-index: -1;
     top: 0;
-    left: calc(-30rem - 5vw);
-    width: 100%;
+    left: 0;
+    width: 50%;
     height: 100%;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 10%,
+        var(--primary-90) 40%,
+        var(--primary-98) 60%
+      );
+    }
+    .image-with-text__content-bg-img {
+      position: relative;
+
+      width: auto;
+      height: 100%;
+      z-index: -1;
+    }
   }
 
   @include media-tablet {
+    .img-container {
+      width: 100%;
+      &::after {
+        background: linear-gradient(
+          to top,
+          hsla(323.5, 100%, 99%, 0.64) 7%,
+          hsla(323.5, 100%, 90%, 0.64) 16%,
+          hsla(323.5, 100%, 90%, 0.64) 36%,
+          rgba(255, 255, 255, 0) 60%,
+          hsla(323.5, 100%, 90%, 0.64) 65%,
+          var(--primary-98) 78%,
+          white 97%
+        );
+      }
+      .image-with-text__content-bg-img {
+        height: auto;
+        top: 18%;
+        height: 100%;
+      }
+    }
     overflow-y: hidden;
     &__content {
       flex-wrap: wrap;
       &-title {
         flex-basis: 100%;
         text-align: center;
+        color: var(--primary-30);
       }
       &-list {
         text-align: center;
+        ul {
+          li {
+            color: white;
+          }
+        }
       }
     }
     &__svg {

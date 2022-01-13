@@ -12,16 +12,21 @@ const cartBtns = document.querySelector(".cart-btns");
 
 // document.addEventListener("DOMContentLoaded", (e) => {
 //   console.log(e);
-//   const loadingIcon = document.querySelector(".loading-svg");
-//   loadingIcon.classList.add("hide");
-//   console.log(loadingIcon);
+//   const loadingIconStep6 = document.querySelector(".loading-svg");
+//   loadingIconStep6.classList.add("hide");
+//   console.log(loadingIconStep6);
 // });
-const loadingIcon = document.querySelector(".loading-svg");
+const loadingIconStep6 = document.querySelector(
+  ".booking-form__content-step-6 .loading-svg"
+);
+const loadingIconStep5 = document.querySelector(
+  ".booking-form__content-step-5 .loading-svg"
+);
 
 window.addEventListener("load", (e) => {
   console.log(e);
-  loadingIcon.classList.add("hide");
-  console.log(loadingIcon);
+  loadingIconStep6.classList.add("hide");
+  console.log(loadingIconStep6);
 });
 
 function toggleForm(e) {
@@ -489,17 +494,34 @@ function renderCart(cartData) {
     items.forEach((item) => {
       const cartItems = itemsWrapper.appendChild(document.createElement("div"));
       const itemTitle = cartItems.appendChild(document.createElement("div"));
+      const itemH2 = itemTitle.appendChild(document.createElement("h2"));
+      const itemRemove = itemTitle.appendChild(document.createElement("div"));
       const itemPrice = cartItems.appendChild(document.createElement("div"));
       cartItems.classList.add("item-wrapper");
+      itemRemove.classList.add("item-remove");
+      itemRemove.dataset.id = item.id;
       itemTitle.classList.add("title");
       itemPrice.classList.add("price");
-      itemTitle.textContent = item.title;
+      itemH2.textContent = item.title;
+      itemRemove.textContent = "Remove";
       itemPrice.textContent = "$" + item.price * 0.01;
     });
   }
   if (step4.classList.contains("selected")) {
     step4.classList.remove("selected");
     step5.classList.add("selected");
+  }
+
+  const removeItemBtns = document.querySelectorAll(".item-remove");
+
+  removeItemBtns.forEach((btn) => {
+    btn.addEventListener("click", removeItem.bind(this));
+  });
+
+  if (items.length === 0) {
+    selectDateBtn.disabled = true;
+  } else {
+    selectDateBtn.disabled = false;
   }
 
   // const cartBtns = document.querySelector(".cart-btns");
@@ -517,6 +539,14 @@ function renderCart(cartData) {
     cartBtns.classList.add("hide");
     return;
   }
+}
+
+async function removeItem(e) {
+  const deletedItem = {
+    id: e.target.dataset.id,
+    quantity: 0,
+  };
+  changeCart(deletedItem);
 }
 
 const currentCart = getCart();
@@ -727,7 +757,7 @@ function updateDate(divNum, cartItems, e) {
       ".booking-form__content-step-6-time"
     );
     timeWrapper.classList.add("hide");
-    loadingIcon.classList.remove("hide");
+    loadingIconStep6.classList.remove("hide");
     const req = await fetch("/apps/app_proxy/blocks", {
       method: "POST",
       headers: {
@@ -737,7 +767,7 @@ function updateDate(divNum, cartItems, e) {
     });
     const res = await req.json();
     getDaysAvailable(res);
-    loadingIcon.classList.add("hide");
+    loadingIconStep6.classList.add("hide");
     timeWrapper.classList.remove("hide");
   }
   testProxy();
@@ -900,7 +930,73 @@ async function updateCart(itemProps) {
   });
   const res = await req.json();
   await getItemsInCart();
-  await renderReview(fullCart);
+  renderReview(await fullCart);
+  showCheckoutBtn(await fullCart);
+}
+function showCheckoutBtn(data) {
+  const checkoutBtn = document.querySelector(".checkout-btn");
+  const formErrorName = document.querySelectorAll(".form-error-alert.name");
+  const formSuccess = document.querySelectorAll(".form-success-alert");
+  const formSuccessEmail = document.querySelector(".form-success-alert.email");
+  const formErrorEmail = document.querySelector(".form-error-alert.email");
+  console.log(data);
+  if (
+    data.attributes.Name === " " ||
+    !data.attributes.Name ||
+    data.attributes.Name === ""
+  ) {
+    console.log("show CHECKOUT");
+    formErrorName.forEach((el) => {
+      el.classList.remove("hide");
+      formSuccess[i].classList.add("hide");
+    });
+  } else {
+    formErrorName.forEach((el, i) => {
+      el.classList.add("hide");
+      formSuccess[i].classList.remove("hide");
+    });
+  }
+
+  if (
+    data.attributes.Email === " " ||
+    !data.attributes.Email ||
+    data.attributes.Email === ""
+  ) {
+    formErrorEmail.classList.remove("hide");
+    formSuccessEmail.classList.add("hide");
+  } else {
+    formErrorEmail.classList.add("hide");
+    formSuccessEmail.classList.remove("hide");
+  }
+
+  if (data.attributes.Name && data.attributes.Email) {
+    checkoutBtn.classList.remove("hide");
+    checkoutBtn.disabled = false;
+    checkoutBtn.ariaDisabled = "false";
+    console.log(checkoutBtn.ariaDisabled);
+    return;
+  }
+}
+
+async function changeCart(itemProps) {
+  const step5Items = document.querySelector(
+    ".booking-form__content-step-5-items"
+  );
+  step5Items.classList.add("hide");
+  loadingIconStep5.classList.remove("hide");
+
+  const req = await fetch("/cart/change.js", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(itemProps),
+  });
+  const res = await req.json();
+  await getItemsInCart();
+  renderCart(await fullCart);
+  loadingIconStep5.classList.add("hide");
+  step5Items.classList.remove("hide");
 }
 
 function renderReview(items) {
@@ -929,9 +1025,17 @@ function renderReview(items) {
     }
     if (section[i].classList[0].includes("date")) {
       section[i].children[1].textContent = weekDayString + ", " + startString;
+      section[i].children[1].addEventListener(
+        "click",
+        editBookingDate.bind(this)
+      );
     }
     if (section[i].classList[0].includes("time")) {
       section[i].children[1].textContent = timeString;
+      section[i].children[1].addEventListener(
+        "click",
+        editBookingDate.bind(this)
+      );
     }
   }
   const allItemsInfo = document.querySelectorAll(
@@ -983,6 +1087,11 @@ function renderReview(items) {
   // console.log(bookingInfo, cartInfo, cartTotal, "heyyy LOOK HERE");
 }
 
+function editBookingDate(e) {
+  e.preventDefault();
+  step6.classList.add("selected");
+  step7.classList.remove("selected");
+}
 const customerInfoBtn = document.getElementById("toCustomerInfo");
 customerInfoBtn.addEventListener("click", renderCustomerForm.bind(this));
 
@@ -995,11 +1104,58 @@ function renderCustomerForm(e) {
 const submitCustomerInfo = document.querySelector("#addCustomerInfo");
 submitCustomerInfo.addEventListener("click", addCustomerInfo.bind(this));
 
+const formEls = document.querySelectorAll("#firstName, #lastName, #email");
+formEls.forEach((el) => {
+  el.addEventListener("change", validateForms.bind(this));
+});
+
+function validateForms(e) {
+  e.preventDefault();
+  if (
+    (e.target.id === "firstName" && e.target.value.length >= 3) ||
+    (e.target.id === "lastName" && e.target.value.length >= 3) ||
+    (e.target.id === "email" &&
+      e.target.value.includes("@") &&
+      e.target.value.includes("."))
+  ) {
+    if (e.target.id === "email") {
+      e.target.nextElementSibling.nextElementSibling.nextElementSibling.firstElementChild.classList.remove(
+        "hide"
+      );
+      e.target.nextElementSibling.nextElementSibling.firstElementChild.classList.add(
+        "hide"
+      );
+    } else {
+      e.target.nextElementSibling.nextElementSibling.firstElementChild.classList.remove(
+        "hide"
+      );
+      e.target.nextElementSibling.firstElementChild.classList.add("hide");
+    }
+  } else {
+    if (e.target.id === "email") {
+      e.target.nextElementSibling.nextElementSibling.firstElementChild.classList.remove(
+        "hide"
+      );
+      e.target.nextElementSibling.nextElementSibling.nextElementSibling.firstElementChild.classList.add(
+        "hide"
+      );
+    } else {
+      e.target.nextElementSibling.firstElementChild.classList.remove("hide");
+      e.target.nextElementSibling.nextElementSibling.firstElementChild.classList.add(
+        "hide"
+      );
+    }
+  }
+  console.log(e.target);
+}
+
 function addCustomerInfo(e) {
   e.preventDefault();
   const firstName = document.querySelector("#firstName").value;
   const lastName = document.querySelector("#lastName").value;
   const email = document.querySelector("#email").value;
+
+  const formValues = [firstName, lastName, email];
 
   const customerInformation = {
     attributes: {
@@ -1028,7 +1184,7 @@ async function addToCart(cart) {
 }
 
 async function getCart() {
-  loadingIcon.classList.remove("hide");
+  loadingIconStep6.classList.remove("hide");
 
   const req = await fetch("/cart.js", {
     method: "GET",
@@ -1036,7 +1192,7 @@ async function getCart() {
   const res = await req.json();
 
   renderCart(await res);
-  loadingIcon.classList.add("hide");
+  loadingIconStep6.classList.add("hide");
 }
 
 renderDate();

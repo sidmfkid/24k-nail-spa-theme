@@ -219,9 +219,12 @@
         top: 0;
         left: 100%;
         width: 100%;
+        height: 100vh;
+        overflow-y: scroll;
         &.selected {
           left: 0%;
         }
+
         &-heading {
           height: 4.5rem;
           padding: 0.5rem 2rem;
@@ -404,10 +407,17 @@
         top: 0;
         left: 100%;
         width: 100%;
+
         // height: 50vh;
 
         &.selected {
           left: 0%;
+        }
+        .loading-svg {
+          width: 100%;
+          height: 100%;
+          // position: absolute;
+          top: 0;
         }
 
         &-heading {
@@ -438,19 +448,42 @@
           align-self: flex-start;
           width: 100%;
           // flex-wrap: wrap;
-          height: 60vh;
+          min-height: 40vh;
+          height: 50vh;
+          max-height: 60vh;
           overflow-y: scroll;
           .item-wrapper {
             display: flex;
             justify-content: space-between;
             .title {
               position: relative;
-              font-size: font-size(regular);
-              font-weight: font-weight(bold);
-              color: black;
-              z-index: -1;
-              width: 100%;
+              width: 80%;
+              h2 {
+                font-size: font-size(regular);
+                font-weight: font-weight(bold);
+                color: black;
+                z-index: -1;
+                width: 100%;
+              }
+              .item-remove {
+                position: relative;
+                right: 0;
+                top: 0;
+                font-size: font-size(small);
+                width: fit-content;
+                padding: 0 2rem;
+                color: black;
+                border: 2px black solid;
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+                &:active,
+                &:hover {
+                  color: white;
+                  background-color: black;
+                }
+              }
             }
+
             .price {
               font-size: font-size(regular);
               font-weight: font-weight(semibold);
@@ -835,6 +868,7 @@
             &:nth-of-type(2) {
               color: blue;
               text-decoration: underline;
+              cursor: pointer;
             }
           }
         }
@@ -927,7 +961,7 @@
           .heading {
             font-size: font-size(medium);
           }
-          form {
+          #contactInfo {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
@@ -946,12 +980,48 @@
               input {
                 width: 100%;
                 height: 3rem;
+                background-color: white;
+                border: 1px solid black;
               }
               small {
                 font-size: 1rem;
                 color: grey;
                 margin-top: 0.5rem;
                 line-height: 1.4rem;
+              }
+            }
+          }
+          form {
+            .checkout {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-top: 2rem;
+              input {
+                position: relative;
+                display: block;
+                margin: 0rem auto 0 auto;
+                font-size: font-size(regular);
+                padding: 1rem 3rem;
+                min-width: 23rem;
+                background-color: black;
+                color: white;
+                border-radius: 5rem;
+                transition: all 0.2s ease-in-out;
+                border: none;
+                opacity: 1;
+                cursor: pointer;
+
+                &:hover,
+                &:active {
+                  background-color: rgb(20, 20, 20);
+                }
+                &.hide {
+                  min-width: 17rem;
+                  z-index: 0;
+                  margin-top: -12rem;
+                  opacity: 0;
+                }
               }
             }
           }
@@ -967,8 +1037,9 @@
               color: white;
               border-radius: 5rem;
               transition: all 0.2s ease-in-out;
-              &:hover,
-              &:active {
+              cursor: pointer;
+              &:active,
+              &:hover {
                 background-color: rgb(20, 20, 20);
               }
               span {
@@ -992,6 +1063,7 @@
         -30rem 10px 70px var(--secondary-80);
       border-radius: 20rem 20rem 0rem 0rem;
       transition: all 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+      background-color: white;
       &.hide {
         opacity: 0;
         transform: translateY(29rem);
@@ -1012,6 +1084,10 @@
         &:hover,
         &:active {
           background-color: rgb(20, 20, 20);
+        }
+        &:disabled {
+          background-color: rgb(44, 44, 44);
+          cursor: not-allowed;
         }
       }
       .add-more {

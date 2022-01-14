@@ -72,10 +72,14 @@
         padding: 1rem 1rem;
         border-radius: 0.5rem;
         color: var(--primary-99);
-        background-color: var(--primary-80-m);
         overflow: hidden;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+        background: linear-gradient(
+          to right,
+          var(--primary-70-m),
+          var(--secondary-70-m)
+        );
 
         &::after {
           position: absolute;
@@ -201,16 +205,22 @@
     }
     .nav-container {
       overflow-x: hidden;
+
       &.open {
         overflow-x: visible;
+        margin-top: -3rem;
+        height: 100vh;
       }
       height: 0;
       .navlink__container {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 80vh;
+        height: 90vh;
         width: 100vw;
+        overflow-y: scroll;
+        margin-top: -3rem;
+
         transform: translate(100%, 0);
         transition: transform 0.5s ease-in-out;
         .nav-link,

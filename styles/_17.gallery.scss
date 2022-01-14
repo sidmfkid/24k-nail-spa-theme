@@ -9,8 +9,8 @@
   }
   &__content {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
-    grid-template-rows: repeat(auto-fill, minmax(30rem, 1fr));
+    grid-template-columns: repeat(9, minmax(10rem, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(10rem, 1fr));
 
     width: 100%;
     height: fit-content;
@@ -19,6 +19,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
       img {
         width: 100%;
         height: auto;

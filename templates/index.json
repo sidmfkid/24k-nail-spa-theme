@@ -17,6 +17,10 @@
       "type": "main_image-quote",
       "settings": {}
     },
+    "hours": {
+      "type": "main_hours",
+      "settings": {}
+    },
     "gallery": {
       "type": "main_gallery",
       "blocks": {
@@ -109,6 +113,7 @@
     "hero",
     "banner",
     "image-quote",
+    "hours",
     "gallery",
     "image-with-text",
     "map",

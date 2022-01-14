@@ -728,7 +728,9 @@ function renderDate(e, divNum) {
       firstDay.classList.add("visible-day");
       dayOptions = firstDay;
     }
-    const radioDays = document.querySelectorAll('input[type="radio"]');
+    const radioDays = document.querySelectorAll(
+      '.booking-form input[type="radio"]'
+    );
 
     radioDays.forEach((radio) => {
       radio.addEventListener(

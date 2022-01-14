@@ -13,20 +13,45 @@ assign collections = collections | reverse
 endif
 -%}
 
-<div class="list-collection">
+<section class="list-collection">
+    <div class="list-collection-title">
+        <img src="https://cdn.shopify.com/s/files/1/0579/4758/6733/files/nail-design-image.jpg?v=1640633470" alt="">
+        <h1>Our Services</h1>
+    </div>
     <div class="list-collection__content">
-        <h1 class="list-collection__content-title">Our Services</h1>
         <div class="list-collection__content-collections">
+            <form action="">
+                {% for collection in collections %}
 
-            {% for collection in collections %}
-            <a href="{{ collection.url }}" class="btn btn-primary-outline collection">
-                {{ collection.title }}
-            </a>
-            {% endfor %}
+                <div class="collection__option">
+                    <label for="{{collection.title}}" class="collection__option-btn">
+                        <h2>{{ collection.title }}</h2>
+                        <i class="fa fa-plus"></i>
+                    </label>
+                    <input type="checkbox" id="{{collection.title}}" />
+                    <div class="collection__option-products ">
+                        {% for product in collection.products %}
+                        <div class="collection__option-products__container">
+                            <div class="product-title">
+                                <h3>{{ product.title }}</h3>
+                                <span>{{ product.price | money}}</span>
+                            </div>
+                            <div class="product-info">
+                                <p>{{ product.content }}</p>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </form>
         </div>
     </div>
-    {% render 'flower-heads' %}
-</div>
+    <!-- {% render 'flower-heads' %} -->
+</section>
+
+{% render 'sticky-btn' %}
 
 
 {% schema %}

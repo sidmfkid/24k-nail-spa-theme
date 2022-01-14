@@ -1,21 +1,25 @@
 <section class="hero">
+    <div class="image-container">
+        <img loading="lazy" width="800px" height="1198"
+            src="https://cdn.shopify.com/s/files/1/0579/4758/6733/files/cherry-blossom-tree.jpg?v=1640633469" alt=""
+            class="hero-bg-image">
+    </div>
     <div class="hero__content">
         <div class="hero__content-title">
-            <h1>Book Your Appointment Today</h1>
+            <h1>Opening Monday January 17th 2022!</h1>
         </div>
 
         <div class="hero__content-cards">
             <div class="hero__content-cards-card">
                 <h2>Start Your Booking Below</h2>
-                <a role="link" aria-disabled="false" class="btn btn-primary-outline"
-                    href="{{ section.settings.hero_btn-1 }}">{{
-                    section.settings.hero_btn-1-text }}</a>
+                <div id="bookAppointment" role="link" aria-disabled="false" class="btn btn-primary-outline" href="">{{
+                    section.settings.hero_btn-1-text }}</div>
             </div>
             <div class="hero__content-cards-card">
                 <h2>Browse Services</h2>
-                <a role="link" aria-disabled="false" class="btn btn-primary-outline"
-                    href="{{ section.settings.hero_btn-2 }}">{{
-                    section.settings.hero_btn-2-text }}</a>
+                <div id="bookAppointment" role="link" aria-disabled="false"
+                    class="btn btn-primary-outline goToServices">{{
+                    section.settings.hero_btn-2-text }}</div>
             </div>
         </div>
 

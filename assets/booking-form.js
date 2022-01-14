@@ -1,4 +1,4 @@
-const bookNowBtn = document.getElementById("bookAppointment");
+const bookNowBtns = document.querySelectorAll("#bookAppointment");
 const step1 = document.querySelector(".booking-form__content-step-1");
 const step2 = document.querySelector(".booking-form__content-step-2");
 const step3 = document.querySelector(".booking-form__content-step-3");
@@ -7,8 +7,12 @@ const step5 = document.querySelector(".booking-form__content-step-5");
 const step6 = document.querySelector(".booking-form__content-step-6");
 const step7 = document.querySelector(".booking-form__content-step-7");
 const step8 = document.querySelector(".booking-form__content-step-8");
-bookNowBtn.addEventListener("click", toggleForm.bind(this));
+
 const cartBtns = document.querySelector(".cart-btns");
+bookNowBtns.forEach((btn) => {
+  btn.addEventListener("click", toggleForm.bind(this));
+});
+cartIcon.addEventListener("click", toggleForm.bind(this));
 
 // document.addEventListener("DOMContentLoaded", (e) => {
 //   console.log(e);
@@ -31,12 +35,35 @@ window.addEventListener("load", (e) => {
 
 function toggleForm(e) {
   e.preventDefault();
+
   const bookingForm = document.querySelector(".booking-form");
   const goBack = document.getElementById("goBack");
 
-  if (e.target.id === "bookAppointment") {
+  if (
+    e.target.id === "cartIcon" ||
+    e.target.classList.contains("cart-icon") ||
+    e.target.classList.contains("cart-icon-img")
+  ) {
     bookingForm.classList.add("open");
+    step1.classList.remove("selected");
+    step7.classList.add("selected");
+    checkCart(renderReview);
   }
+
+  if (
+    e.target.id === "bookAppointment" &&
+    e.target.classList.contains("goToServices")
+  ) {
+    bookingForm.classList.add("open");
+    step1.classList.remove("selected");
+    step2.classList.add("selected");
+
+    return;
+  } else if (e.target.id === "bookAppointment") {
+    bookingForm.classList.add("open");
+    return;
+  }
+
   if (
     !cartBtns.classList.contains("hide") &&
     !step5.classList.contains("selected") &&

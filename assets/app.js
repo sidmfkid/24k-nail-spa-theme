@@ -31,7 +31,7 @@ let options = {
 const cartIcon = document.querySelector("#cartIcon");
 const cartNum = document.querySelector(".cart-icon-num");
 
-const checkCart = async function () {
+const checkCart = async function (fn) {
   const res = await fetch("/cart.js", {
     method: "GET",
     headers: {
@@ -39,14 +39,22 @@ const checkCart = async function () {
     },
   });
   const data = await res.json();
-  addNumToCart(data);
-  console.log(data);
+  if (!fn) {
+    addNumToCart(await data);
+  }
+
+  if (fn) {
+    if (fn.name === "renderReview") {
+      fn(data);
+    }
+  }
 };
 
-document.addEventListener("DOMContentLoaded", checkCart);
+document.addEventListener("DOMContentLoaded", checkCart());
 
 function addNumToCart(data) {
-  if (data.item_count > 0) {
+  if (data.item_count >= 1) {
+    console.log("ADDED NUM");
     cartNum.classList.toggle("hide");
     cartNum.textContent = data.items.length;
     return;

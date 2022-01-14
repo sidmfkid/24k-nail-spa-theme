@@ -9,13 +9,13 @@
         "hero_btn-2-text": "Browse"
       }
     },
-    "services": {
-      "type": "main_services",
-      "settings": {
-        "service_btn_1": "",
-        "service_btn_2": "",
-        "service_btn_3": ""
-      }
+    "banner": {
+      "type": "main_banner",
+      "setting": {}
+    },
+    "image-quote": {
+      "type": "main_image-quote",
+      "settings": {}
     },
     "gallery": {
       "type": "main_gallery",
@@ -107,7 +107,8 @@
   },
   "order": [
     "hero",
-    "services",
+    "banner",
+    "image-quote",
     "gallery",
     "image-with-text",
     "map",

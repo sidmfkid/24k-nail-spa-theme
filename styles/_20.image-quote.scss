@@ -1,0 +1,88 @@
+.image-quote {
+  @extend %sec-padding;
+  background: linear-gradient(
+    to bottom,
+    var(--secondary-98),
+    var(--secondary-90)
+  );
+  &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-img {
+      width: calc(35rem + 5vw);
+      height: 50rem;
+      overflow: hidden;
+      img {
+        width: 120%;
+        transform: translateY(-9rem);
+        height: auto;
+      }
+    }
+    &-quote {
+      position: relative;
+      padding: 2rem 0rem 2rem 2rem;
+      width: calc(37rem + 5vw);
+      //   border: 1px solid black;
+      background: var(--secondary-80-m);
+      z-index: 1;
+      transform: translate(-8rem, -9rem);
+      &::before {
+        content: "";
+        position: absolute;
+        top: 10rem;
+        z-index: -2;
+        left: 10rem;
+        transform: translate(-50%, -50%);
+        background-color: var(--secondary-80-m);
+        width: 20px;
+        height: 20px;
+        box-shadow: 0px 0px var(--secondary-80), 0px 45px var(--secondary-80-m),
+          0px 90px var(--secondary-80-m), 0px 135px var(--secondary-80-m),
+          45px 0px var(--secondary-80-m), 45px 45px var(--secondary-80-m),
+          45px 90px var(--secondary-80-m), 45px 135px var(--secondary-80-m),
+          90px 0px var(--secondary-80-m), 90px 45px var(--secondary-80-m),
+          90px 90px var(--secondary-80-m), 90px 135px var(--secondary-80-m),
+          135px 0px var(--secondary-80-m), 135px 45px var(--secondary-80-m),
+          135px 90px var(--secondary-80-m), 135px 135px var(--secondary-80-m),
+          180px 0px var(--secondary-80-m), 180px 45px var(--secondary-80-m),
+          180px 90px var(--secondary-80-m), 180px 135px var(--secondary-80-m),
+          225px 0px var(--secondary-80-m), 225px 45px var(--secondary-80-m),
+          225px 90px var(--secondary-80-m), 225px 135px var(--secondary-80-m),
+          270px 0px var(--secondary-80-m), 270px 45px var(--secondary-80-m),
+          270px 90px var(--secondary-80-m), 270px 135px var(--secondary-80-m),
+          315px 0px var(--secondary-80-m), 315px 45px var(--secondary-80-m),
+          315px 90px var(--secondary-80-m), 315px 135px var(--secondary-80-m),
+          360px 0px var(--secondary-80-m), 360px 45px var(--secondary-80-m),
+          360px 90px var(--secondary-80-m), 360px 135px var(--secondary-80-m);
+      }
+      h2 {
+        font-size: font-size(medium);
+        color: white;
+      }
+    }
+  }
+  @include media-tablet {
+    &__content {
+      flex-wrap: wrap;
+      &-img {
+      }
+      &-quote {
+        transform: translate(-1rem, -3rem);
+        &::before {
+          top: 3rem;
+          left: 13rem;
+        }
+      }
+    }
+  }
+  @include media-small {
+    &__content {
+      &-quote {
+        width: 100%;
+        transform: translate(0rem, 0rem);
+        margin-top: 2rem;
+      }
+    }
+  }
+}

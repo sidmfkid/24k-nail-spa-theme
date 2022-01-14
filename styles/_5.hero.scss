@@ -1,6 +1,24 @@
 .hero {
   width: 100%;
 
+  position: relative;
+  .image-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    .hero-bg-image {
+      position: absolute;
+      top: 0rem;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: 1;
+    }
+  }
+
   &__content {
     height: 90vh;
     overflow: hidden;
@@ -14,8 +32,8 @@
     z-index: 1;
     background: linear-gradient(
       to bottom,
-      var(--primary-98),
-      var(--primary-95)
+      hsla(323.1, 100%, 94.9%, 0.51) 50%,
+      hsla(323.1, 100%, 94.9%, 0.91) 76%
     );
     &-title {
       @extend %sec-heading;
@@ -50,6 +68,9 @@
           font-size: font-size(regular);
           color: var(--primary-40);
         }
+        #bookAppointment {
+          cursor: pointer;
+        }
       }
     }
   }
@@ -82,8 +103,32 @@
       fill: var(--secondary-98);
     }
   }
+  @include media-desktop-max {
+    .image-container {
+      .hero-bg-image {
+        height: 100%;
+        width: auto;
+      }
+    }
+  }
+
+  @include media-medium {
+    .image-container {
+      .hero-bg-image {
+        height: 100%;
+        width: auto;
+      }
+    }
+  }
+
   @include media-tablet {
     height: 80vh;
+    .image-container {
+      .hero-bg-image {
+        height: 100%;
+        width: auto;
+      }
+    }
     &__content {
       display: flex;
       flex-wrap: wrap;

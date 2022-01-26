@@ -1040,13 +1040,13 @@ function addDateTime(e) {
     },
   };
 
-  updateCart(selectedTime);
+  updateCart(selectedTime, e);
 
   currentStep.classList.remove("selected");
   nextStep.classList.add("selected");
 }
 
-async function updateCart(itemProps) {
+async function updateCart(itemProps, e) {
   const req = await fetch("/cart/update.js", {
     method: "POST",
     headers: {
@@ -1059,8 +1059,8 @@ async function updateCart(itemProps) {
   await getItemsInCart();
   console.log(res);
   if (!itemProps.attributes.resource) {
-    renderReview(await fullCart);
-    showCheckoutBtn(await fullCart);
+    renderReview(e, await fullCart);
+    showCheckoutBtn(await fullCart, e);
   }
 }
 function showCheckoutBtn(data) {
@@ -1130,7 +1130,6 @@ async function changeCart(itemProps) {
 }
 
 function renderReview(e, items) {
-  console.log(e.target);
   const bookingInfo = items.attributes;
   const cartInfo = items.items;
   console.log(items);

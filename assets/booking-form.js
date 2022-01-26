@@ -27,6 +27,14 @@ const loadingIconStep5 = document.querySelector(
   ".booking-form__content-step-5 .loading-svg"
 );
 
+const loadingIconStep3 = document.querySelector(
+  ".booking-form__content-step-3 .loading-svg"
+);
+
+const loadingIconStep4 = document.querySelector(
+  ".booking-form__content-step-4 .loading-svg"
+);
+
 window.addEventListener("load", (e) => {
   e.preventDefault();
   console.log(e);
@@ -154,6 +162,10 @@ function viewCart(e) {
     e.target.classList.contains("go-to-cart") &&
     step4.classList.contains("selected")
   ) {
+    const errorMsg = document.querySelector(".cart-error");
+    const successMsg = document.querySelector(".cart-success");
+    errorMsg.classList.remove("show");
+    successMsg.classList.remove("show");
     step4.classList.remove("selected");
     step5.classList.add("selected");
     cartBtns.classList.remove("hide");
@@ -222,6 +234,10 @@ function toggleSelected(e) {
     (step4.classList.contains("selected") && e.target.id === "goBack")
   ) {
     step4.classList.remove("selected");
+    const errorMsg = document.querySelector(".cart-error");
+    const successMsg = document.querySelector(".cart-success");
+    errorMsg.classList.remove("show");
+    successMsg.classList.remove("show");
     step2.classList.add("selected");
     removeProducts();
     return;
@@ -552,6 +568,13 @@ async function fetchResources(id) {
   const product = {
     id: id,
   };
+  const allProductOptions = document.querySelectorAll(
+    ".booking-form__content-step-3-option"
+  );
+  allProductOptions.forEach((prod) => {
+    prod.classList.add("hide");
+  });
+  loadingIconStep3.classList.remove("hide");
   console.log(product);
   const req = await fetch("/apps/app_proxy/bta-products", {
     method: "POST",
@@ -562,6 +585,11 @@ async function fetchResources(id) {
   });
   const res = await req.json();
   console.log(res);
+  loadingIconStep3.classList.add("hide");
+  allProductOptions.forEach((prod) => {
+    prod.classList.remove("hide");
+  });
+
   return await res;
 }
 
@@ -606,9 +634,12 @@ function renderCart(cartData) {
       const itemTitle = cartItems.appendChild(document.createElement("div"));
       const itemH2 = itemTitle.appendChild(document.createElement("h2"));
       const itemRemove = itemTitle.appendChild(document.createElement("div"));
+      const itemQuantity = itemTitle.appendChild(document.createElement("div"));
       const itemPrice = cartItems.appendChild(document.createElement("div"));
       cartItems.classList.add("item-wrapper");
       itemRemove.classList.add("item-remove");
+      itemQuantity.classList.add("item-quantity");
+      itemQuantity.textContent = "Quantity: " + item.quantity;
       itemRemove.dataset.id = item.id;
       itemTitle.classList.add("title");
       itemPrice.classList.add("price");
@@ -1300,6 +1331,11 @@ function addCustomerInfo(e) {
 }
 
 async function addToCart(cart) {
+  const successMsg = document.querySelector(".cart-success");
+  const errorMsg = document.querySelector(".cart-error");
+  const atcBtnText = productATC.textContent;
+  productATC.textContent = "";
+  loadingIconStep4.classList.remove("hide");
   try {
     const req = await fetch("/cart/add.js", {
       method: "POST",
@@ -1308,6 +1344,15 @@ async function addToCart(cart) {
       },
       body: JSON.stringify(cart),
     });
+    if (req.status === 400) {
+      errorMsg.classList.add("show");
+      productATC.textContent = atcBtnText;
+    }
+    if (req.status === 200) {
+      successMsg.classList.add("show");
+      productATC.textContent = atcBtnText;
+    }
+    console.log(req);
     const res = await req.json();
   } catch (error) {
     console.log(error);

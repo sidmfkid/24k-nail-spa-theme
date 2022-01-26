@@ -2014,7 +2014,7 @@ input:checked + .slider:before {
   top: 0;
   left: 100%;
   width: 100%;
-  height: 100vh;
+  height: 75vh;
   overflow-y: scroll;
 }
 .booking-form__content-step-3.selected {
@@ -2057,6 +2057,10 @@ input:checked + .slider:before {
 }
 .booking-form__content-step-3-option:hover {
   background-color: var(--primary-95);
+}
+.booking-form__content-step-3-option.hide {
+  opacity: 0;
+  transform: translateY(0rem);
 }
 .booking-form__content-step-3-option__info {
   position: relative;
@@ -2136,6 +2140,42 @@ input:checked + .slider:before {
   opacity: 0;
   transform: translateY(20rem);
   cursor: default;
+}
+.booking-form__content-step-4 .product-btns .cart-success {
+  display: block;
+  position: relative;
+  opacity: 0;
+  padding: 1rem;
+  margin: -5rem auto 0 auto;
+  width: fit-content;
+  font-size: calc(1.2rem + 0.5vw);
+  color: green;
+  transition: all 0.3s cubic-bezier(0.47, 0, 0.745, 0.715);
+}
+.booking-form__content-step-4 .product-btns .cart-success i {
+  color: green;
+}
+.booking-form__content-step-4 .product-btns .cart-success.show {
+  margin: 0rem auto 0 auto;
+  opacity: 1;
+}
+.booking-form__content-step-4 .product-btns .cart-error {
+  display: block;
+  position: relative;
+  opacity: 0;
+  padding: 1rem;
+  margin: -5rem auto 0 auto;
+  width: fit-content;
+  font-size: calc(1.2rem + 0.5vw);
+  color: red;
+  transition: all 0.3s cubic-bezier(0.47, 0, 0.745, 0.715);
+}
+.booking-form__content-step-4 .product-btns .cart-error i {
+  color: red;
+}
+.booking-form__content-step-4 .product-btns .cart-error.show {
+  margin: 0rem auto;
+  opacity: 1;
 }
 .booking-form__content-step-4-heading {
   height: 4.5rem;
@@ -2274,6 +2314,8 @@ input:checked + .slider:before {
 .booking-form__content-step-5-items .item-wrapper .title {
   position: relative;
   width: 80%;
+  display: flex;
+  flex-wrap: wrap;
 }
 .booking-form__content-step-5-items .item-wrapper .title h2 {
   font-size: calc(1.5rem + 1vw);
@@ -2297,6 +2339,12 @@ input:checked + .slider:before {
 .booking-form__content-step-5-items .item-wrapper .title .item-remove:active, .booking-form__content-step-5-items .item-wrapper .title .item-remove:hover {
   color: white;
   background-color: black;
+}
+.booking-form__content-step-5-items .item-wrapper .title .item-quantity {
+  display: inline-block;
+  font-size: calc(1.2rem + 0.5vw);
+  width: fit-content;
+  padding: 0 2rem;
 }
 .booking-form__content-step-5-items .item-wrapper .price {
   font-size: calc(1.5rem + 1vw);

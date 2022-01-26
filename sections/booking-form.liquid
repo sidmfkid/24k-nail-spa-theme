@@ -44,8 +44,10 @@
             <div id="collectionProducts" data-id="" class="booking-form__content-step-3">
                 <div class="booking-form__content-step-3-heading">
                     <i id="stepBack" class="fa fa-chevron-left"></i>
-                    <h2 id="stepBack">Acrylic</h2>
+                    <h2 id="stepBack"></h2>
                 </div>
+                {% render 'loading-icon' %}
+
             </div>
             <div id="formProduct" class="booking-form__content-step-4">
                 <div class="booking-form__content-step-4-heading">
@@ -69,7 +71,11 @@
 
                     <button class="go-to-cart hide">View Cart</button>
                     <button data-quantity="1" data-id="" data-title="" data-price="" class="product-atc">Add
+                        {% render 'loading-icon' %}
                         $55</button>
+                    <div class="cart-success">Added To Cart Successfully! <i class="fa fa-check-circle"></i></div>
+                    <div class="cart-error">Oops! Looks Like There's An Error!<i class="fa fa-times-circle"></i>
+                    </div>
                 </div>
             </div>
             <div id="cartForm" class="booking-form__content-step-5">

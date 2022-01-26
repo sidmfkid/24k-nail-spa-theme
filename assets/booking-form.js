@@ -28,6 +28,7 @@ const loadingIconStep5 = document.querySelector(
 );
 
 window.addEventListener("load", (e) => {
+  e.preventDefault();
   console.log(e);
   loadingIconStep6.classList.add("hide");
   console.log(loadingIconStep6);
@@ -148,6 +149,7 @@ appointmentStepBack.addEventListener("click", toggleSelected.bind(this));
 
 function viewCart(e) {
   e.preventDefault();
+
   if (
     e.target.classList.contains("go-to-cart") &&
     step4.classList.contains("selected")
@@ -160,7 +162,6 @@ function viewCart(e) {
 
 function toggleSelected(e) {
   e.preventDefault();
-
   if (e.target.id === "goBack" && step8.classList.contains("selected")) {
     step8.classList.remove("selected");
     step7.classList.add("selected");
@@ -197,6 +198,7 @@ function toggleSelected(e) {
     removeProducts();
     return;
   }
+
   if (step3.classList.contains("selected") && e.target.id === "goBack") {
     step3.classList.remove("selected");
     step2.classList.add("selected");
@@ -224,6 +226,7 @@ function toggleSelected(e) {
     removeProducts();
     return;
   }
+
   if (
     e.target.classList.contains("add-more") &&
     step5.classList.contains("selected")
@@ -299,6 +302,7 @@ function toggleSelected(e) {
   ) {
     step4.classList.add("selected");
     step3.classList.remove("selected");
+
     return;
   }
 
@@ -329,6 +333,7 @@ function toggleSelected(e) {
     removeProducts();
     return;
   }
+
   if (
     (e.target.id === "goBack" &&
       step3.classList.contains("selected") &&
@@ -360,18 +365,22 @@ function toggleSelected(e) {
     goBack.classList.remove("hide");
     return;
   }
+
   if (
     (!step1.classList.contains("selected") &&
       !step3.classList.contains("selected") &&
-      e.target.id !== "stepBack") ||
+      e.target.id !== "stepBack" &&
+      !e.target.classList.contains("booking-form__content-step-3-option")) ||
     (!step1.classList.contains("selected") &&
       !step2.classList.contains("selected") &&
-      e.target.id !== "stepBack")
+      e.target.id !== "stepBack" &&
+      !e.target.classList.contains("booking-form__content-step-3-option"))
   ) {
     step1.classList.add("selected");
     step2.classList.remove("selected");
     step3.classList.remove("selected");
     goBack.classList.add("hide");
+
     return;
   }
 
@@ -463,7 +472,8 @@ async function renderCollectionInfo(targetID, el) {
   });
 }
 
-function showProductInfo(item, e) {
+async function showProductInfo(item, e) {
+  console.log(e.target);
   const productTitle = document.querySelector(
     ".booking-form__content-step-4-option__info .product-title"
   );
@@ -473,15 +483,88 @@ function showProductInfo(item, e) {
   const productATC = document.querySelector(
     ".booking-form__content-step-4 .product-atc"
   );
+  const staffSelect = document.querySelector(
+    ".booking-form__content-step-4 #staff-select"
+  );
   productTitle.textContent = item.title;
-  productDescription.textContent = item.description;
+  const parser = new DOMParser();
+  const html = parser.parseFromString(item.description, "text/html");
+  const desc = html.querySelector("body");
+  console.log(desc);
+  productDescription.textContent = desc.textContent;
   productATC.dataset.id = item.id;
   productATC.dataset.variantId = item.variants[0].id;
   productATC.dataset.title = item.title;
   productATC.dataset.price = item.price;
   productATC.textContent = `Add $${item.price * 0.01}`;
+
+  const productID = item.id;
+  const resources = await fetchResources(productID);
+  const staff = resources.staff;
+  const prevOptions = document.querySelectorAll(
+    ".booking-form__content-step-4 #staff-select option"
+  );
+  console.log(prevOptions, staffSelect);
+
+  if (prevOptions.length > 1) {
+    prevOptions.forEach((option) => {
+      if (option.value !== "") {
+        option.remove();
+      }
+    });
+  }
+  staff.forEach((emp) => {
+    const staffOption = staffSelect.appendChild(
+      document.createElement("option")
+    );
+    staffOption.value = emp.id;
+    staffOption.textContent = emp.name;
+  });
+  console.log(resources.staff, "AFTER FETCH");
   toggleSelected(e);
 }
+const staffSelect = document.querySelector(
+  ".booking-form__content-step-4 #staff-select"
+);
+
+staffSelect.addEventListener("change", selectStaff.bind(this));
+
+async function selectStaff(e) {
+  const options = document.querySelectorAll(
+    ".booking-form__content-step-4 #staff-select option"
+  );
+
+  options.forEach((option) => {
+    if (option.selected) {
+      const staffID = option.value;
+      const employee = {
+        attributes: {
+          resource: staffID,
+        },
+      };
+      updateCart(employee);
+    }
+  });
+
+  console.log(e.target);
+}
+async function fetchResources(id) {
+  const product = {
+    id: id,
+  };
+  console.log(product);
+  const req = await fetch("/apps/app_proxy/bta-products", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+  const res = await req.json();
+  console.log(res);
+  return await res;
+}
+
 let cartStorage = [];
 const productATC = document.querySelector(
   ".booking-form__content-step-4 .product-atc"
@@ -534,10 +617,10 @@ function renderCart(cartData) {
       itemPrice.textContent = "$" + item.price * 0.01;
     });
   }
-  if (step4.classList.contains("selected")) {
-    step4.classList.remove("selected");
-    step5.classList.add("selected");
-  }
+  // if (step4.classList.contains("selected")) {
+  //   step4.classList.remove("selected");
+  //   step5.classList.add("selected");
+  // }
 
   const removeItemBtns = document.querySelectorAll(".item-remove");
 
@@ -772,10 +855,11 @@ function updateDate(divNum, cartItems, e) {
   end.setHours(19, 0, 0);
   const endDate = end;
   end.toISOString();
-
+  const resourceID = Number(fullCart.attributes.resource);
   const body = {
     external_id: variantID,
     location_ids: [locationID],
+    resource_ids: [resourceID] || null,
     start: startDate,
     finish: endDate,
     interval: "60:00",
@@ -806,103 +890,115 @@ function updateDate(divNum, cartItems, e) {
     data.blocks.forEach((block) => {
       blocks.push(block);
     });
-
+    console.log(blocks);
     renderBlocks(blocks);
   };
   renderDate(e, divNum);
 }
 
 function renderBlocks(blocks) {
-  const dateBlocks = blocks[0].timeslots;
-  const timeWrapper = document.querySelector(
-    ".booking-form__content-step-6-time"
-  );
+  if (blocks.length > 0) {
+    const dateBlocks = blocks[0].timeslots;
+    const timeWrapper = document.querySelector(
+      ".booking-form__content-step-6-time"
+    );
+    const timeForm = document.querySelector(
+      ".booking-form__content-step-6-time #appointmentTime"
+    );
+    timeForm.textContent = "";
+    const timeEl = document.querySelectorAll(
+      ".booking-form__content-step-6-time input, .booking-form__content-step-6-time label, .evening, .morning, .afternoon"
+    );
+    if (timeEl) {
+      timeEl.forEach((el) => {
+        el.remove();
+      });
+    }
 
-  const timeEl = document.querySelectorAll(
-    ".booking-form__content-step-6-time input, .booking-form__content-step-6-time label, .evening, .morning, .afternoon"
-  );
-  if (timeEl) {
-    timeEl.forEach((el) => {
-      el.remove();
+    dateBlocks.forEach((block, i) => {
+      const startTime = new Date(block.start);
+      const finishTime = new Date(block.finish);
+      const startTimeString = new Intl.DateTimeFormat("en-US", {
+        timeStyle: "short",
+      }).format(startTime);
+      const timeForm = document.querySelector(
+        ".booking-form__content-step-6-time form"
+      );
+      const prevMorning = document.querySelector(".morning");
+      const prevAfternoon = document.querySelector(".afternoon");
+      const prevEvening = document.querySelector(".evening");
+
+      if (startTimeString.includes("AM") && !prevMorning) {
+        const timeOfDay = timeForm.appendChild(document.createElement("div"));
+        timeOfDay.classList.add("morning");
+        timeOfDay.textContent = "Morning";
+      }
+      if (
+        (startTimeString.includes("PM") &&
+          !prevAfternoon &&
+          startTimeString.includes("12:")) ||
+        (startTimeString.includes("PM") &&
+          !prevAfternoon &&
+          startTimeString.includes("1:")) ||
+        (startTimeString.includes("PM") &&
+          !prevAfternoon &&
+          startTimeString.includes("2:")) ||
+        (startTimeString.includes("PM") &&
+          !prevAfternoon &&
+          startTimeString.includes("3:")) ||
+        (startTimeString.includes("PM") &&
+          !prevAfternoon &&
+          startTimeString.includes("4:"))
+      ) {
+        const timeOfDay = timeForm.appendChild(document.createElement("div"));
+        timeOfDay.classList.add("afternoon");
+        timeOfDay.textContent = "Afternoon";
+      }
+
+      if (
+        startTimeString.includes("PM") &&
+        !prevEvening &&
+        startTimeString.includes("5:")
+      ) {
+        const timeOfDay = timeForm.appendChild(document.createElement("div"));
+        timeOfDay.classList.add("evening");
+        timeOfDay.textContent = "Evening";
+      }
+
+      const timeSlotsContainer = timeForm.appendChild(
+        document.createElement("div")
+      );
+      const timeSlots = timeSlotsContainer.appendChild(
+        document.createElement("input")
+      );
+      const timeSlotsLabel = timeSlotsContainer.appendChild(
+        document.createElement("label")
+      );
+      timeSlotsContainer.classList.add("time-slot-container");
+      timeSlots.type = "radio";
+      timeSlots.name = "start";
+      timeSlots.value = startTime;
+      timeSlots.dataset.endTime = finishTime;
+
+      timeSlots.id = "timeslot-" + i;
+      timeSlotsLabel.setAttribute("for", "timeslot-" + i);
+      timeSlotsLabel.textContent = startTimeString;
+    });
+
+    const timeSlots = document.querySelectorAll(
+      ".booking-form__content-step-6-time input"
+    );
+    timeSlots.forEach((slot) => {
+      slot.addEventListener("change", handleSlotChange.bind(this));
     });
   }
 
-  dateBlocks.forEach((block, i) => {
-    const startTime = new Date(block.start);
-    const finishTime = new Date(block.finish);
-    const startTimeString = new Intl.DateTimeFormat("en-US", {
-      timeStyle: "short",
-    }).format(startTime);
+  if (blocks.length === 0) {
     const timeForm = document.querySelector(
-      ".booking-form__content-step-6-time form"
+      ".booking-form__content-step-6-time #appointmentTime"
     );
-    const prevMorning = document.querySelector(".morning");
-    const prevAfternoon = document.querySelector(".afternoon");
-    const prevEvening = document.querySelector(".evening");
-
-    if (startTimeString.includes("AM") && !prevMorning) {
-      const timeOfDay = timeForm.appendChild(document.createElement("div"));
-      timeOfDay.classList.add("morning");
-      timeOfDay.textContent = "Morning";
-    }
-    if (
-      (startTimeString.includes("PM") &&
-        !prevAfternoon &&
-        startTimeString.includes("12:")) ||
-      (startTimeString.includes("PM") &&
-        !prevAfternoon &&
-        startTimeString.includes("1:")) ||
-      (startTimeString.includes("PM") &&
-        !prevAfternoon &&
-        startTimeString.includes("2:")) ||
-      (startTimeString.includes("PM") &&
-        !prevAfternoon &&
-        startTimeString.includes("3:")) ||
-      (startTimeString.includes("PM") &&
-        !prevAfternoon &&
-        startTimeString.includes("4:"))
-    ) {
-      const timeOfDay = timeForm.appendChild(document.createElement("div"));
-      timeOfDay.classList.add("afternoon");
-      timeOfDay.textContent = "Afternoon";
-    }
-
-    if (
-      startTimeString.includes("PM") &&
-      !prevEvening &&
-      startTimeString.includes("5:")
-    ) {
-      const timeOfDay = timeForm.appendChild(document.createElement("div"));
-      timeOfDay.classList.add("evening");
-      timeOfDay.textContent = "Evening";
-    }
-
-    const timeSlotsContainer = timeForm.appendChild(
-      document.createElement("div")
-    );
-    const timeSlots = timeSlotsContainer.appendChild(
-      document.createElement("input")
-    );
-    const timeSlotsLabel = timeSlotsContainer.appendChild(
-      document.createElement("label")
-    );
-    timeSlotsContainer.classList.add("time-slot-container");
-    timeSlots.type = "radio";
-    timeSlots.name = "start";
-    timeSlots.value = startTime;
-    timeSlots.dataset.endTime = finishTime;
-
-    timeSlots.id = "timeslot-" + i;
-    timeSlotsLabel.setAttribute("for", "timeslot-" + i);
-    timeSlotsLabel.textContent = startTimeString;
-  });
-
-  const timeSlots = document.querySelectorAll(
-    ".booking-form__content-step-6-time input"
-  );
-  timeSlots.forEach((slot) => {
-    slot.addEventListener("change", handleSlotChange.bind(this));
-  });
+    timeForm.textContent = "FUCK";
+  }
 }
 
 function handleSlotChange(e) {
@@ -940,6 +1036,7 @@ function addDateTime(e) {
     attributes: {
       Start: startTime.toISOString(),
       Finish: finishTime.toISOString(),
+      Resource: fullCart.attributes.Resource,
     },
   };
 
@@ -958,9 +1055,13 @@ async function updateCart(itemProps) {
     body: JSON.stringify(itemProps),
   });
   const res = await req.json();
+
   await getItemsInCart();
-  renderReview(await fullCart);
-  showCheckoutBtn(await fullCart);
+  console.log(res);
+  if (!itemProps.attributes.resource) {
+    renderReview(await fullCart);
+    showCheckoutBtn(await fullCart);
+  }
 }
 function showCheckoutBtn(data) {
   const checkoutBtn = document.querySelector(".checkout-btn");
@@ -1190,6 +1291,7 @@ function addCustomerInfo(e) {
     attributes: {
       Start: currentCartItems[0].properties.Start,
       Finish: currentCartItems[0].properties.Finish,
+      Resource: fullCart.attributes.Resource,
       Name: firstName + " " + lastName,
       Email: email,
     },

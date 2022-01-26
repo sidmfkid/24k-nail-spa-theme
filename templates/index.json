@@ -1,13 +1,8 @@
 {
   "sections": {
     "hero": {
-      "type": "main_hero",
-      "settings": {
-        "hero_btn-1": "",
-        "hero_btn-1-text": "Start Here",
-        "hero_btn-2": "",
-        "hero_btn-2-text": "Browse"
-      }
+      "type": "main_hero-2",
+      "settings": {}
     },
     "banner": {
       "type": "main_banner",

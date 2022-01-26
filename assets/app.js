@@ -45,7 +45,7 @@ const checkCart = async function (fn) {
 
   if (fn) {
     if (fn.name === "renderReview") {
-      fn(data);
+      fn(e, data);
     }
   }
 };

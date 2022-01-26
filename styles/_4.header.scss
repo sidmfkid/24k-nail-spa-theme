@@ -194,7 +194,7 @@
   @include media-tablet {
     .overlay {
       display: block;
-      .open {
+      &.open {
         overflow: hidden;
       }
     }

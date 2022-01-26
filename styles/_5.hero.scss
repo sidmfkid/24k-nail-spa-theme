@@ -2,6 +2,7 @@
   width: 100%;
 
   position: relative;
+
   .image-container {
     position: absolute;
     width: 100vw;
@@ -107,7 +108,7 @@
     .image-container {
       .hero-bg-image {
         height: 100%;
-        width: auto;
+        width: 100%;
       }
     }
   }

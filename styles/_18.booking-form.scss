@@ -855,7 +855,26 @@
         }
         &-time {
           height: 70%;
-
+          .calendar-icon {
+            display: block;
+            margin: 10rem auto;
+            width: 20rem;
+            height: auto;
+            img {
+              width: 100%;
+              height: auto;
+            }
+            span {
+              display: block;
+              font-size: font-size(regular);
+              width: 100%;
+              text-align: center;
+            }
+            &.hide {
+              opacity: 0;
+              display: none;
+            }
+          }
           form {
             overflow: scroll;
             width: 100%;

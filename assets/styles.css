@@ -2603,6 +2603,26 @@ input:checked + .slider:before {
 .booking-form__content-step-6-time {
   height: 70%;
 }
+.booking-form__content-step-6-time .calendar-icon {
+  display: block;
+  margin: 10rem auto;
+  width: 20rem;
+  height: auto;
+}
+.booking-form__content-step-6-time .calendar-icon img {
+  width: 100%;
+  height: auto;
+}
+.booking-form__content-step-6-time .calendar-icon span {
+  display: block;
+  font-size: calc(1.5rem + 1vw);
+  width: 100%;
+  text-align: center;
+}
+.booking-form__content-step-6-time .calendar-icon.hide {
+  opacity: 0;
+  display: none;
+}
 .booking-form__content-step-6-time form {
   overflow: scroll;
   width: 100%;

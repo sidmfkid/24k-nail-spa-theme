@@ -1028,7 +1028,11 @@ function renderBlocks(blocks) {
     const timeForm = document.querySelector(
       ".booking-form__content-step-6-time #appointmentTime"
     );
-    timeForm.textContent = "FUCK";
+    const calIcon = document.querySelector(".calendar-icon");
+    const calText = document.querySelector(".calendar-icon span");
+    calIcon.classList.remove("hide");
+    calText.textContent =
+      "Oops Looks Like Our Nail Techs Are Booked Up, Please Select Another Date";
   }
 }
 
@@ -1388,6 +1392,11 @@ nextDay.addEventListener("click", moveDate.bind(this, "nextDay"));
 previousDay.addEventListener("click", moveDate.bind(this, "prevDay"));
 
 function moveDate(params, e) {
+  const calendarPlaceholder = document.querySelector(".calendar-icon");
+  if (!calendarPlaceholder.classList.contains("hide")) {
+    calendarPlaceholder.classList.add("hide");
+  }
+
   let dayOptions = document.querySelector(".visible-day");
   if (!dayOptions) {
     const firstDay = document.querySelector(".date-day > span");

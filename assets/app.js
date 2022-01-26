@@ -31,7 +31,7 @@ let options = {
 const cartIcon = document.querySelector("#cartIcon");
 const cartNum = document.querySelector(".cart-icon-num");
 
-const checkCart = async function (fn) {
+const checkCart = async function (fn, e) {
   const res = await fetch("/cart.js", {
     method: "GET",
     headers: {

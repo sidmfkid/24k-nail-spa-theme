@@ -48,7 +48,7 @@ function toggleForm(e) {
     bookingForm.classList.add("open");
     step1.classList.remove("selected");
     step7.classList.add("selected");
-    checkCart(renderReview);
+    checkCart(renderReview, e);
   }
 
   if (
@@ -1129,7 +1129,8 @@ async function changeCart(itemProps) {
   step5Items.classList.remove("hide");
 }
 
-function renderReview(items) {
+function renderReview(e, items) {
+  console.log(e.target);
   const bookingInfo = items.attributes;
   const cartInfo = items.items;
   console.log(items);

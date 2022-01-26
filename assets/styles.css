@@ -502,7 +502,6 @@ input:checked + .slider:before {
   .header .nav-container.open {
     overflow-x: visible;
     margin-top: -3rem;
-    height: 100vh;
   }
   .header .nav-container .navlink__container {
     flex-direction: column;
@@ -3222,22 +3221,34 @@ input:checked + .slider:before {
 .hero-2__content-info__btn:active::after, .hero-2__content-info__btn:hover::after {
   left: 18rem;
 }
-.hero-2__content-img {
+.hero-2__content-img-wrapper {
   width: 50%;
+}
+.hero-2__content-img-wrapper-img {
+  width: 100%;
 }
 @media screen and (max-width: 600px) {
   .hero-2__content {
     flex-wrap: wrap-reverse;
   }
   .hero-2__content-info {
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     background: linear-gradient(to bottom, white, var(--secondary-98));
     width: 100%;
   }
-  .hero-2__content-img {
+  .hero-2__content-img-wrapper {
+    position: relative;
     width: 100%;
+    min-height: 50vh;
+  }
+  .hero-2__content-img-wrapper-img {
+    position: absolute;
+    top: -5rem;
+    left: 0;
+    width: 100%;
+    z-index: -1;
   }
 }
 

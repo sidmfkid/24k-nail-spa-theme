@@ -63,22 +63,35 @@
         }
       }
     }
-    &-img {
+    &-img-wrapper {
       width: 50%;
+      &-img {
+        width: 100%;
+      }
     }
   }
   @include media-medium {
     &__content {
       flex-wrap: wrap-reverse;
       &-info {
-        position: absolute;
+        position: relative;
         bottom: 0;
         left: 0;
         background: linear-gradient(to bottom, white, var(--secondary-98));
         width: 100%;
       }
-      &-img {
+      &-img-wrapper {
+        position: relative;
         width: 100%;
+        min-height: 50vh;
+        // overflow: hidden;
+        &-img {
+          position: absolute;
+          top: -5rem;
+          left: 0;
+          width: 100%;
+          z-index: -1;
+        }
       }
     }
   }

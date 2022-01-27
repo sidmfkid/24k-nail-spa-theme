@@ -3332,7 +3332,6 @@ html.transition *::after {
   height: 3rem;
   top: 0.5rem;
   position: relative;
-  overflow: hidden;
 }
 .form-error-alert {
   position: absolute;
@@ -3341,8 +3340,7 @@ html.transition *::after {
   height: 3rem;
   width: 100%;
   font-size: calc(1.2rem + 0.5vw);
-  color: white;
-  background-color: #f45151;
+  color: red;
   opacity: 1;
   text-align: center;
   transition: all 0.2s ease-in-out;
@@ -3359,7 +3357,6 @@ html.transition *::after {
   height: 3rem;
   top: -2.5rem;
   position: relative;
-  overflow: hidden;
 }
 .form-success-alert {
   position: absolute;
@@ -3368,8 +3365,7 @@ html.transition *::after {
   height: 3rem;
   width: 100%;
   font-size: calc(1.2rem + 0.5vw);
-  color: white;
-  background-color: #2ade2d;
+  color: green;
   opacity: 1;
   text-align: center;
   transition: all 0.2s ease-in-out;

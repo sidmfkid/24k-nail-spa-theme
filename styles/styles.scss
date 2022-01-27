@@ -166,7 +166,7 @@ html.transition *::after {
   height: 3rem;
   top: 0.5rem;
   position: relative;
-  overflow: hidden;
+
   &-alert {
     position: absolute;
     top: 0;
@@ -174,8 +174,8 @@ html.transition *::after {
     height: 3rem;
     width: 100%;
     font-size: font-size(small);
-    color: white;
-    background-color: rgb(244, 81, 81);
+    color: red;
+
     opacity: 1;
     text-align: center;
     transition: all 0.2s ease-in-out;
@@ -192,7 +192,7 @@ html.transition *::after {
   height: 3rem;
   top: -2.5rem;
   position: relative;
-  overflow: hidden;
+
   &-alert {
     position: absolute;
     top: 0;
@@ -200,8 +200,8 @@ html.transition *::after {
     height: 3rem;
     width: 100%;
     font-size: font-size(small);
-    color: white;
-    background-color: rgb(42, 222, 45);
+    color: green;
+
     opacity: 1;
     text-align: center;
     transition: all 0.2s ease-in-out;

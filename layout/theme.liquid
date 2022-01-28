@@ -9,9 +9,9 @@
     <link rel="canonical" href="{{ canonical_url }}">
     <link href="https://cdn.shopify.com" rel="preconnect" crossorigin>
 
-    {%- if settings.favicon != blank -%}
+    
     <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
-    {%- endif -%}
+    
 
     {%- unless settings.header_font.system? and settings.body_font.system? -%}
     <link href="https://fonts.shopifycdn.com" rel="preconnect" crossorigin>

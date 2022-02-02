@@ -103,7 +103,6 @@
     &-step {
       position: relative;
       width: 100%;
-
       &-1 {
         position: absolute;
         top: 0;
@@ -593,7 +592,6 @@
         top: 0;
         left: 100%;
         width: 100%;
-        // height: 50vh;
 
         &.selected {
           left: 0%;
@@ -915,10 +913,9 @@
             }
           }
           .select-time {
-            overflow: hidden;
             &-btn {
               display: block;
-              margin: 2rem auto;
+              margin: 0rem auto 0 auto;
               padding: 1rem 3rem;
               background-color: black;
               color: white;
@@ -962,7 +959,8 @@
         }
         &-location,
         &-date,
-        &-time {
+        &-time,
+        &-staff {
           height: 4.5rem;
           padding: 0.5rem 2rem;
           border-bottom: 1px rgb(205, 205, 205) solid;

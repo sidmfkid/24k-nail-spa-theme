@@ -1,0 +1,242 @@
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* The 1300px Mark Desktop Break Point  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+@mixin media-desktop {
+  @media screen and (min-width: break-point(break-point-desktop)) {
+    @content;
+  }
+}
+
+@mixin media-desktop-max {
+  @media screen and (max-width: break-point(break-point-desktop)) {
+    @content;
+  }
+}
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* The 800px Mark Tablet Break Point  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+@mixin media-tablet {
+  @media screen and (max-width: break-point(break-point-tablet)) {
+    @content;
+  }
+}
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* The 600px Mark Tablet Break Point  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+@mixin media-medium {
+  @media screen and (max-width: break-point(break-point-medium)) {
+    @content;
+  }
+}
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* The 400px Mark Tablet Break Point  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+@mixin media-small {
+  @media screen and (max-width: break-point(break-point-small)) {
+    @content;
+  }
+}
+
+//   ::selection {
+//     background-color: var(--color-primary);
+//     -webkit-text-fill-color: var(--color-secondary);
+//   }
+
+@import "1.reset";
+@import "2.variables";
+@import "3.utilities";
+@import "4.header";
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Placeholder Styles  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+%bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Section Padding Styles  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+%sec-padding {
+  padding: 6vh 4vw;
+}
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Section Headings h2 Styles  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+%sec-heading {
+  font-size: font-size(medium);
+  font-weight: font-weight(semibold);
+  padding: 3rem 0rem;
+  width: 100%;
+
+  //   letter-spacing: 0.2rem;
+  color: var(--primary-30);
+}
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Section Paragraph p Styles  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+%sec-para {
+  font-size: font-size(small);
+  font-family: "Signika", cursive;
+  //   letter-spacing: 0.2rem;
+  color: var(--color-quinary);
+}
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Section h3 Styles  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+//   %sec-h3 {
+//     font-size: font-size(font-size-small);
+//     color: var(--color-quinary);
+//   }
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Section h4 Styles  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+//   %sec-h4 {
+//     color: var(--color-quinary);
+//   }
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* Dark Mode Transition  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+html.transition,
+html.transition *,
+html.transition *::before,
+html.transition *::after {
+  transition: all 0.5s !important;
+  transition-delay: 0 !important;
+}
+
+.loading-svg {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.hide {
+    display: none;
+  }
+  div {
+    width: 7rem;
+    height: 7rem;
+    svg {
+      circle {
+        stroke: rgb(212, 212, 212);
+        fill: rgb(164, 164, 164);
+        animation: loading 0.7s infinite cubic-bezier(0.47, 0, 0.745, 0.715);
+      }
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    stroke: rgb(212, 212, 212);
+    fill: rgb(164, 164, 164);
+  }
+  50% {
+    stroke: rgb(164, 164, 164);
+    fill: rgb(212, 212, 212);
+  }
+  100% {
+    stroke: rgb(212, 212, 212);
+    fill: rgb(164, 164, 164);
+  }
+}
+
+.form-error {
+  position: absolute;
+  width: 100%;
+  height: 3rem;
+  top: 0.5rem;
+  position: relative;
+
+  &-alert {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3rem;
+    width: 100%;
+    font-size: font-size(small);
+    color: red;
+
+    opacity: 1;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    border-radius: 5rem;
+    &.hide {
+      top: 4rem;
+      opacity: 0;
+    }
+  }
+}
+.form-success {
+  position: absolute;
+  width: 100%;
+  height: 3rem;
+  top: -2.5rem;
+  position: relative;
+
+  &-alert {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3rem;
+    width: 100%;
+    font-size: font-size(small);
+    color: green;
+
+    opacity: 1;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    border-radius: 5rem;
+    &.hide {
+      top: -6rem;
+      opacity: 0;
+    }
+  }
+}
+
+.gift-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  &__image-wrapper {
+    width: 100%;
+    height: auto;
+  }
+  &__image {
+    display: block;
+    margin: 5rem auto 0 auto;
+  }
+  &__qr-code{
+    margin: 2rem 0;
+    width: 100%;
+    img{
+      display: block;
+      margin: 0 auto;
+      // width: 100%;
+      height: auto;
+    }
+  }
+  &__information {
+    margin: 2rem 0;
+    width: 100%;
+    input {
+      display: block;
+      margin: 0 auto;
+      // width: calc(20rem + 10vw);
+      height: auto;
+      text-align: center;
+      font-size: font-size(medium);
+    }
+  }
+  &__copy-link{
+    display: block;
+    margin: 2rem auto 0 auto;
+    padding: 2rem 5rem;
+    background: var(--primary-50);
+    color: white;
+    cursor: pointer;
+  }
+  &__buttons{
+    button{
+    display: block;
+    margin: 0 auto;
+    text-decoration: underline;
+    cursor: pointer;
+    }
+  }
+}

@@ -553,9 +553,12 @@ async function selectStaff(e) {
   options.forEach((option) => {
     if (option.selected) {
       const staffID = option.value;
+      const staffName = option.textContent;
+
       const employee = {
         attributes: {
-          resource: staffID,
+          ResourceID: staffID,
+          ResourceName: staffName,
         },
       };
       updateCart(employee);
@@ -886,7 +889,7 @@ function updateDate(divNum, cartItems, e) {
   end.setHours(19, 0, 0);
   const endDate = end;
   end.toISOString();
-  const resourceID = Number(fullCart.attributes.resource);
+  const resourceID = Number(fullCart.attributes.resourceID);
   const body = {
     external_id: variantID,
     location_ids: [locationID],
@@ -1071,7 +1074,8 @@ function addDateTime(e) {
     attributes: {
       Start: startTime.toISOString(),
       Finish: finishTime.toISOString(),
-      Resource: fullCart.attributes.Resource,
+      ResourceID: fullCart.attributes.ResourceID,
+      ResourceName: fullCart.attributes.ResourceName,
     },
   };
 
@@ -1166,6 +1170,7 @@ async function changeCart(itemProps) {
 
 function renderReview(e, items) {
   const bookingInfo = items.attributes;
+  console.log(bookingInfo);
   const cartInfo = items.items;
   console.log(items);
   const startDate = new Date(bookingInfo.Start);
@@ -1201,6 +1206,18 @@ function renderReview(e, items) {
         "click",
         editBookingDate.bind(this)
       );
+    }
+    if (section[i].classList[0].includes("staff")) {
+      console.log(bookingInfo.ResourceName);
+      if (bookingInfo.ResourceName) {
+        section[i].children[1].textContent = bookingInfo.ResourceName;
+        section[i].children[1].addEventListener(
+          "click",
+          editBookingDate.bind(this)
+        );
+      } else {
+        section[i].children[1].textContent = "No Preference";
+      }
     }
   }
   const allItemsInfo = document.querySelectorAll(
@@ -1326,7 +1343,8 @@ function addCustomerInfo(e) {
     attributes: {
       Start: currentCartItems[0].properties.Start,
       Finish: currentCartItems[0].properties.Finish,
-      Resource: fullCart.attributes.Resource,
+      ResourceID: fullCart.attributes.ResourceID,
+      ResourceName: fullCart.attributes.ResourceName,
       Name: firstName + " " + lastName,
       Email: email,
     },

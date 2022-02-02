@@ -2662,12 +2662,9 @@ input:checked + .slider:before {
   background-color: black;
   color: white;
 }
-.booking-form__content-step-6-time .select-time {
-  overflow: hidden;
-}
 .booking-form__content-step-6-time .select-time-btn {
   display: block;
-  margin: 2rem auto;
+  margin: 0rem auto 0 auto;
   padding: 1rem 3rem;
   background-color: black;
   color: white;
@@ -2705,7 +2702,7 @@ input:checked + .slider:before {
   font-weight: 600;
   width: fit-content;
 }
-.booking-form__content-step-7-location, .booking-form__content-step-7-date, .booking-form__content-step-7-time {
+.booking-form__content-step-7-location, .booking-form__content-step-7-date, .booking-form__content-step-7-time, .booking-form__content-step-7-staff {
   height: 4.5rem;
   padding: 0.5rem 2rem;
   border-bottom: 1px #cdcdcd solid;
@@ -2714,11 +2711,11 @@ input:checked + .slider:before {
   justify-content: space-between;
   align-items: baseline;
 }
-.booking-form__content-step-7-location div, .booking-form__content-step-7-date div, .booking-form__content-step-7-time div {
+.booking-form__content-step-7-location div, .booking-form__content-step-7-date div, .booking-form__content-step-7-time div, .booking-form__content-step-7-staff div {
   font-size: 2rem;
   font-weight: 400;
 }
-.booking-form__content-step-7-location div:nth-of-type(2), .booking-form__content-step-7-date div:nth-of-type(2), .booking-form__content-step-7-time div:nth-of-type(2) {
+.booking-form__content-step-7-location div:nth-of-type(2), .booking-form__content-step-7-date div:nth-of-type(2), .booking-form__content-step-7-time div:nth-of-type(2), .booking-form__content-step-7-staff div:nth-of-type(2) {
   color: blue;
   text-decoration: underline;
   cursor: pointer;

@@ -951,11 +951,15 @@ function renderBlocks(blocks) {
     }
 
     dateBlocks.forEach((block, i) => {
+      console.log(block.start);
       const startTime = new Date(block.start);
+      console.log(startTime);
+
       const finishTime = new Date(block.finish);
       const startTimeString = new Intl.DateTimeFormat("en-US", {
         timeStyle: "short",
       }).format(startTime);
+      console.log(startTime);
       const timeForm = document.querySelector(
         ".booking-form__content-step-6-time form"
       );
@@ -1049,9 +1053,10 @@ function renderBlocks(blocks) {
 
 function handleSlotChange(e) {
   e.preventDefault();
-
-  const startTime = new Date(e.target.value);
+  const start = e.target.value;
+  const startTime = new Date(start);
   const finishTime = e.target.dataset.endTime;
+  console.log(finishTime);
   const selectTimeBtn = document.querySelector(".select-time-btn");
   selectTimeBtn.classList.remove("hidden");
 
@@ -1063,7 +1068,7 @@ function handleSlotChange(e) {
     weekday: "short",
   }).format(startTime);
   selectTimeBtn.textContent = "Select " + weekDayString + " " + startTimeString;
-  selectTimeBtn.dataset.startTime = startTime;
+  selectTimeBtn.dataset.startTime = start;
   selectTimeBtn.dataset.finishTime = finishTime;
 }
 
@@ -1075,8 +1080,8 @@ function addDateTime(e) {
   const currentStep = document.querySelector(".booking-form__content-step-6");
   const nextStep = document.querySelector(".booking-form__content-step-7");
 
-  const startTime = new Date(e.target.dataset.startTime);
-  const finishTime = new Date(e.target.dataset.finishTime);
+  const startTime = e.target.dataset.startTime;
+  const finishTime = e.target.dataset.finishTime;
 
   const selectedTime = {
     attributes: {
@@ -1360,6 +1365,7 @@ function addCustomerInfo(e) {
       Email: email,
     },
   };
+  console.log(customerInformation);
   updateCart(customerInformation, e);
 }
 

@@ -1080,8 +1080,8 @@ function addDateTime(e) {
 
   const selectedTime = {
     attributes: {
-      Start: startTime.toISOString(),
-      Finish: finishTime.toISOString(),
+      Start: startTime,
+      Finish: finishTime,
       ResourceID: fullCart.attributes.ResourceID,
       ResourceName: fullCart.attributes.ResourceName,
     },

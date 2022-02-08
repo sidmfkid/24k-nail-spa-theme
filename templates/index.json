@@ -85,27 +85,28 @@
         "e18ac069-5932-4027-b321-1b910410cad2",
         "f699d7d8-9aac-4aff-ba80-58413977c803"
       ],
-      "settings": {
-      }
+      "settings": {}
     },
     "image-with-text": {
       "type": "main_image-with-text",
-      "settings": {
-      }
+      "settings": {}
+    },
+    "image-with-text-2": {
+      "type": "main_image-with-text-2",
+      "settings": {}
     },
     "map": {
       "type": "main_map",
-      "settings": {
-      }
+      "settings": {}
     },
     "newsletter": {
       "type": "main_newsletter",
-      "settings": {
-      }
+      "settings": {}
     }
   },
   "order": [
     "hero",
+    "image-with-text-2",
     "banner",
     "image-quote",
     "hours",

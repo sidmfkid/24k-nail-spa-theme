@@ -1,0 +1,77 @@
+<section class="image-with-text-2">
+    <div class="image-with-text-2__content {{ section.settings.image_position }}">
+        <div class="image-with-text-2__content-img">
+            {% if section.settings.image %}
+            <img src="{{ section.settings.image | img_url: '800x'}}" alt="{{ section.settings.image.alt }}">
+
+            {% else %}
+            <img height="800" width="800" loading="lazy"
+                src="https://cdn.shopify.com/s/files/1/0579/4758/6733/files/24k_18-800x800.jpg?v=1644197924" alt="">
+
+            {% endif %}
+        </div>
+        <div class="image-with-text-2__content-text">
+            {% if section.settings.title == blank %}
+            <h2>Treat Yourself To A Bubble Bomb Pedicure</h2>
+            {% else %}
+            <h2>{{ section.settings.title }}</h2>
+            {% endif %}
+            {% if section.settings.para == blank %}
+            <p>Our Bubble Bomb Pedicure is a customer favorite! Choose from Cashmere Snowball, Glitter Night, or Star
+                Space Bubble bomb when you book your 24K experience! All made in house and will soon be available for
+                retail, so you'll be able to take a little 24K home with you.</p>
+            {% elsif section.settings.para != blank %}
+            <p>{{ section.settings.para }}</p>
+            {% endif %}
+            <div class="btn-container">
+                <span id="bookAppointment">Book Yours</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% schema %}
+{
+"name": "Image With Text 2",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Type In A Heading"
+},
+{
+"type": "textarea",
+"id": "para",
+"label": "Type In A Description"
+},
+{
+"type": "select",
+"id": "image_position",
+"label": "Image Position",
+"options": [
+{
+"value": "reverse",
+"label": "Right"
+},
+{
+"value": "row",
+"label": "Left"
+}
+],
+"default": "row"
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Select An Image"
+}
+],
+"presets": [
+{
+"category": "Images",
+"name":"Image With Text 2"
+}
+]
+}
+{% endschema %}

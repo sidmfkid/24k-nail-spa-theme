@@ -561,7 +561,7 @@ async function selectStaff(e) {
           ResourceName: staffName,
         },
       };
-      updateCart(employee);
+      updateCart(employee, e);
     }
   });
 
@@ -889,14 +889,14 @@ function updateDate(divNum, cartItems, e) {
   end.setHours(19, 0, 0);
   const endDate = end;
   end.toISOString();
-  const resourceID = Number(fullCart.attributes.resourceID);
+  const resourceID = Number(fullCart.attributes.ResourceID);
   const body = {
     external_id: variantID,
     location_ids: [locationID],
     resource_ids: [resourceID] || null,
     start: startDate,
     finish: endDate,
-    interval: "60:00",
+    interval: null,
   };
 
   async function testProxy() {
@@ -905,6 +905,7 @@ function updateDate(divNum, cartItems, e) {
     );
     timeWrapper.classList.add("hide");
     loadingIconStep6.classList.remove("hide");
+    console.log(body);
     const req = await fetch("/apps/app_proxy/blocks", {
       method: "POST",
       headers: {
@@ -1086,6 +1087,7 @@ function addDateTime(e) {
 }
 
 async function updateCart(itemProps, e) {
+  console.log(e);
   const req = await fetch("/cart/update.js", {
     method: "POST",
     headers: {
@@ -1097,7 +1099,7 @@ async function updateCart(itemProps, e) {
 
   await getItemsInCart();
   console.log(res);
-  if (!itemProps.attributes.resource) {
+  if (e.target.id !== "staff-select") {
     renderReview(e, await fullCart);
     showCheckoutBtn(await fullCart, e);
   }
@@ -1115,7 +1117,7 @@ function showCheckoutBtn(data) {
     data.attributes.Name === ""
   ) {
     console.log("show CHECKOUT");
-    formErrorName.forEach((el) => {
+    formErrorName.forEach((el, i) => {
       el.classList.remove("hide");
       formSuccess[i].classList.add("hide");
     });

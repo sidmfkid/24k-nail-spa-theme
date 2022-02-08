@@ -1,0 +1,112 @@
+.image-with-text-2 {
+  @extend %sec-padding;
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    &.reverse {
+      flex-direction: row-reverse;
+    }
+    &.row {
+      flex-direction: row;
+    }
+    &-img {
+      width: 50%;
+      padding: 1rem;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    &-text {
+      width: 50%;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      h2 {
+        font-size: font-size(medium);
+        background: linear-gradient(
+          to bottom right,
+          var(--secondary-60),
+          var(--primary-60)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      p {
+        font-size: font-size(small);
+        background: linear-gradient(
+          to bottom right,
+          var(--secondary-60),
+          var(--primary-60)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .btn-container {
+        margin-top: 3rem;
+        span {
+          display: block;
+          margin: 0 auto 0 auto;
+          position: relative;
+          margin-top: 3rem;
+          font-size: calc(1.5rem + 1vw);
+          padding: 1rem 3rem;
+          background-color: white;
+          color: #202020;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-clip: padding-box;
+          border: solud 3px transparent;
+          cursor: pointer;
+          width: fit-content;
+          transition: all 0.4s cubic-bezier(0.47, 0, 0.745, 0.715);
+          &::after {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: -3px;
+            border-radius: inherit;
+            background: linear-gradient(
+              to right,
+              var(--secondary-60),
+              var(--primary-60)
+            );
+            box-shadow: -4px -10px 2rem var(--secondary-60-m),
+              4px 10px 2rem var(--primary-60-m);
+          }
+          &:active,
+          &:hover {
+            box-shadow: -8px -7px 3rem var(--secondary-60-m),
+              8px 7px 3rem var(--primary-60-m);
+          }
+        }
+      }
+    }
+  }
+  @include media-medium {
+    &__content {
+      &.reverse {
+        flex-direction: row;
+      }
+      &.row {
+        flex-direction: row;
+      }
+      &-img {
+        width: 100%;
+      }
+      &-text {
+        width: 100%;
+      }
+    }
+  }
+}

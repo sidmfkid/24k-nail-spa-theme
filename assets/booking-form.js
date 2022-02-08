@@ -1106,9 +1106,11 @@ async function updateCart(itemProps, e) {
 
   await getItemsInCart();
   console.log(res);
-  if (e.target.id !== "staff-select") {
-    renderReview(e, await fullCart);
-    showCheckoutBtn(await fullCart, e);
+  if (e) {
+    if (e.target.id !== "staff-select") {
+      renderReview(e, await fullCart);
+      showCheckoutBtn(await fullCart, e);
+    }
   }
 }
 function showCheckoutBtn(data) {
@@ -1358,7 +1360,7 @@ function addCustomerInfo(e) {
       Email: email,
     },
   };
-  updateCart(customerInformation);
+  updateCart(customerInformation, e);
 }
 
 async function addToCart(cart) {

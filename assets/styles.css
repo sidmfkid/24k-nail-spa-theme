@@ -1838,7 +1838,7 @@ input:checked + .slider:before {
 .booking-form {
   position: fixed;
   top: 0;
-  left: -100%;
+  left: -140%;
   width: 100vw;
   height: 100vh;
   overflow: hidden;

@@ -2,19 +2,34 @@
   "sections": {
     "hero": {
       "type": "main_hero-2",
-      "settings": {}
+      "settings": {
+        "hero_image": "shopify:\/\/shop_images\/24k_03-1000x.jpg"
+      }
+    },
+    "image-with-text-2": {
+      "type": "main_image-with-text-2",
+      "settings": {
+        "title": "",
+        "para": "",
+        "image_position": "row",
+        "button_link": "",
+        "button_text": ""
+      }
     },
     "banner": {
       "type": "main_banner",
-      "setting": {}
+      "settings": {
+      }
     },
     "image-quote": {
       "type": "main_image-quote",
-      "settings": {}
+      "settings": {
+      }
     },
     "hours": {
       "type": "main_hours",
-      "settings": {}
+      "settings": {
+      }
     },
     "gallery": {
       "type": "main_gallery",
@@ -85,23 +100,23 @@
         "e18ac069-5932-4027-b321-1b910410cad2",
         "f699d7d8-9aac-4aff-ba80-58413977c803"
       ],
-      "settings": {}
+      "settings": {
+      }
     },
     "image-with-text": {
       "type": "main_image-with-text",
-      "settings": {}
-    },
-    "image-with-text-2": {
-      "type": "main_image-with-text-2",
-      "settings": {}
+      "settings": {
+      }
     },
     "map": {
       "type": "main_map",
-      "settings": {}
+      "settings": {
+      }
     },
     "newsletter": {
       "type": "main_newsletter",
-      "settings": {}
+      "settings": {
+      }
     }
   },
   "order": [

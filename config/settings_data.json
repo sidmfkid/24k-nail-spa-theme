@@ -2,13 +2,36 @@
   "current": {
     "body_font": "agmena_n4",
     "header_font": "agmena_n4",
+    "social_facebook_link": "https:\/\/www.facebook.com\/24K-Nail-Spa-102322682104613",
     "colors_solid_button_labels": "#FFFFFF",
     "colors_accent_1": "#121212",
     "colors_accent_2": "#334FB4",
     "colors_text": "#121212",
     "colors_outline_button_labels": "#121212",
     "colors_background_1": "#FFFFFF",
-    "colors_background_2": "#F3F3F3"
+    "colors_background_2": "#F3F3F3",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "new-menu": "main-menu"
+        }
+      },
+      "booking-form": {
+        "type": "booking-form",
+        "settings": {
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "footer": "footer"
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
   },
   "presets": {
     "Default": {

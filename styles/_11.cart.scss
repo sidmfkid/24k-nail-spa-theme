@@ -7,7 +7,11 @@
     text-align: center;
     .line-item {
       width: 100%;
-      padding: 3rem 0rem;
+      padding: 2rem 0rem;
+      &-img {
+        width: 100%;
+        height: auto;
+      }
       h2 {
         color: var(--primary-30);
         font-size: font-size(medium);

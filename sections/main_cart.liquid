@@ -4,6 +4,7 @@
         <form id="checkoutForm" method="POST" action="{{ routes.cart_url }}">
             {% for item in cart.items %}
             <div class="line-item">
+                {{ item | image_url: width: 1080, height: 1080 | image_tag: srcset: nil, class: "line-item-img" }}
                 <h2 class="line-item-title">
                     {{ item.title }}
                 </h2>

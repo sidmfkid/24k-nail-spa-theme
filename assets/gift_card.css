@@ -141,6 +141,37 @@ button:active {
   border-radius: 1rem;
 }
 
+.btn-new {
+  position: relative;
+  padding: 1rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--primary-99);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  background: linear-gradient(to right, var(--primary-70-m), var(--secondary-70-m));
+  border: none;
+}
+.btn-new:active, .btn-new:hover {
+  transform: scale(1.06);
+  background-color: var(--primary-80);
+}
+.btn-new::after {
+  position: absolute;
+  display: block;
+  content: "";
+  top: 0;
+  left: -5rem;
+  width: 19%;
+  height: 120%;
+  transform: skewX(30deg);
+  background-color: rgba(255, 255, 255, 0.474);
+  transition: all 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.btn-new:active::after, .btn-new:hover::after {
+  left: 12rem;
+}
+
 section {
   transition: all 0.7s ease-in-out;
   transform: translateY(0rem);

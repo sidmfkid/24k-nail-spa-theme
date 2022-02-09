@@ -24,7 +24,12 @@
             <p>{{ section.settings.para }}</p>
             {% endif %}
             <div class="btn-container">
+                {% if section.settings.button_link == blank %}
                 <span id="bookAppointment">Book Yours</span>
+                {% else %}
+                <a href="{{ section.settings.button_link }}" id="bookAppointment">{{ section.settings.button_text}}</a>
+                {% endif %}
+
             </div>
         </div>
 
@@ -65,6 +70,20 @@
 "type": "image_picker",
 "id": "image",
 "label": "Select An Image"
+},
+{
+"type": "header",
+"content": "Button Settings"
+},
+{
+"type": "url",
+"id": "button_link",
+"label": "Button Link"
+},
+{
+"type": "text",
+"id": "button_text",
+"label": "Type Button Text"
 }
 ],
 "presets": [

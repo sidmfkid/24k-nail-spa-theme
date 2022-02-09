@@ -1,5 +1,5 @@
 .hero-2 {
-  min-height: 50rem;
+  min-height: fit-content;
 
   &__content {
     position: relative;
@@ -7,6 +7,7 @@
     display: flex;
     justify-content: space-between;
     overflow: hidden;
+    align-items: center;
     &-info {
       width: 50%;
       align-self: center;
@@ -65,8 +66,13 @@
     }
     &-img-wrapper {
       width: 50%;
+      height: 40rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       &-img {
         width: 100%;
+        height: auto;
       }
     }
   }
@@ -83,13 +89,13 @@
       &-img-wrapper {
         position: relative;
         width: 100%;
-        min-height: 50vh;
         // overflow: hidden;
         &-img {
-          position: absolute;
-          top: -5rem;
-          left: 0;
           width: 100%;
+          height: auto;
+          // top: 0rem;
+          // left: 0;
+          // width: 100%;
           z-index: -1;
         }
       }

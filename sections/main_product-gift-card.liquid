@@ -1,5 +1,43 @@
-<section class="gc-product">
-    hello world
+<section class="gift-card">
+    <div class="gift-card__content">
+        <div class="gift-card__content-title">
+            <h1>{{ product.title }}</h1>
+        </div>
+        <div class="gift-card__content-image">
+            <img loading="lazy" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}"
+                src="{{ product.featured_image | image_url: width: 1080, height: 1080 }}"
+                alt="{{ product.featured_image.alt }}">
+        </div>
+        <div class="gift-card__content-payment-icons">
+            <span>Safe & Secure Checkout</span>
+            {% for type in shop.enabled_payment_types %}
+            <img src="{{ type | payment_type_img_url }}" />
+            {% endfor %}
+        </div>
+        <div class="gift-card__content-select-container">
+
+            <h2>Select the dollar amount you want added to your card</h2>
+
+            {% for variant in product.variants %}
+            <div class="radio-container">
+                <input value="{{ variant.id }}" form="giftCardForm" type="radio" name="id" id="{{ variant.title }}" {%
+                    if forloop.index==1 %}checked{% endif %}>
+                <label for="{{ variant.title }}">{{ variant.title }}</label>
+            </div>
+            {% endfor %}
+
+        </div>
+        <div class="gift-card__content-btn-container">
+            {% form "product", product, id: "giftCardForm" %}
+            <input class="btn-new" type="submit" value="Add To Cart">
+            {{ form | payment_button }}
+            {% endform %}
+        </div>
+        <div class="gift-card__content-description">
+            <p>{{ product.content }}</p>
+        </div>
+
+    </div>
 </section>
 
 {% schema %}

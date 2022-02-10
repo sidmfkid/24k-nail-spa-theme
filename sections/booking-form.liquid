@@ -1,4 +1,4 @@
-<section class="booking-form">
+<section class="booking-form open">
     <div class="booking-form__overlay">
         <span id="closeBookingForm"></span>
     </div>
@@ -11,7 +11,7 @@
         </div>
 
         <div class="booking-form__content-step">
-            <div class="booking-form__content-step-1 selected">
+            <div class="booking-form__content-step-1">
                 <div class="booking-form__content-step-1-heading">
                     <h2>Appointment Preference</h2>
 
@@ -194,7 +194,7 @@
                     <button id="toCustomerInfo"><span>25$</span>Next</button>
                 </div>
             </div>
-            <div class="booking-form__content-step-8">
+            <div class="booking-form__content-step-8 selected">
                 <div class="booking-form__content-step-8-heading">
                     <h2>Complete Your Booking</h2>
                 </div>
@@ -234,6 +234,20 @@
                             </div>
                             <div class="form-success">
                                 <span class="form-success-alert hide email">Looks Good!</span>
+                            </div>
+                        </div>
+                        <div class="input">
+                            <label for="phone">Phone</label>
+                            <input autocomplete="on" id="phone" name="properties[phone]" type="text">
+                            <small>So you get reminders about your Booking</small>
+                            <div class="form-error">
+                                <span class="form-error-alert hide phone">Please type in your phone number with area
+                                    code. This field
+                                    is
+                                    required.</span>
+                            </div>
+                            <div class="form-success">
+                                <span class="form-success-alert hide phone">Looks Good!</span>
                             </div>
                         </div>
 

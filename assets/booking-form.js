@@ -1124,6 +1124,8 @@ function showCheckoutBtn(data) {
   const formSuccess = document.querySelectorAll(".form-success-alert");
   const formSuccessEmail = document.querySelector(".form-success-alert.email");
   const formErrorEmail = document.querySelector(".form-error-alert.email");
+  const formSuccessPhone = document.querySelector(".form-success-alert.phone");
+  const formErrorPhone = document.querySelector(".form-error-alert.phone");
   console.log(data);
   if (
     data.attributes.Name === " " ||
@@ -1152,6 +1154,18 @@ function showCheckoutBtn(data) {
   } else {
     formErrorEmail.classList.add("hide");
     formSuccessEmail.classList.remove("hide");
+  }
+
+  if (
+    data.attributes.Phone === " " ||
+    !data.attributes.Phone ||
+    data.attributes.Phone === ""
+  ) {
+    formErrorPhone.classList.remove("hide");
+    formSuccessPhone.classList.add("hide");
+  } else {
+    formErrorPhone.classList.add("hide");
+    formSuccessPhone.classList.remove("hide");
   }
 
   if (data.attributes.Name && data.attributes.Email) {
@@ -1302,7 +1316,9 @@ function renderCustomerForm(e) {
 const submitCustomerInfo = document.querySelector("#addCustomerInfo");
 submitCustomerInfo.addEventListener("click", addCustomerInfo.bind(this));
 
-const formEls = document.querySelectorAll("#firstName, #lastName, #email");
+const formEls = document.querySelectorAll(
+  "#firstName, #lastName, #email, #phone"
+);
 formEls.forEach((el) => {
   el.addEventListener("change", validateForms.bind(this));
 });
@@ -1314,9 +1330,10 @@ function validateForms(e) {
     (e.target.id === "lastName" && e.target.value.length >= 3) ||
     (e.target.id === "email" &&
       e.target.value.includes("@") &&
-      e.target.value.includes("."))
+      e.target.value.includes(".")) ||
+    (e.target.id === "phone" && e.target.value.length >= 10)
   ) {
-    if (e.target.id === "email") {
+    if (e.target.id === "email" || e.target.id === "phone") {
       e.target.nextElementSibling.nextElementSibling.nextElementSibling.firstElementChild.classList.remove(
         "hide"
       );
@@ -1330,7 +1347,7 @@ function validateForms(e) {
       e.target.nextElementSibling.firstElementChild.classList.add("hide");
     }
   } else {
-    if (e.target.id === "email") {
+    if (e.target.id === "email" || e.target.id === "phone") {
       e.target.nextElementSibling.nextElementSibling.firstElementChild.classList.remove(
         "hide"
       );
@@ -1352,8 +1369,9 @@ function addCustomerInfo(e) {
   const firstName = document.querySelector("#firstName").value;
   const lastName = document.querySelector("#lastName").value;
   const email = document.querySelector("#email").value;
+  const phone = document.querySelector("#phone").value;
 
-  const formValues = [firstName, lastName, email];
+  const formValues = [firstName, lastName, email, phone];
 
   const customerInformation = {
     attributes: {
@@ -1363,6 +1381,7 @@ function addCustomerInfo(e) {
       ResourceName: fullCart.attributes.ResourceName,
       Name: firstName + " " + lastName,
       Email: email,
+      Phone: phone,
     },
   };
   console.log(customerInformation);

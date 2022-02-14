@@ -2697,6 +2697,11 @@ input:checked + .slider:before {
   background-color: black;
   color: white;
 }
+.booking-form__content-step-6-time form .time-slot-container input:disabled ~ label {
+  display: none;
+  background-color: grey;
+  color: white;
+}
 .booking-form__content-step-6-time .select-time-btn {
   display: block;
   margin: 0rem auto 0 auto;

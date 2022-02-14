@@ -910,6 +910,11 @@
                 background-color: black;
                 color: white;
               }
+              input:disabled ~ label {
+                display: none;
+                background-color: grey;
+                color: white;
+              }
             }
           }
           .select-time {

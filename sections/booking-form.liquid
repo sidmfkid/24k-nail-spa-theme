@@ -307,12 +307,35 @@ endcase
 endfor
 
 -%}
+{% capture duration %}
+{% for collection in collections %}
+{% for product in collection.products %}
+{{ product.metafields.service.duration }},
+{% endfor %}
+{% endfor %}
+{% endcapture %}
+{% capture id %}
+{% for collection in collections %}
+{% for product in collection.products %}
+{{ product.id }},
+{% endfor %}
+{% endfor %}
+{% endcapture %}
 
-
+{% assign productDuration = duration | split: "," | strip %}
+{% assign productID = id | split: "," %}
 <script>
+    const duration = {{ productDuration | remove: '\n'}}
+    const prodIDs = {{ productID | remove: '\n'}}
 
+    const prodMeta = prodIDs.map((prod, i) => {
+        const meta = {
+            id: prod,
+            time: duration[i]
+        }
+        return meta
+    })
     const jsonCollection = {{ collections | json }}
-
     const acrylicProducts = {{ acrylicProducts | json }}
     const addtionalServices = {{ addtionalServices | json }}
     const dipPowder = {{ dipPowder | json }}

@@ -37,9 +37,9 @@ const loadingIconStep4 = document.querySelector(
 
 window.addEventListener("load", (e) => {
   e.preventDefault();
-  console.log(e);
+  // console.log(e);
   loadingIconStep6.classList.add("hide");
-  console.log(loadingIconStep6);
+  // console.log(loadingIconStep6);
 });
 
 function toggleForm(e) {
@@ -433,7 +433,6 @@ collectionOptions.forEach((option) => {
 function toggleCollection(e) {
   e.stopPropagation();
   e.preventDefault();
-  console.log(e.target);
   const collectionID = e.target.dataset.id;
   const step3 = document.getElementById("collectionProducts");
   const step2 = document.querySelector(".booking-form__content-step-2");
@@ -489,7 +488,6 @@ async function renderCollectionInfo(targetID, el) {
 }
 
 async function showProductInfo(item, e) {
-  console.log(e.target);
   const productTitle = document.querySelector(
     ".booking-form__content-step-4-option__info .product-title"
   );
@@ -506,12 +504,18 @@ async function showProductInfo(item, e) {
   const parser = new DOMParser();
   const html = parser.parseFromString(item.description, "text/html");
   const desc = html.querySelector("body");
-  console.log(desc);
   productDescription.textContent = desc.textContent;
   productATC.dataset.id = item.id;
   productATC.dataset.variantId = item.variants[0].id;
   productATC.dataset.title = item.title;
   productATC.dataset.price = item.price;
+  const [prodMetaInfo] = prodMeta.filter((prod) => {
+    if (Number(prod.id) === Number(item.id)) {
+      return prod.time;
+    }
+    return;
+  });
+  productATC.dataset.duration = prodMetaInfo.time;
   productATC.textContent = `Add $${item.price * 0.01}`;
 
   const productID = item.id;
@@ -520,8 +524,6 @@ async function showProductInfo(item, e) {
   const prevOptions = document.querySelectorAll(
     ".booking-form__content-step-4 #staff-select option"
   );
-  console.log(prevOptions, staffSelect);
-
   if (prevOptions.length > 1) {
     prevOptions.forEach((option) => {
       if (option.value !== "") {
@@ -536,7 +538,6 @@ async function showProductInfo(item, e) {
     staffOption.value = emp.id;
     staffOption.textContent = emp.name;
   });
-  console.log(resources.staff, "AFTER FETCH");
   toggleSelected(e);
 }
 const staffSelect = document.querySelector(
@@ -564,8 +565,6 @@ async function selectStaff(e) {
       updateCart(employee, e);
     }
   });
-
-  console.log(e.target);
 }
 async function fetchResources(id) {
   const product = {
@@ -578,7 +577,6 @@ async function fetchResources(id) {
     prod.classList.add("hide");
   });
   loadingIconStep3.classList.remove("hide");
-  console.log(product);
   const req = await fetch("/apps/app_proxy/bta-products", {
     method: "POST",
     headers: {
@@ -587,7 +585,6 @@ async function fetchResources(id) {
     body: JSON.stringify(product),
   });
   const res = await req.json();
-  console.log(res);
   loadingIconStep3.classList.add("hide");
   allProductOptions.forEach((prod) => {
     prod.classList.remove("hide");
@@ -608,6 +605,9 @@ async function storeCartItem(e) {
   const selectedItem = {
     id: e.target.dataset.variantId,
     quantity: 1,
+    properties: {
+      duration: e.target.dataset.duration,
+    },
   };
   await addToCart(selectedItem);
   await getCart();
@@ -890,6 +890,14 @@ function updateDate(divNum, cartItems, e) {
   const endDate = end;
   end.toISOString();
   const resourceID = Number(fullCart.attributes.ResourceID);
+  const durationArr = items.map((item) => {
+    return Number(item.properties.duration);
+  });
+  const totalTime = durationArr.reduce(
+    (prevVal, currentVal) => Number(prevVal) + Number(currentVal),
+    0
+  );
+  const timeString = totalTime + ":00";
   const body = {
     external_id: variantID,
     location_ids: [locationID],
@@ -905,7 +913,6 @@ function updateDate(divNum, cartItems, e) {
     );
     timeWrapper.classList.add("hide");
     loadingIconStep6.classList.remove("hide");
-    console.log(body);
     const req = await fetch("/apps/app_proxy/blocks", {
       method: "POST",
       headers: {
@@ -925,13 +932,12 @@ function updateDate(divNum, cartItems, e) {
     data.blocks.forEach((block) => {
       blocks.push(block);
     });
-    console.log(blocks);
-    renderBlocks(blocks);
+    renderBlocks(blocks, totalTime);
   };
   renderDate(e, divNum);
 }
 
-function renderBlocks(blocks) {
+function renderBlocks(blocks, totalTime) {
   if (blocks.length > 0) {
     const dateBlocks = blocks[0].timeslots;
     const timeWrapper = document.querySelector(
@@ -949,17 +955,15 @@ function renderBlocks(blocks) {
         el.remove();
       });
     }
-
+    const currentDate = new Date();
     dateBlocks.forEach((block, i) => {
-      console.log(block.start);
       const startTime = new Date(block.start);
-      console.log(startTime);
 
-      const finishTime = new Date(block.finish);
+      const prevTime = new Date(block.finish);
+      const finishTime = new Date(prevTime.getTime() + totalTime * 60000);
       const startTimeString = new Intl.DateTimeFormat("en-US", {
         timeStyle: "short",
       }).format(startTime);
-      console.log(startTime);
       const timeForm = document.querySelector(
         ".booking-form__content-step-6-time form"
       );
@@ -1022,6 +1026,13 @@ function renderBlocks(blocks) {
       timeSlots.id = "timeslot-" + i;
       timeSlotsLabel.setAttribute("for", "timeslot-" + i);
       timeSlotsLabel.textContent = startTimeString;
+      if (
+        startTime.getHours() < currentDate.getHours() + 1 &&
+        startTime.getDate() === currentDate.getDate()
+      ) {
+        timeSlots.disabled = true;
+        timeSlotsLabel.disabled = true;
+      }
     });
 
     const timeSlots = document.querySelectorAll(
@@ -1056,7 +1067,6 @@ function handleSlotChange(e) {
   const start = e.target.value;
   const startTime = new Date(start);
   const finishTime = e.target.dataset.endTime;
-  console.log(finishTime);
   const selectTimeBtn = document.querySelector(".select-time-btn");
   selectTimeBtn.classList.remove("hidden");
 
@@ -1099,7 +1109,6 @@ function addDateTime(e) {
 }
 
 async function updateCart(itemProps, e) {
-  console.log(e);
   const req = await fetch("/cart/update.js", {
     method: "POST",
     headers: {
@@ -1110,7 +1119,6 @@ async function updateCart(itemProps, e) {
   const res = await req.json();
 
   await getItemsInCart();
-  console.log(res);
   if (e) {
     if (e.target.id !== "staff-select") {
       renderReview(e, await fullCart);
@@ -1126,13 +1134,11 @@ function showCheckoutBtn(data) {
   const formErrorEmail = document.querySelector(".form-error-alert.email");
   const formSuccessPhone = document.querySelector(".form-success-alert.phone");
   const formErrorPhone = document.querySelector(".form-error-alert.phone");
-  console.log(data);
   if (
     data.attributes.Name === " " ||
     !data.attributes.Name ||
     data.attributes.Name === ""
   ) {
-    console.log("show CHECKOUT");
     formErrorName.forEach((el, i) => {
       el.classList.remove("hide");
       formSuccess[i].classList.add("hide");
@@ -1172,7 +1178,6 @@ function showCheckoutBtn(data) {
     checkoutBtn.classList.remove("hide");
     checkoutBtn.disabled = false;
     checkoutBtn.ariaDisabled = "false";
-    console.log(checkoutBtn.ariaDisabled);
     return;
   }
 }
@@ -1200,9 +1205,7 @@ async function changeCart(itemProps) {
 
 function renderReview(e, items) {
   const bookingInfo = items.attributes;
-  console.log(bookingInfo);
   const cartInfo = items.items;
-  console.log(items);
   const startDate = new Date(bookingInfo.Start);
 
   const startString = new Intl.DateTimeFormat("en-US", {
@@ -1238,7 +1241,6 @@ function renderReview(e, items) {
       );
     }
     if (section[i].classList[0].includes("staff")) {
-      console.log(bookingInfo.ResourceName);
       if (bookingInfo.ResourceName) {
         section[i].children[1].textContent = bookingInfo.ResourceName;
         section[i].children[1].addEventListener(
@@ -1282,7 +1284,6 @@ function renderReview(e, items) {
   let itemPrices = [];
   for (let i = 0; i < allItems.length; i++) {
     itemPrices.push(Number(allItems[i].textContent.slice(1)));
-    // console.log(itemPrices);
   }
   const cartTotal = itemPrices.reduce((a, b) => a + b, 0);
   const totalPriceEl = document.getElementById("totalPrice");
@@ -1361,7 +1362,6 @@ function validateForms(e) {
       );
     }
   }
-  console.log(e.target);
 }
 
 function addCustomerInfo(e) {
@@ -1384,7 +1384,7 @@ function addCustomerInfo(e) {
       Phone: phone,
     },
   };
-  console.log(customerInformation);
+
   updateCart(customerInformation, e);
 }
 
@@ -1410,7 +1410,7 @@ async function addToCart(cart) {
       successMsg.classList.add("show");
       productATC.textContent = atcBtnText;
     }
-    console.log(req);
+
     const res = await req.json();
   } catch (error) {
     console.log(error);

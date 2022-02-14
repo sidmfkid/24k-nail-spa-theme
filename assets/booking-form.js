@@ -38,6 +38,7 @@ const loadingIconStep4 = document.querySelector(
 window.addEventListener("load", (e) => {
   e.preventDefault();
   // console.log(e);
+  renderReview(e, currentCart);
   loadingIconStep6.classList.add("hide");
   // console.log(loadingIconStep6);
 });

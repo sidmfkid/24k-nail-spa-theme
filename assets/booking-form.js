@@ -51,6 +51,7 @@ function toggleForm(e) {
   if (
     e.target.id === "cartIcon" ||
     e.target.classList.contains("cart-icon") ||
+    e.target.classList.contains("cart-icon-num") ||
     e.target.classList.contains("cart-icon-img")
   ) {
     bookingForm.classList.add("open");

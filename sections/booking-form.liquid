@@ -184,14 +184,18 @@
                     <div class="items-heading">
                         <span>Items</span><span>Cost</span>
                     </div>
+                    <div class="items-none hide">
+                        <img width="925" height="925" src="{{ 'cart_error.svg' | asset_url }}" alt="">
+                        <span>No Items In Your Cart</span>
+                    </div>
 
                 </div>
                 <div class="booking-form__content-step-7-total">
                     <div>Total</div>
-                    <div id="totalPrice">25$</div>
+                    <div id="totalPrice"></div>
                 </div>
                 <div class="booking-form__content-step-7-btn">
-                    <button id="toCustomerInfo"><span>25$</span>Next</button>
+                    <button id="toCustomerInfo"><span></span>Next</button>
                 </div>
             </div>
             <div class="booking-form__content-step-8">

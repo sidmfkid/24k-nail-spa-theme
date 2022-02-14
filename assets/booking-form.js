@@ -38,7 +38,7 @@ const loadingIconStep4 = document.querySelector(
 window.addEventListener("load", (e) => {
   e.preventDefault();
   // console.log(e);
-  renderReview(e, currentCart);
+
   loadingIconStep6.classList.add("hide");
   // console.log(loadingIconStep6);
 });
@@ -1206,6 +1206,15 @@ async function changeCart(itemProps) {
 }
 
 function renderReview(e, items) {
+  const cartEl = document.querySelector(
+    ".booking-form__content-step-7-items .items-none"
+  );
+  if (items.items.length === 0) {
+    cartEl.classList.remove("hide");
+  } else {
+    cartEl.classList.add("hide");
+  }
+
   const bookingInfo = items.attributes;
   const cartInfo = items.items;
   const startDate = new Date(bookingInfo.Start);

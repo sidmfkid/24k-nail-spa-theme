@@ -521,7 +521,7 @@ async function showProductInfo(item, e) {
   productATC.textContent = `Add $${item.price * 0.01}`;
 
   const productID = item.id;
-  const resources = await fetchResources(productID);
+  const resources = await fetchResources(productID, e);
   const staff = resources.staff;
   const prevOptions = document.querySelectorAll(
     ".booking-form__content-step-4 #staff-select option"
@@ -568,31 +568,44 @@ async function selectStaff(e) {
     }
   });
 }
-async function fetchResources(id) {
+async function fetchResources(id, e) {
   const product = {
     id: id,
   };
-  const allProductOptions = document.querySelectorAll(
-    ".booking-form__content-step-3-option"
-  );
-  allProductOptions.forEach((prod) => {
-    prod.classList.add("hide");
-  });
-  loadingIconStep3.classList.remove("hide");
-  const req = await fetch("/apps/app_proxy/bta-products", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  });
-  const res = await req.json();
-  loadingIconStep3.classList.add("hide");
-  allProductOptions.forEach((prod) => {
-    prod.classList.remove("hide");
-  });
 
-  return await res;
+  if (e.target === "button") {
+    const allProductOptions = document.querySelectorAll(
+      ".booking-form__content-step-3-option"
+    );
+    allProductOptions.forEach((prod) => {
+      prod.classList.add("hide");
+    });
+    loadingIconStep3.classList.remove("hide");
+    const req = await fetch("/apps/app_proxy/bta-products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+    const res = await req.json();
+    loadingIconStep3.classList.add("hide");
+    allProductOptions.forEach((prod) => {
+      prod.classList.remove("hide");
+    });
+
+    return await res;
+  } else {
+    const req = await fetch("/apps/app_proxy/bta-products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+    const res = await req.json();
+    return await res;
+  }
 }
 
 let cartStorage = [];
@@ -611,8 +624,10 @@ async function storeCartItem(e) {
       duration: e.target.dataset.duration,
     },
   };
+
   await addToCart(selectedItem);
   await getCart();
+  await checkCart();
 }
 
 function renderCart(cartData) {
@@ -860,7 +875,15 @@ function renderDate(e, divNum) {
   }
 }
 
-function updateDate(divNum, cartItems, e) {
+async function updateDate(divNum, cartItems, e) {
+  if (!divNum) {
+    divNum = Number(e.target.value);
+  }
+  console.log(divNum);
+  if (!cartItems) {
+    cartItems = currentCartItems;
+  }
+  console.log(e);
   const currentMonth = document.getElementById("month");
   const currentYear = dt.getFullYear();
   const currentDay = e.target.value || divNum;
@@ -880,15 +903,16 @@ function updateDate(divNum, cartItems, e) {
   selectDate.textContent = selectedRadioDate;
 
   const items = cartItems;
-  const variantID = 41179086717101;
+  const checkCartItems = await checkCart();
+  const variantID = checkCartItems.items[0].id;
 
   const locationID = 35770;
   const today = new Date(selectedRadioDate);
-  const end = new Date(selectedRadioDate);
+  const end = new Date(today.getTime() + 20 * 600000);
   today.setHours(10, 0, 0);
   const startDate = today;
   startDate.toISOString();
-  end.setHours(19, 0, 0);
+  // end.setHours(19, 0, 0);
   const endDate = end;
   end.toISOString();
   const resourceID = Number(fullCart.attributes.ResourceID);
@@ -906,8 +930,9 @@ function updateDate(divNum, cartItems, e) {
     resource_ids: [resourceID] || null,
     start: startDate,
     finish: endDate,
-    interval: null,
+    interval: "30:00",
   };
+  console.log(body, body.resource_ids);
 
   async function testProxy() {
     const timeWrapper = document.querySelector(
@@ -928,7 +953,6 @@ function updateDate(divNum, cartItems, e) {
     timeWrapper.classList.remove("hide");
   }
   testProxy();
-
   const getDaysAvailable = (data) => {
     let blocks = [];
     data.blocks.forEach((block) => {
@@ -940,6 +964,7 @@ function updateDate(divNum, cartItems, e) {
 }
 
 function renderBlocks(blocks, totalTime) {
+  console.log(blocks, "render blocks func");
   if (blocks.length > 0) {
     const dateBlocks = blocks[0].timeslots;
     const timeWrapper = document.querySelector(
@@ -1023,7 +1048,11 @@ function renderBlocks(blocks, totalTime) {
       timeSlots.type = "radio";
       timeSlots.name = "start";
       timeSlots.value = startTime;
-      timeSlots.dataset.endTime = finishTime;
+      if (finishTime) {
+        timeSlots.dataset.endTime = finishTime;
+      } else {
+        timeSlots.dataset.endTime = prevTime;
+      }
 
       timeSlots.id = "timeslot-" + i;
       timeSlotsLabel.setAttribute("for", "timeslot-" + i);
@@ -1057,10 +1086,13 @@ function renderBlocks(blocks, totalTime) {
     calText.textContent =
       "Oops Looks Like Our Nail Techs Are Booked Up, Please Select Another Date";
   } else {
+    const calIcon = document.querySelector(".calendar-icon");
+
     const timeForm = document.querySelector(
       ".booking-form__content-step-6-time #appointmentTime"
     );
     timeForm.classList.remove("hide");
+    calIcon.classList.add("hide");
   }
 }
 
@@ -1217,52 +1249,74 @@ function renderReview(e, items) {
 
   const bookingInfo = items.attributes;
   const cartInfo = items.items;
-  const startDate = new Date(bookingInfo.Start);
+  if (bookingInfo.Start) {
+    const startDate = new Date(bookingInfo.Start);
 
-  const startString = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "medium",
-  }).format(startDate);
-  const weekDayString = new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-  }).format(startDate);
-  const timeString = new Intl.DateTimeFormat("en-US", {
-    timeStyle: "short",
-  }).format(startDate);
+    const startString = new Intl.DateTimeFormat("en-US", {
+      dateStyle: "medium",
+    }).format(startDate);
+    const weekDayString = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+    }).format(startDate);
+    const timeString = new Intl.DateTimeFormat("en-US", {
+      timeStyle: "short",
+    }).format(startDate);
 
-  const section = document.querySelector(
-    ".booking-form__content-step-7"
-  ).children;
+    const section = document.querySelector(
+      ".booking-form__content-step-7"
+    ).children;
 
-  for (let i = 1; i < section.length; i++) {
-    if (section[i].classList[0].includes("location")) {
-      section[i].children[1].textContent = "24K Broadripple Ave";
-    }
-    if (section[i].classList[0].includes("date")) {
-      section[i].children[1].textContent = weekDayString + ", " + startString;
-      section[i].children[1].addEventListener(
-        "click",
-        editBookingDate.bind(this)
-      );
-    }
-    if (section[i].classList[0].includes("time")) {
-      section[i].children[1].textContent = timeString;
-      section[i].children[1].addEventListener(
-        "click",
-        editBookingDate.bind(this)
-      );
-    }
-    if (section[i].classList[0].includes("staff")) {
-      if (bookingInfo.ResourceName) {
-        section[i].children[1].textContent = bookingInfo.ResourceName;
+    for (let i = 1; i < section.length; i++) {
+      if (section[i].classList[0].includes("location")) {
+        section[i].children[1].textContent = "24K Broadripple Ave";
+      }
+      if (section[i].classList[0].includes("date")) {
+        section[i].children[1].textContent = weekDayString + ", " + startString;
         section[i].children[1].addEventListener(
           "click",
           editBookingDate.bind(this)
         );
-      } else {
-        section[i].children[1].textContent = "No Preference";
+      }
+      if (section[i].classList[0].includes("time")) {
+        section[i].children[1].textContent = timeString;
+        section[i].children[1].addEventListener(
+          "click",
+          editBookingDate.bind(this)
+        );
+      }
+      if (section[i].classList[0].includes("staff")) {
+        if (bookingInfo.ResourceName) {
+          section[i].children[1].textContent = bookingInfo.ResourceName;
+          section[i].children[1].addEventListener(
+            "click",
+            editBookingDate.bind(this) // Change to editResource
+          );
+        } else {
+          section[i].children[1].textContent = "No Preference";
+        }
       }
     }
+  } else {
+    const location = document.querySelector(
+      ".booking-form__content-step-7-location"
+    );
+    const date = document.querySelector(".booking-form__content-step-7-date");
+    const time = document.querySelector(".booking-form__content-step-7-time");
+    const staff = document.querySelector(".booking-form__content-step-7-staff");
+    location.children[1].textContent = "24K | 815 Broadripple Ave";
+    date.children[1].textContent = "No Date Selected";
+    time.children[1].textContent = "No Time Selected";
+    if (bookingInfo.ResourceName) {
+      staff.children[1].textContent = bookingInfo.ResourceName;
+    } else {
+      staff.children[1].textContent = "No Preference Selected";
+    }
+    location.children[1].addEventListener("click", editBookingDate.bind(this));
+    date.children[1].addEventListener("click", editBookingDate.bind(this));
+    time.children[1].addEventListener("click", editBookingDate.bind(this));
+    staff.children[1].addEventListener("click", editBookingDate.bind(this));
   }
+
   const allItemsInfo = document.querySelectorAll(
     ".booking-form__content-step-7-items .item-info"
   );
@@ -1309,6 +1363,21 @@ function renderReview(e, items) {
   customerBtn.textContent = "$" + cartTotal;
 
   // console.log(bookingInfo, cartInfo, cartTotal, "heyyy LOOK HERE");
+}
+
+async function editResource(e) {
+  e.preventDefault();
+  e.target.textContent = "";
+  const resourceSelect = e.target.appendChild(document.createElement("select"));
+  resourceSelect.classList.add("custom-select");
+  const resources = await fetchResources(currentCartItems[0].product_id, e);
+  console.log(resources, currentCartItems[0].id);
+  const staff = resources.staff;
+  staff.forEach((emp) => {
+    const option = resourceSelect.appendChild(document.createElement("option"));
+    option.textContent = emp.name;
+    option.value = emp.id;
+  });
 }
 
 function editBookingDate(e) {

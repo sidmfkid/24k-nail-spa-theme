@@ -48,6 +48,7 @@ const checkCart = async function (fn, e) {
       fn(e, data);
     }
   }
+  return await data;
 };
 
 document.addEventListener("DOMContentLoaded", checkCart());

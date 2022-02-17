@@ -1289,7 +1289,7 @@ function renderReview(e, items) {
           section[i].children[1].textContent = bookingInfo.ResourceName;
           section[i].children[1].addEventListener(
             "click",
-            editBookingDate.bind(this) // Change to editResource
+            editResource.bind(this) // Change to editResource
           );
         } else {
           section[i].children[1].textContent = "No Preference";
@@ -1367,17 +1367,81 @@ function renderReview(e, items) {
 
 async function editResource(e) {
   e.preventDefault();
-  e.target.textContent = "";
-  const resourceSelect = e.target.appendChild(document.createElement("select"));
-  resourceSelect.classList.add("custom-select");
-  const resources = await fetchResources(currentCartItems[0].product_id, e);
-  console.log(resources, currentCartItems[0].id);
-  const staff = resources.staff;
-  staff.forEach((emp) => {
-    const option = resourceSelect.appendChild(document.createElement("option"));
-    option.textContent = emp.name;
-    option.value = emp.id;
-  });
+  let prevSelectedOption = e.target.textContent;
+  // console.log(prevSelectedOption);
+  if (e.target.tagName === "DIV") {
+    e.target.textContent = "";
+    const selectResourceBtn = e.target.appendChild(
+      document.createElement("button")
+    );
+    const resourceSelect = e.target.appendChild(
+      document.createElement("select")
+    );
+
+    selectResourceBtn.textContent = "Confirm Selection";
+    selectResourceBtn.id = "selectResourceBtn";
+    selectResourceBtn.classList.add("edit-resource-btn");
+    resourceSelect.classList.add("custom-select");
+    resourceSelect.id = "changeResource";
+    const resources = await fetchResources(currentCartItems[0].product_id, e);
+    // console.log(resources, currentCartItems[0].id);
+    const staff = resources.staff;
+    const defaultOption = resourceSelect.appendChild(
+      document.createElement("option")
+    );
+    defaultOption.textContent = "Select Your Choice";
+    const firstOption = resourceSelect.appendChild(
+      document.createElement("option")
+    );
+    firstOption.textContent = "No Preference";
+    firstOption.value = "";
+    firstOption.dataset.resourceName = "No Preference";
+    staff.forEach((emp) => {
+      const option = resourceSelect.appendChild(
+        document.createElement("option")
+      );
+      if (emp.name === prevSelectedOption) {
+        option.selected = true;
+      }
+      if (prevSelectedOption.textContent === "No Preference") {
+        firstOption.selected = true;
+      }
+      option.textContent = emp.name;
+      option.dataset.resourceName = emp.name;
+      option.value = emp.id;
+    });
+  }
+  const resourceSelect = document.querySelector(
+    "#changeResource.custom-select"
+  );
+  const selectResourceBtn = document.querySelector("#selectResourceBtn");
+  resourceSelect.addEventListener(
+    "change",
+    selectNewResource.bind(this, selectResourceBtn)
+  );
+  selectResourceBtn.addEventListener("click", confirmResource.bind(this));
+}
+
+async function selectNewResource(btnEl, e) {
+  // console.log(e.target.value, e.target);
+  btnEl.dataset.resourceID = e.target.value;
+  btnEl.dataset.resourceName = e.target.selectedOptions[0].dataset.resourceName;
+}
+
+async function confirmResource(e) {
+  e.preventDefault();
+
+  const prevCartData = await checkCart();
+
+  const newResource = {
+    attributes: {
+      Start: prevCartData.attributes.Start,
+      Finish: prevCartData.attributes.Finish,
+      ResourceID: e.target.dataset.resourceID,
+      ResourceName: e.target.dataset.resourceName,
+    },
+  };
+  updateCart(newResource, e);
 }
 
 function editBookingDate(e) {

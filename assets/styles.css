@@ -2760,6 +2760,23 @@ input:checked + .slider:before {
   text-decoration: underline;
   cursor: pointer;
 }
+.booking-form__content-step-7-location div:nth-of-type(2) #selectResourceBtn, .booking-form__content-step-7-date div:nth-of-type(2) #selectResourceBtn, .booking-form__content-step-7-time div:nth-of-type(2) #selectResourceBtn, .booking-form__content-step-7-staff div:nth-of-type(2) #selectResourceBtn {
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+  padding: 0rem 2rem;
+  cursor: pointer;
+  background: black;
+  height: 100%;
+  color: white;
+  line-height: 2.4rem;
+  border-radius: 2rem;
+}
+.booking-form__content-step-7-location div:nth-of-type(2) #changeResource, .booking-form__content-step-7-date div:nth-of-type(2) #changeResource, .booking-form__content-step-7-time div:nth-of-type(2) #changeResource, .booking-form__content-step-7-staff div:nth-of-type(2) #changeResource {
+  border: #cdcdcd;
+  line-height: 2.4rem;
+  height: 100%;
+  padding: 0.5rem 0.2rem;
+}
 .booking-form__content-step-7-items {
   padding: 2rem 3rem;
 }
@@ -2922,6 +2939,9 @@ input:checked + .slider:before {
   z-index: 0;
   margin-top: -12rem;
   opacity: 0;
+}
+.booking-form__content-step-8-form form .checkout input:disabled {
+  cursor: not-allowed;
 }
 .booking-form__content-step-8-form #customerBtn {
   width: 100%;

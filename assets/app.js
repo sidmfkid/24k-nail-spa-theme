@@ -54,8 +54,14 @@ const checkCart = async function (fn, e) {
 document.addEventListener("DOMContentLoaded", checkCart());
 
 function addNumToCart(data) {
-  if (data.item_count >= 1) {
-    console.log("ADDED NUM");
+  if (data.item_count >= 1 && cartNum.classList.contains("hide")) {
+    // console.log("ADDED NUM");
+    cartNum.classList.toggle("hide");
+    cartNum.textContent = data.items.length;
+    return;
+  }
+  if (data.item_count === 0 && !cartNum.classList.contains("hide")) {
+    // console.log("ADDED NUM");
     cartNum.classList.toggle("hide");
     cartNum.textContent = data.items.length;
     return;

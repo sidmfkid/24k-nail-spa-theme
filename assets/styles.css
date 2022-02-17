@@ -1841,7 +1841,8 @@ input:checked + .slider:before {
   left: -140%;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
   z-index: 10;
 }
 .booking-form__overlay {
@@ -2710,7 +2711,16 @@ input:checked + .slider:before {
   background-color: grey;
   color: white;
 }
+.booking-form__content-step-6-time .select-time {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .booking-form__content-step-6-time .select-time-btn {
+  position: absolute;
+  bottom: 5rem;
   display: block;
   margin: 0rem auto 0 auto;
   padding: 1rem 3rem;
@@ -2719,9 +2729,13 @@ input:checked + .slider:before {
   cursor: pointer;
   border-radius: 5rem;
   transition: all 0.3s ease-in-out;
+  opacity: 1;
+  height: auto;
 }
 .booking-form__content-step-6-time .select-time-btn.hidden {
   transform: translateY(10rem);
+  opacity: 0;
+  height: 0;
 }
 .booking-form__content-step-6-time .select-time-btn:hover, .booking-form__content-step-6-time .select-time-btn:active {
   background-color: #202020;

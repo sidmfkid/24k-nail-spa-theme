@@ -5,7 +5,9 @@
   width: 100vw;
   height: 100vh;
   //   background-color: white;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
   z-index: 10;
   &__overlay {
     position: fixed;
@@ -926,7 +928,15 @@
             }
           }
           .select-time {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             &-btn {
+              position: absolute;
+
+              bottom: 5rem;
               display: block;
               margin: 0rem auto 0 auto;
               padding: 1rem 3rem;
@@ -935,8 +945,12 @@
               cursor: pointer;
               border-radius: 5rem;
               transition: all 0.3s ease-in-out;
+              opacity: 1;
+              height: auto;
               &.hidden {
                 transform: translateY(10rem);
+                opacity: 0;
+                height: 0;
               }
               &:hover,
               &:active {

@@ -24,7 +24,7 @@ hamburgerBtn.addEventListener("click", openMenu);
 let options = {
   root: null,
   rootMargin: "0px",
-  threshold: 0.6,
+  threshold: 0.4,
 };
 
 let observer = new IntersectionObserver(callbackFn, options);

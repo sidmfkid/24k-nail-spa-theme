@@ -304,18 +304,19 @@ input:checked + .slider:before {
 }
 
 #shopify-section-header {
-  height: 16rem;
+  height: 12rem;
   overflow-x: unset;
 }
 .header {
   &.sticky {
-    // height: 16rem;
+    height: fit-content;
     position: fixed;
     top: -30rem;
     z-index: 5;
     transition: all 0.4s ease-in-out;
     &.slideDown {
       top: 0;
+      opacity: 0.95;
     }
   }
 }

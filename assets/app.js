@@ -24,8 +24,53 @@ hamburgerBtn.addEventListener("click", openMenu);
 let options = {
   root: null,
   rootMargin: "0px",
-  threshold: 0,
+  threshold: 0.6,
 };
+
+let observer = new IntersectionObserver(callbackFn, options);
+
+let targets = document.querySelectorAll(".shopify-section");
+
+targets.forEach((target) => {
+  observer.observe(target);
+});
+
+function callbackFn(entries, observer) {
+  entries.forEach((entry) => {
+    if (entry.target.id.includes("hero")) {
+      stickNav(entry);
+    }
+
+    animateIn(entry);
+  });
+}
+
+function stickNav(entry) {
+  const header = document.querySelector(".header");
+
+  if (entry.target.id.includes("hero") && entry.isIntersecting === false) {
+    // console.log(entry);
+    header.classList.add("sticky");
+    setTimeout(() => {
+      header.classList.add("slideDown");
+    }, 100);
+  } else if (
+    entry.target.id.includes("hero") &&
+    entry.isIntersecting === true
+  ) {
+    // console.log(entry);
+    header.classList.remove("slideDown");
+    setTimeout(() => {
+      header.classList.remove("sticky");
+    }, 400);
+  }
+}
+
+function animateIn(entry) {
+  if (entry.isIntersecting === true) {
+    entry.target.firstChild.classList.add("fadeIn");
+  }
+}
 
 // ************ Cart ************* //
 const cartIcon = document.querySelector("#cartIcon");

@@ -1,8 +1,3 @@
-{% render 'no-overflow'%}
-
-
-
-
 <section class="map{% if page.title == 'Locations' %}-page{% endif %}">
     <h2 class="map__title">Location</h2>
     <div class="map__content">
@@ -17,6 +12,8 @@
         </div>
     </div>
 </section>
+{% render 'no-overflow'%}
+
 <script defer="defer" src="{{ 'leaflet.js' | asset_url }}"></script>
 <script defer="defer" src="{{ 'map.js' | asset_url }}"></script>
 

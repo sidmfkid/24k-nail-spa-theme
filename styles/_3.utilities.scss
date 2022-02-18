@@ -287,3 +287,35 @@ input:checked + .slider:before {
     }
   }
 }
+.shopify-section > header,
+.shopify-section > section,
+.shopify-section section {
+  opacity: 0;
+  transform: translateY(10rem);
+  transition: all 0.4s ease-in-out;
+  &.fadeIn {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+}
+.shopify-section {
+  position: relative;
+  overflow-x: hidden;
+}
+
+#shopify-section-header {
+  height: 16rem;
+  overflow-x: unset;
+}
+.header {
+  &.sticky {
+    // height: 16rem;
+    position: fixed;
+    top: -30rem;
+    z-index: 5;
+    transition: all 0.4s ease-in-out;
+    &.slideDown {
+      top: 0;
+    }
+  }
+}

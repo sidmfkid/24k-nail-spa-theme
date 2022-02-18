@@ -930,9 +930,9 @@ async function updateDate(divNum, cartItems, e) {
     resource_ids: [resourceID] || null,
     start: startDate,
     finish: endDate,
-    interval: "30:00",
+    interval: timeString,
   };
-  console.log(body, body.resource_ids);
+  // console.log(body, body.resource_ids);
 
   async function testProxy() {
     const timeWrapper = document.querySelector(
@@ -954,6 +954,7 @@ async function updateDate(divNum, cartItems, e) {
   }
   testProxy();
   const getDaysAvailable = (data) => {
+    console.log(data);
     let blocks = [];
     data.blocks.forEach((block) => {
       blocks.push(block);
